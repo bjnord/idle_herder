@@ -5,8 +5,33 @@ require 'nokogiri'
 FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
 CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
 
+$sources = {}
+
 def titleize_hero(name)
   return name.gsub(/\s/, '_')
+end
+
+def parse_acquired_through(str, hero_name)
+  return [] if str.empty?
+  # Wikia fixups:
+  str.gsub!(/\s+/, ' ')
+  if m = str.match(/^(.*\w\w)(\d+\s+Star\s+.*)$/)
+    str = m.captures[0] + ',' + m.captures[1]
+  elsif m = str.match(/^(.*\w\w)(Prophet\s+Tree.*)$/)
+    str = m.captures[0] + ',' + m.captures[1]
+  end
+  if str.sub!(/Shardv/, 'Shard')
+    $stderr.puts "WARN: Acquired through: fixed typo 'Shardv' on hero #{hero_name}"
+  end
+  if str.match(%r{^.*\([^),]*$})
+    str += ')'
+    $stderr.puts "WARN: Acquired through: added missing close paren on hero #{hero_name}"
+  end
+  str.gsub!(/Creation circle/, 'Creation Circle')
+  # then just split it
+  str.split(/,/).collect do |source|
+    source.strip
+  end
 end
 
 def parse_fuses_into(str, hero_name)
@@ -102,6 +127,14 @@ def parse_a_section(section, hero_name)
           fuses_into = parse_fuses_into(value_div.content.to_s, hero_name)
           sect_attr['fuses_into'] = fuses_into unless fuses_into.empty?
         end
+      elsif label_type == 'acquired through'
+        div.css('div.pi-data-value').each do |value_div|
+          acq_thru = parse_acquired_through(value_div.content.to_s, hero_name)
+          acq_thru.each do |source|
+            $sources[source] = true
+          end
+          sect_attr['sources'] = acq_thru unless acq_thru.empty?
+        end
       elsif ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
         div.css('div.pi-data-value').each do |value_div|
           value = value_div.content.strip.to_i
@@ -111,6 +144,8 @@ def parse_a_section(section, hero_name)
             sect_attr[label_type] = value.to_i
           end
         end
+      else
+        $stderr.puts "WARN: unknown label_type=[#{label_type}]"
       end
     end
   end
@@ -195,4 +230,7 @@ Dir.entries(path).each do |filename|
   rescue Errno::ENOENT => e
     $stderr.puts "SKIP: file not found, path=#{path} filename=#{filename}"
   end
+end
+$sources.keys.sort.each do |source|
+  $stderr.puts "source: #{source}"
 end
