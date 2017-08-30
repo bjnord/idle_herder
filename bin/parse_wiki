@@ -9,6 +9,45 @@ def titleize_hero(name)
   return name.gsub(/\s/, '_')
 end
 
+def parse_fused_from(str, hero_name)
+  return [] if str.match(/can't/i)
+  if m = str.match(/^(.*\w\w)(\d+x\s+\d+.*)$/)
+    str = m.captures[0] + ',' + m.captures[1]
+  end
+  str.split(/,/).collect do |fodder|
+    if m = fodder.match(%r{^(\d+)x\s+(\d+)\u2605\s*(.*)$})
+      count, stars, name = m.captures
+      name.strip!
+      if m = name.match(%r{^(.*)\s+hero$})
+        faction = m.captures[0].strip
+        if FACTIONS.include?(faction)
+          {'count' => count.to_i, 'stars' => stars.to_i, 'faction' => faction}
+        elsif faction == 'Any faction'
+          {'count' => count.to_i, 'stars' => stars.to_i}
+        else
+          $stderr.puts "WARN: hero #{hero_name}: ignoring unknown faction fused_from=[#{fodder}]"
+          {}
+        end
+      else
+        {'count' => count.to_i, 'stars' => stars.to_i, 'name' => name}
+      end
+    elsif m = fodder.match(%r{^(\d+)x\s+(\S+)\s+hero$})
+      count, faction = m.captures
+      if FACTIONS.include?(faction)
+        {'count' => count.to_i, 'faction' => faction}
+      elsif faction == 'Any'
+        {'count' => count.to_i}
+      else
+        $stderr.puts "WARN: hero #{hero_name}: ignoring unknown bare faction fused_from=[#{fodder}]"
+        {}
+      end
+    else
+      $stderr.puts "WARN: hero #{hero_name}: ignoring fused_from=[#{fodder}]"
+      {}
+    end
+  end
+end
+
 def parse_a_section(section, hero_name)
   sect_attr = {}
   # Hero stars
@@ -39,7 +78,12 @@ def parse_a_section(section, hero_name)
   section.css('div.pi-item').each do |div|
     div.css('h3.pi-data-label').each do |label_h|
       label_type = label_h.content.strip.downcase
-      if ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
+      if label_type == 'fused from'
+        div.css('div.pi-data-value').each do |value_div|
+          fused_from = parse_fused_from(value_div.content.to_s, hero_name)
+          sect_attr['fused_from'] = fused_from unless fused_from.empty?
+        end
+      elsif ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
         div.css('div.pi-data-value').each do |value_div|
           value = value_div.content.strip.to_i
           if value <= 0
