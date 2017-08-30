@@ -9,6 +9,51 @@ def titleize_hero(name)
   return name.gsub(/\s/, '_')
 end
 
+def parse_a_section(section, hero_name)
+  sect_attr = {}
+  # Hero stars
+  stars = nil
+  section.css('h2').each do |label_h|
+    label = label_h.content.strip
+    next unless m = label.match(/^(\d+).*stats/i)
+    sect_attr['stars'] = m.captures[0].to_i
+  end
+  if !sect_attr['stars']
+    $stderr.puts "SKIP: hero #{hero_name} no star sections"
+    return {}
+  end
+  # Hero image
+  section.css('figure img').each do |img|
+    sect_attr['img_src'] = img['src']
+    if m = sect_attr['img_src'].match(%r</([^/]+icon\.[a-z]{3,4})/>i)
+      sect_attr['img'] = m.captures[0]
+    else
+      $stderr.puts "SKIP: hero #{hero_name} #{sect_attr['stars']}-star bad image base"
+      return {}
+    end
+  end
+  if !sect_attr['img_src']
+    $stderr.puts "WARN: hero #{hero_name} #{sect_attr['stars']}-star no image"
+  end
+  # Hero stats
+  section.css('div.pi-item').each do |div|
+    div.css('h3.pi-data-label').each do |label_h|
+      label_type = label_h.content.strip.downcase
+      if ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
+        div.css('div.pi-data-value').each do |value_div|
+          value = value_div.content.strip.to_i
+          if value <= 0
+            $stderr.puts "WARN: hero #{attr['name']}: invalid #{label_type}"
+          elsif
+            sect_attr[label_type] = value.to_i
+          end
+        end
+      end
+    end
+  end
+  sect_attr
+end
+
 def parse_an_article(art, page_tag)
   attr = {}
   # Hero name
@@ -44,12 +89,20 @@ def parse_an_article(art, page_tag)
       end
     end
   end
+  # Hero star levels
+  stars_attr = art.css('section.pi-item.pi-group').collect do |section|
+    parse_a_section(section, attr['name'])
+  end
+  attr['stars'] = stars_attr unless stars_attr.empty?
   attr
 end
 
 def store_a_hero(attr)
   if !attr['name'] || !attr['faction'] || !attr['role']
     $stderr.puts "SKIP: missing attributes #{attr.inspect}"
+    return
+  elsif !attr['stars'] || attr['stars'].empty?
+    $stderr.puts "SKIP: missing star levels #{attr.inspect}"
     return
   end
   puts attr.inspect
