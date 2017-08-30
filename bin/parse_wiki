@@ -9,6 +9,20 @@ def titleize_hero(name)
   return name.gsub(/\s/, '_')
 end
 
+def parse_fuses_into(str, hero_name)
+  return [] if str.match(/nothing/i)
+  str.split(/,/).collect do |forged|
+    if m = forged.match(%r{^(\d+)\u2605\s*(.*)$})
+      stars, name = m.captures
+      name.strip!
+      {'stars' => stars.to_i, 'name' => name}
+    else
+      $stderr.puts "WARN: hero #{hero_name}: ignoring fuses_into=[#{forged}]"
+      {}
+    end
+  end
+end
+
 def parse_fused_from(str, hero_name)
   return [] if str.match(/can't/i)
   if m = str.match(/^(.*\w\w)(\d+x\s+\d+.*)$/)
@@ -82,6 +96,11 @@ def parse_a_section(section, hero_name)
         div.css('div.pi-data-value').each do |value_div|
           fused_from = parse_fused_from(value_div.content.to_s, hero_name)
           sect_attr['fused_from'] = fused_from unless fused_from.empty?
+        end
+      elsif label_type == 'fuses into'
+        div.css('div.pi-data-value').each do |value_div|
+          fuses_into = parse_fuses_into(value_div.content.to_s, hero_name)
+          sect_attr['fuses_into'] = fuses_into unless fuses_into.empty?
         end
       elsif ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
         div.css('div.pi-data-value').each do |value_div|
