@@ -1,0 +1,82 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+
+FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
+CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
+
+def titleize_hero(name)
+  return name.gsub(/\s/, '_')
+end
+
+def parse_an_article(art, page_tag)
+  attr = {}
+  # Hero name
+  art.css('h2.pi-title').each do |h2|
+    name = h2.content.strip
+    name.sub!(/Eyed$/, 'eyed')  # EXCEPTION
+    if titleize_hero(name) != page_tag
+      $stderr.puts "SKIP: hero name #{name} <=> page title #{page_tag}"
+      return {}
+    else
+      attr['name'] = name
+    end
+  end
+  # Hero faction and role (class)
+  art.css('div.pi-item').each do |div|
+    div.css('h3.pi-data-label').each do |label_h|
+      label_type = label_h.content.strip.downcase
+      if ['faction', 'role'].include?(label_type)
+        div.css('div.pi-data-value').each do |value_div|
+          value_div.css('a').each do |a|
+            value = a.content.strip
+            break if !value.empty?
+          end
+          value ||= value_div.content.strip
+          list = (label_type == 'faction') ? FACTIONS : CLASSES
+          if !list.include?(value)
+            $stderr.puts "SKIP: hero #{attr['name']}: unknown #{label_type} #{value}"
+            return {}
+          else
+            attr[label_type] = value
+          end
+        end
+      end
+    end
+  end
+  attr
+end
+
+def store_a_hero(attr)
+  if !attr['name'] || !attr['faction'] || !attr['role']
+    $stderr.puts "SKIP: missing attributes #{attr.inspect}"
+    return
+  end
+  puts attr.inspect
+  $stderr.puts "store-it"
+end
+
+def parse_a_page(path, page_tag)
+  page = Nokogiri::HTML(open(File.join(path, page_tag)))
+  if art = page.css('.WikiaArticle')[0]
+    attr = parse_an_article(art, page_tag)
+    if !attr.empty?
+      store_a_hero(attr)
+    end
+  else
+    $stderr.puts "SKIP: no WikiaArticle found in #{page_tag}"
+  end
+end
+
+path = File.join(ENV['HOME'], 'public_html', 'mirror', 'idleheroes.wikia.com', 'wiki')
+Dir.entries(path).each do |filename|
+  next if filename =~ /^\.+$/
+  #next unless filename =~ /^[AB]/  # FIXME debug
+  $stderr.puts filename.inspect
+  begin
+    # catch Errno::ENOENT from this function:
+    parse_a_page(path, filename)
+  rescue Errno::ENOENT => e
+    $stderr.puts "SKIP: file not found, path=#{path} filename=#{filename}"
+  end
+end

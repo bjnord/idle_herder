@@ -1,0 +1,8 @@
+As of Wed Aug 30 2017 from <http://idleheroes.wikia.com/wiki/Heroes>
+
+echo 11 + 13 + 11 + 11 + 4 + 4  # 6-star
+echo 16 + 18 + 16 + 16 + 6 + 6  # 5-star
+echo 8 + 8 + 8 + 8 + 3 + 3      # 4-star
+echo 5 + 5 + 5 + 5 + 1 + 1      # 3-star
+echo 4 + 4 + 4 + 4 + 0 + 0      # 2-star
+echo 3 + 3 + 3 + 3 + 0 + 0      # 1-star
