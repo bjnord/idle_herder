@@ -6,6 +6,7 @@ FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
 CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
 
 $sources = {}
+$heroes = 0
 
 def titleize_hero(name)
   return name.gsub(/\s/, '_')
@@ -191,7 +192,10 @@ def parse_an_article(art, page_tag)
   stars_attr = art.css('section.pi-item.pi-group').collect do |section|
     parse_a_section(section, attr['name'])
   end
-  attr['stars'] = stars_attr unless stars_attr.empty?
+  unless stars_attr.empty?
+    attr['stars'] = stars_attr
+    $heroes += attr['stars'].select {|s| s['stars'] < 10 }.count
+  end
   attr
 end
 
@@ -234,3 +238,4 @@ end
 $sources.keys.sort.each do |source|
   $stderr.puts "source: #{source}"
 end
+$stderr.puts "total of #{$heroes} heroes (excluding 10*)"
