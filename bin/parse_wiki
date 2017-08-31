@@ -62,7 +62,7 @@ def parse_fused_from(str, hero_name)
     if m = fodder.match(%r{^(\d+)x\s+(\d+)\u2605\s*(.*)$})
       count, stars, name = m.captures
       name.strip!
-      if m = name.match(%r{^(.*)\s+hero$})
+      if m = name.match(%r{^(.*)\s+[Hh]ero$})
         faction = m.captures[0].strip
         if FACTIONS.include?(faction)
           {'count' => count.to_i, 'stars' => stars.to_i, 'faction' => faction}
@@ -75,7 +75,7 @@ def parse_fused_from(str, hero_name)
       else
         {'count' => count.to_i, 'stars' => stars.to_i, 'name' => name}
       end
-    elsif m = fodder.match(%r{^(\d+)x\s+(\S+)\s+hero$})
+    elsif m = fodder.match(%r{^(\d+)x\s+(\S+)\s+[Hh]ero$})
       count, faction = m.captures
       if FACTIONS.include?(faction)
         {'count' => count.to_i, 'faction' => faction}
