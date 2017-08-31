@@ -1,4 +1,6 @@
 class Hero < ApplicationRecord
+  self.primary_key = 'id'
+
   FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 

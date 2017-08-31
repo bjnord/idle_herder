@@ -12,19 +12,19 @@
 
 ActiveRecord::Schema.define(version: 20170831135939) do
 
-  create_table "heroes", force: :cascade do |t|
+  create_table "heroes", id: false, force: :cascade do |t|
+    t.integer "id", default: 0, null: false
     t.string "name", default: "", null: false
     t.integer "stars", default: 0, null: false
     t.string "faction", default: "", null: false
     t.string "role", default: "", null: false
     t.integer "power", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "image_file"
     t.integer "health"
     t.integer "attack"
     t.integer "armor"
     t.integer "speed"
+    t.index ["id"], name: "index_heroes_on_id", unique: true
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
   end
 
