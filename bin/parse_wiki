@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'json'
 require 'nokogiri'
 require 'optparse'
 
@@ -157,7 +158,7 @@ def parse_a_section(section, hero_name)
 end
 
 def parse_an_article(art, page_tag)
-  attr = {}
+  attr = {'id' => 0}
   # Hero name
   art.css('h2.pi-title').each do |h2|
     name = h2.content.strip
@@ -223,11 +224,23 @@ def flatten_heroes
   end.flatten.sort_by{|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
 end
 
+def save_heroes
+  hero_id = 1
+  $flat_heroes.each do |hero|
+    path = File.join('db', 'data', "#{hero_id}.json")
+    File.open(path, 'w') do |f|
+      hero['id'] = hero_id
+      f.puts hero.to_json
+    end
+    hero_id += 1
+  end
+end
+
 def parse_a_page(path, page_tag)
   page = Nokogiri::HTML(open(File.join(path, page_tag)))
   if art = page.css('.WikiaArticle')[0]
     attr = parse_an_article(art, page_tag)
-    if !attr.empty?
+    if attr.count > 1
       cache_a_hero(attr)
     end
   else
@@ -288,6 +301,7 @@ Dir.entries(path).each do |filename|
   end
 end
 flatten_heroes
+save_heroes unless $options[:dryrun]
 emit_images if $options[:images]
 emit_sources if $options[:sources]
 $stderr.puts "total of #{$hero_count} heroes (excluding 10*)" if $options[:verbose]
