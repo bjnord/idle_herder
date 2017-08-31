@@ -3,10 +3,11 @@
 require 'nokogiri'
 require 'optparse'
 
-FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
-CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
+FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
+CLASSES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
-$heroes = {}
+$flat_heroes = []
+$heroes = []
 $hero_count = 0
 $sources = {}
 
@@ -201,17 +202,25 @@ def parse_an_article(art, page_tag)
   attr
 end
 
-def store_a_hero(attr)
+def cache_a_hero(attr)
   if !attr['name'] || !attr['faction'] || !attr['role']
     $stderr.puts "SKIP: missing attributes #{attr.inspect}"
-    return
   elsif !attr['stars'] || attr['stars'].empty?
     $stderr.puts "SKIP: missing star levels #{attr.inspect}"
-    return
+  else
+    #puts attr.inspect if $options[:verbose]
+    $heroes << attr
   end
-  puts attr.inspect if $options[:verbose]
-  # TODO store to DB (unless :dryrun)
-  $heroes[attr['name']] = attr
+end
+
+def flatten_heroes
+  $flat_heroes = $heroes.collect do |hero|
+    hero['stars'].collect do |star|
+      flat_attr = hero.clone.tap{|a| a.delete('stars') }.merge(star)
+      $stderr.puts "store_hero #{flat_attr.inspect}" if $options[:verbose]
+      flat_attr
+    end
+  end.flatten.sort_by{|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
 end
 
 def parse_a_page(path, page_tag)
@@ -219,7 +228,7 @@ def parse_a_page(path, page_tag)
   if art = page.css('.WikiaArticle')[0]
     attr = parse_an_article(art, page_tag)
     if !attr.empty?
-      store_a_hero(attr)
+      cache_a_hero(attr)
     end
   else
     $stderr.puts "SKIP: no WikiaArticle found in #{page_tag}"
@@ -227,10 +236,8 @@ def parse_a_page(path, page_tag)
 end
 
 def emit_images
-  $heroes.each do |hero_name, hero|
-    hero['stars'].each do |star|
-      puts "wget -O app/assets/images/heroes/#{star['img']} '#{star['img_src']}'" if star['img_src']
-    end
+  $flat_heroes.each do |hero|
+    puts "wget -O app/assets/images/heroes/#{hero['img']} '#{hero['img_src']}'" if hero['img_src']
   end
 end
 
@@ -280,6 +287,7 @@ Dir.entries(path).each do |filename|
     $stderr.puts "SKIP: file not found, path=#{path} filename=#{filename}"
   end
 end
+flatten_heroes
 emit_images if $options[:images]
 emit_sources if $options[:sources]
 $stderr.puts "total of #{$hero_count} heroes (excluding 10*)" if $options[:verbose]

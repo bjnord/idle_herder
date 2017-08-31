@@ -1,6 +1,6 @@
 class Hero < ApplicationRecord
-  FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
-  CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
+  FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
+  CLASSES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
   validates :name, presence: true
   validates :stars, presence: true
