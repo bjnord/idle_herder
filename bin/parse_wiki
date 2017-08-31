@@ -217,11 +217,11 @@ end
 def flatten_heroes
   $flat_heroes = $heroes.collect do |hero|
     hero['stars'].collect do |star|
-      flat_attr = hero.clone.tap{|a| a.delete('stars') }.merge(star)
+      flat_attr = hero.clone.tap {|a| a.delete('stars') }.merge(star)
       $stderr.puts "store_hero #{flat_attr.inspect}" if $options[:verbose]
       flat_attr
     end
-  end.flatten.sort_by{|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
+  end.flatten.sort_by {|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
 end
 
 def save_heroes

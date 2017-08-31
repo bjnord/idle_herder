@@ -26,7 +26,7 @@ class Hero < ApplicationRecord
     if hero_h['fused_from']
       hero.materials_attributes = hero_h['fused_from'].collect do |ff|
         Material::attr_from_hash(ff)
-      end.reject{|m| m.blank? }
+      end.reject {|m| m.blank? }
     end
     hero
   end
