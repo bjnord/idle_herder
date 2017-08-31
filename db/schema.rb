@@ -13,12 +13,12 @@
 ActiveRecord::Schema.define(version: 20170831180632) do
 
   create_table "heroes", id: false, force: :cascade do |t|
-    t.integer "id", default: 0, null: false
-    t.string "name", default: "", null: false
-    t.integer "stars", default: 0, null: false
-    t.string "faction", default: "", null: false
-    t.string "role", default: "", null: false
-    t.integer "power", default: 0, null: false
+    t.integer "id", null: false
+    t.string "name", null: false
+    t.integer "stars", null: false
+    t.string "faction", null: false
+    t.string "role", null: false
+    t.integer "power"
     t.string "image_file"
     t.integer "health"
     t.integer "attack"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170831180632) do
 
   create_table "materials", force: :cascade do |t|
     t.integer "hero_id", null: false
-    t.integer "count", default: 0, null: false
+    t.integer "count", null: false
     t.integer "material_hero_id"
     t.integer "stars"
     t.string "faction"

@@ -7,6 +7,8 @@ class Hero < ApplicationRecord
   FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
+  validates :id, presence: true
+  validates :id, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|h| h.id.blank? }
   validates :name, presence: true
   validates :stars, presence: true
   validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10 }, unless: Proc.new {|h| h.stars.blank? }
