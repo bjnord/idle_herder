@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830184339) do
+ActiveRecord::Schema.define(version: 20170831135939) do
 
   create_table "heroes", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -20,6 +20,11 @@ ActiveRecord::Schema.define(version: 20170830184339) do
     t.integer "power", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_file"
+    t.integer "health"
+    t.integer "attack"
+    t.integer "armor"
+    t.integer "speed"
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
   end
 
