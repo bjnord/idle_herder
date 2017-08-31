@@ -4,6 +4,7 @@ class Hero < ApplicationRecord
   has_many :materials, inverse_of: :hero, dependent: :destroy
   accepts_nested_attributes_for :materials
 
+  STARS = [1, 2, 3, 4, 5, 6, 10]
   FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 

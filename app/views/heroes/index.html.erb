@@ -1,0 +1,15 @@
+<% @hero_tree.each do |stars, hero_group| %>
+  <h1><%= stars %>★ Heroes</h1>
+  <% hero_group.each do |faction, hero_subgroup| %>
+    <h2><%= faction %></h2>
+    <ul>
+      <% hero_subgroup.each do |hero| %>
+        <li>
+          <span><%= link_to hero.name, hero %></span>
+          <span>(<%= hero.role %>)</span>
+          <span><%= hero.power %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
