@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'foreman'
 gem 'webpacker', '~> 2.0'
+gem 'devise'
+gem 'cancancan'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
