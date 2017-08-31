@@ -227,7 +227,7 @@ end
 def save_heroes
   hero_id = 1
   $flat_heroes.each do |hero|
-    path = File.join('db', 'data', "#{hero_id}.json")
+    path = File.join('db', 'data', 'heroes', "#{hero_id}.json")
     File.open(path, 'w') do |f|
       hero['id'] = hero_id
       f.puts hero.to_json
