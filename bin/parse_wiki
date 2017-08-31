@@ -1,12 +1,14 @@
 #!/usr/bin/env ruby
 
 require 'nokogiri'
+require 'optparse'
 
 FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Light', 'Dark']
 CLASSES = ['Warrior', 'Mage', 'Assassin', 'Ranger', 'Priest']
 
+$heroes = {}
+$hero_count = 0
 $sources = {}
-$heroes = 0
 
 def titleize_hero(name)
   return name.gsub(/\s/, '_')
@@ -105,7 +107,7 @@ def parse_a_section(section, hero_name)
   section.css('figure img').each do |img|
     sect_attr['img_src'] = img['src']
     if m = sect_attr['img_src'].match(%r</([^/]+icon\.[a-z]{3,4})/>i)
-      sect_attr['img'] = m.captures[0]
+      sect_attr['img'] = m.captures[0].sub(/%[0-9a-f]{2}/i, '')
     else
       $stderr.puts "SKIP: hero #{hero_name} #{sect_attr['stars']}-star bad image base"
       return {}
@@ -194,7 +196,7 @@ def parse_an_article(art, page_tag)
   end
   unless stars_attr.empty?
     attr['stars'] = stars_attr
-    $heroes += attr['stars'].select {|s| s['stars'] < 10 }.count
+    $hero_count += attr['stars'].select {|s| s['stars'] < 10 }.count
   end
   attr
 end
@@ -207,8 +209,9 @@ def store_a_hero(attr)
     $stderr.puts "SKIP: missing star levels #{attr.inspect}"
     return
   end
-  puts attr.inspect
-  $stderr.puts "store-it"
+  puts attr.inspect if $options[:verbose]
+  # TODO store to DB (unless :dryrun)
+  $heroes[attr['name']] = attr
 end
 
 def parse_a_page(path, page_tag)
@@ -223,11 +226,53 @@ def parse_a_page(path, page_tag)
   end
 end
 
-path = File.join(ENV['HOME'], 'public_html', 'mirror', 'idleheroes.wikia.com', 'wiki')
+def emit_images
+  $heroes.each do |hero_name, hero|
+    hero['stars'].each do |star|
+      puts "wget -O app/assets/images/heroes/#{star['img']} '#{star['img_src']}'" if star['img_src']
+    end
+  end
+end
+
+def emit_sources
+  $sources.keys.sort.each do |source|
+    puts "source: #{source}"
+  end
+end
+
+$options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: parse_wiki [$options]"
+  opts.on("-i", "--images", "Dump image URLs") do |i|
+    $options[:images] = i
+  end
+  opts.on("-n", "--[no-]dry-run", "Dry run (don't update DB)") do |d|
+    $options[:dryrun] = d
+  end
+  opts.on("-s", "--sources", "Dump list of sources") do |s|
+    $options[:sources] = s
+  end
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    $options[:verbose] = v
+  end
+  opts.on("-w", "--wiki PATH", "Path to Wikia mirror") do |w|
+    $options[:wiki_path] = w
+  end
+  opts.on_tail("-h", "--help", "Display command-line options") do
+    puts opts
+    exit
+  end
+end.parse!
+unless $options[:wiki_path]
+  abort('-w/--wiki is required')
+end
+
+path = File.join($options[:wiki_path], 'wiki')
+$stderr.puts "path=#{path}" if $options[:verbose]
 Dir.entries(path).each do |filename|
   next if filename =~ /^\.+$/
-  #next unless filename =~ /^[AB]/  # FIXME debug
-  $stderr.puts filename.inspect
+  #next unless filename =~ /^[AB]/  # for short debug runs
+  $stderr.puts "file=#{filename}" if $options[:verbose]
   begin
     # catch Errno::ENOENT from this function:
     parse_a_page(path, filename)
@@ -235,7 +280,6 @@ Dir.entries(path).each do |filename|
     $stderr.puts "SKIP: file not found, path=#{path} filename=#{filename}"
   end
 end
-$sources.keys.sort.each do |source|
-  $stderr.puts "source: #{source}"
-end
-$stderr.puts "total of #{$heroes} heroes (excluding 10*)"
+emit_images if $options[:images]
+emit_sources if $options[:sources]
+$stderr.puts "total of #{$hero_count} heroes (excluding 10*)" if $options[:verbose]
