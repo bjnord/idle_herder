@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831135939) do
+ActiveRecord::Schema.define(version: 20170831180632) do
 
   create_table "heroes", id: false, force: :cascade do |t|
     t.integer "id", default: 0, null: false
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 20170831135939) do
     t.integer "speed"
     t.index ["id"], name: "index_heroes_on_id", unique: true
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.integer "hero_id", null: false
+    t.integer "count", default: 0, null: false
+    t.integer "material_hero_id"
+    t.integer "stars"
+    t.string "faction"
+    t.index ["hero_id"], name: "index_materials_on_hero_id"
   end
 
 end

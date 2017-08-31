@@ -1,6 +1,9 @@
 class Hero < ApplicationRecord
   self.primary_key = 'id'
 
+  has_many :materials, inverse_of: :hero, dependent: :destroy
+  accepts_nested_attributes_for :materials
+
   FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
@@ -16,7 +19,13 @@ class Hero < ApplicationRecord
     json = File.read(self.json_path(id))
     hero_h = JSON.parse(json)
     hero_h['image_file'] = hero_h.delete('img')
-    Hero.new(hero_h.except('img_src', 'fuses_into', 'fused_from', 'sources'))
+    hero = Hero.new(hero_h.except('img_src', 'fuses_into', 'fused_from', 'sources'))
+    if hero_h['fused_from']
+      hero.materials_attributes = hero_h['fused_from'].collect do |ff|
+        Material::attr_from_hash(ff)
+      end.reject{|m| m.blank? }
+    end
+    hero
   end
 
 protected
