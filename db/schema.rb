@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20170831180632) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "heroes", id: false, force: :cascade do |t|
-    t.integer "id", null: false
+    t.bigint "id", null: false
     t.string "name", null: false
     t.integer "stars", null: false
     t.string "faction", null: false
@@ -29,9 +32,9 @@ ActiveRecord::Schema.define(version: 20170831180632) do
   end
 
   create_table "materials", force: :cascade do |t|
-    t.integer "hero_id", null: false
+    t.bigint "hero_id", null: false
     t.integer "count", null: false
-    t.integer "material_hero_id"
+    t.bigint "material_hero_id"
     t.integer "stars"
     t.string "faction"
     t.index ["hero_id"], name: "index_materials_on_hero_id"
