@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170830184339) do
     t.string "name", default: "", null: false
     t.integer "stars", default: 0, null: false
     t.string "faction", default: "", null: false
-    t.string "class", default: "", null: false
+    t.string "role", default: "", null: false
     t.integer "power", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

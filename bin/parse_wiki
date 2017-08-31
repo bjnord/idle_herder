@@ -5,7 +5,7 @@ require 'nokogiri'
 require 'optparse'
 
 FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
-CLASSES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
+ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
 $flat_heroes = []
 $heroes = []
@@ -181,7 +181,7 @@ def parse_an_article(art, page_tag)
             break if !value.empty?
           end
           value ||= value_div.content.strip
-          list = (label_type == 'faction') ? FACTIONS : CLASSES
+          list = (label_type == 'faction') ? FACTIONS : ROLES
           if !list.include?(value)
             $stderr.puts "SKIP: hero #{attr['name']}: unknown #{label_type} #{value}"
             return {}
