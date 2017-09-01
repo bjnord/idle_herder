@@ -119,7 +119,14 @@ def parse_a_section(section, hero_name)
     end
   end
   if !sect_attr['img_src']
-    $stderr.puts "WARN: hero #{hero_name} #{sect_attr['stars']}-star no image"
+    if hero_name == 'Lava Beetle'
+      # missing in Wikia; fill it in here until that's fixed
+      sect_attr['img_src'] = 'https://vignette2.wikia.nocookie.net/idleheroes/images/1/1c/Lava_Beetle-1-icon.png/revision/latest?cb=20170723171257'
+      sect_attr['img'] = 'Lava_Beetle-1-icon.png'
+      $stderr.puts "WARN: filled in missing image for hero #{hero_name}"
+    else
+      $stderr.puts "WARN: hero #{hero_name} #{sect_attr['stars']}-star no image"
+    end
   end
   # Hero stats
   section.css('div.pi-item').each do |div|
