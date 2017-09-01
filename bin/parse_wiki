@@ -9,7 +9,10 @@ ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
 $flat_heroes = []
 $heroes = []
+$have_heroes = {}
 $hero_count = 0
+$new_hero_count = 0
+$highest_hero_id = 0
 $sources = {}
 
 def titleize_hero(name)
@@ -198,7 +201,7 @@ def parse_an_article(art, page_tag)
   end
   unless stars_attr.empty?
     attr['stars'] = stars_attr
-    $hero_count += attr['stars'].select {|s| s['stars'] < 10 }.count
+    $hero_count += attr['stars'].count
   end
   attr
 end
@@ -224,15 +227,35 @@ def flatten_heroes
   end.flatten.sort_by {|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
 end
 
+def load_heroes
+  path = File.join('db', 'data', 'heroes')
+  Dir.entries(path).each do |filename|
+    if m = filename.match(/^(\d+)\.json$/)
+      i = m.captures[0].to_i
+      $highest_hero_id = i if i > $highest_hero_id
+      j_path = File.join('db', 'data', 'heroes', filename)
+      json = File.read(j_path)
+      hero_h = JSON.parse(json)
+      $have_heroes["#{hero_h['stars']}-#{hero_h['name']}"] = hero_h
+    end
+  end
+end
+
 def save_heroes
-  hero_id = 1
-  $flat_heroes.each do |hero|
+  $flat_heroes.each do |hero_h|
+    if hh = $have_heroes["#{hero_h['stars']}-#{hero_h['name']}"]
+      hero_id = hh['id']
+    else
+      $highest_hero_id += 1
+      hero_id = $highest_hero_id
+      $new_hero_count += 1
+      $stderr.puts "adding new hero id=#{hero_id} #{hero_h.inspect}" if $options[:verbose]
+    end
     path = File.join('db', 'data', 'heroes', "#{hero_id}.json")
     File.open(path, 'w') do |f|
-      hero['id'] = hero_id
-      f.puts hero.to_json
+      hero_h['id'] = hero_id
+      f.puts hero_h.to_json
     end
-    hero_id += 1
   end
 end
 
@@ -301,7 +324,8 @@ Dir.entries(path).each do |filename|
   end
 end
 flatten_heroes
+load_heroes
 save_heroes unless $options[:dryrun]
 emit_images if $options[:images]
 emit_sources if $options[:sources]
-$stderr.puts "total of #{$hero_count} heroes (excluding 10*)" if $options[:verbose]
+$stderr.puts "total of #{$hero_count} heroes (#{$new_hero_count} added)" if $options[:verbose]
