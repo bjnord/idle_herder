@@ -218,9 +218,9 @@ def cache_a_hero(attr)
 end
 
 def flatten_heroes
-  $flat_heroes = $heroes.collect do |hero|
-    hero['stars'].collect do |star|
-      flat_attr = hero.clone.tap {|a| a.delete('stars') }.merge(star)
+  $flat_heroes = $heroes.collect do |hero_h|
+    hero_h['stars'].collect do |star|
+      flat_attr = hero_h.clone.tap {|a| a.delete('stars') }.merge(star)
       $stderr.puts "store_hero #{flat_attr.inspect}" if $options[:verbose]
       flat_attr
     end
@@ -272,8 +272,8 @@ def parse_a_page(path, page_tag)
 end
 
 def emit_images
-  $flat_heroes.each do |hero|
-    puts "wget -O app/assets/images/heroes/#{hero['img']} '#{hero['img_src']}'" if hero['img_src']
+  $flat_heroes.each do |hero_h|
+    puts "wget -O app/assets/images/heroes/#{hero_h['img']} '#{hero_h['img_src']}'" if hero_h['img_src']
   end
 end
 
