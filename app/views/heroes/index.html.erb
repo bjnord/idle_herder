@@ -1,9 +1,9 @@
-<% @hero_tree.each do |stars, hero_group| %>
+<% @hero_tree.keys.sort.each do |stars| %>
   <h1><%= stars %>★ Heroes</h1>
-  <% hero_group.each do |faction, hero_subgroup| %>
+  <% @hero_tree[stars].keys.sort_by {|f| Hero::FACTIONS.index(f) }.each do |faction| %>
     <h2><%= faction %></h2>
     <ul>
-      <% hero_subgroup.each do |hero| %>
+      <% @hero_tree[stars][faction].sort_by {|h| h.name }.each do |hero| %>
         <li>
           <span><%= link_to hero.name, hero %></span>
           <span>(<%= hero.role %>)</span>

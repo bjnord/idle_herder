@@ -4,7 +4,7 @@ require 'json'
 require 'nokogiri'
 require 'optparse'
 
-FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
+FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
 ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
 $flat_heroes = []
@@ -231,7 +231,7 @@ def flatten_heroes
       $stderr.puts "store_hero #{flat_attr.inspect}" if $options[:verbose]
       flat_attr
     end
-  end.flatten.sort_by {|f| [f['stars'], FACTIONS.index(f['faction']), f['name']] }
+  end.flatten.sort_by {|f| [FACTIONS.index(f['faction']), f['name'], f['stars']] }
 end
 
 def load_heroes

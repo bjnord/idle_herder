@@ -5,7 +5,7 @@ class Hero < ApplicationRecord
   accepts_nested_attributes_for :materials
 
   STARS = [1, 2, 3, 4, 5, 6, 10]
-  FACTIONS = ['Forest', 'Shadow', 'Fortress', 'Abyss', 'Dark', 'Light']
+  FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
   validates :id, presence: true
