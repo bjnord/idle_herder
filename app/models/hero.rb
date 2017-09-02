@@ -31,6 +31,23 @@ class Hero < ApplicationRecord
     hero
   end
 
+  def update_materials!(new_materials)
+    new_materials.each do |material|
+      match = self.materials.select do |m|
+        # FIXME more elegant way to compare-except-id?
+        (m.count == material.count) &&
+          (m.material_hero_id == material.material_hero_id) &&
+          (m.stars == material.stars) &&
+          (m.faction == material.faction)
+      end
+      if match.empty?
+        self.materials << material
+      end
+    end
+    self.save! if self.changed?
+    true
+  end
+
 protected
 
   def self.json_path(id)

@@ -10,7 +10,7 @@ ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 $flat_heroes = []
 $heroes = []
 $have_heroes = {}
-$hero_count = 0
+$hero_counts = Hash.new {|h, k| h[k] = 0 }
 $new_hero_count = 0
 $highest_hero_id = 0
 $sources = {}
@@ -208,9 +208,33 @@ def parse_an_article(art, page_tag)
   end
   unless stars_attr.empty?
     attr['stars'] = stars_attr
-    $hero_count += attr['stars'].count
   end
   attr
+end
+
+def hero_star(stars, attr, star_attr)
+  star_h = star_attr.select {|k,v| ['stars', 'img_src', 'img'].include?(k) }
+  star_h['stars'] = stars
+  star_h['fuses_into'] = [{'stars' => stars+1, 'name' => attr['name']}]
+  case stars
+  when 7
+    star_h['fused_from'] = [
+      {'count' => 4, 'stars' => 5, 'faction' => attr['faction']}
+    ]
+  when 8
+    star_h['fused_from'] = [
+      {'count' => 1, 'stars' => 6, 'faction' => attr['faction']},
+      {'count' => 3, 'stars' => 5, 'faction' => attr['faction']}
+    ]
+  when 9
+    star_h['fused_from'] = [
+      {'count' => 1, 'stars' => 5, 'name' => attr['name']},
+      {'count' => 1, 'stars' => 6, 'faction' => attr['faction']},
+      {'count' => 2, 'stars' => 5, 'faction' => attr['faction']}
+    ]
+  end
+  star_h['sources'] = ['Awakening']
+  star_h
 end
 
 def cache_a_hero(attr)
@@ -219,8 +243,15 @@ def cache_a_hero(attr)
   elsif !attr['stars'] || attr['stars'].empty?
     $stderr.puts "SKIP: missing star levels #{attr.inspect}"
   else
-    #puts attr.inspect if $options[:verbose]
     $heroes << attr
+    star_6 = attr['stars'].select {|s| s['stars'] == 6 }
+    if star_6[0]
+      star_6[0]['fuses_into'] = {'stars' => 7, 'name' => attr['name']}
+      attr['stars'] << hero_star(7, attr, star_6[0])
+      attr['stars'] << hero_star(8, attr, star_6[0])
+      attr['stars'] << hero_star(9, attr, star_6[0])
+    end
+    $stderr.puts "cache_a_hero #{attr.to_json}" if $options[:verbose]
   end
 end
 
@@ -228,7 +259,8 @@ def flatten_heroes
   $flat_heroes = $heroes.collect do |hero_h|
     hero_h['stars'].collect do |star|
       flat_attr = hero_h.clone.tap {|a| a.delete('stars') }.merge(star)
-      $stderr.puts "store_hero #{flat_attr.inspect}" if $options[:verbose]
+      $hero_counts[flat_attr['stars']] += 1
+      $stderr.puts "flatten_hero #{flat_attr.to_json}" if $options[:verbose]
       flat_attr
     end
   end.flatten.sort_by {|f| [FACTIONS.index(f['faction']), f['name'], f['stars']] }
@@ -256,7 +288,7 @@ def save_heroes
       $highest_hero_id += 1
       hero_id = $highest_hero_id
       $new_hero_count += 1
-      $stderr.puts "adding new hero id=#{hero_id} #{hero_h.inspect}" if $options[:verbose]
+      $stderr.puts "save_hero NEW id=#{hero_id} #{hero_h.to_json}" if $options[:verbose]
     end
     path = File.join('db', 'data', 'heroes', "#{hero_id}.json")
     File.open(path, 'w') do |f|
@@ -288,6 +320,15 @@ def emit_sources
   $sources.keys.sort.each do |source|
     puts "source: #{source}"
   end
+end
+
+def emit_stats
+  $box_score = $hero_counts.sort.collect do |tuple|
+    "#{tuple[0]}\u2605:#{tuple[1]}"
+  end.join(' ')
+  $hero_count = $hero_counts.sum {|k, v| v }
+  $stderr.puts "#{$hero_count} heroes: #{$box_score}"
+  $stderr.puts "#{$new_hero_count} new heroes added"
 end
 
 $options = {}
@@ -335,4 +376,4 @@ load_heroes
 save_heroes unless $options[:dryrun]
 emit_images if $options[:images]
 emit_sources if $options[:sources]
-$stderr.puts "total of #{$hero_count} heroes (#{$new_hero_count} added)" if $options[:verbose]
+emit_stats
