@@ -48,6 +48,14 @@ class Hero < ApplicationRecord
     true
   end
 
+  def material_of
+    @material_of ||= Material.where(material_hero_id: self.id).includes(:hero).order('heroes.stars desc', 'heroes.name').collect {|m| m.hero }
+  end
+
+  def other_stars
+    @other_stars ||= Hero.where(name: self.name).where.not(stars: self.stars).order('stars desc')
+  end
+
 protected
 
   def self.json_path(id)
