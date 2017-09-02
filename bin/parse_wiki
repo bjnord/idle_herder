@@ -7,12 +7,21 @@ require 'optparse'
 FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
 ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
-$flat_heroes = []
+# these are from the wiki mirror
+# - $heroes has one entry per named hero ("Aidan")
+#   -- each of these has a "stars" attribute, with a list of its star forms
+# - $flat_heroes has one entry per hero star form ("6* Aidan")
+# - $wiki_heroes (also flat) is indexed by "stars-name"
 $heroes = []
-$have_heroes = {}
+$flat_heroes = []
+$wiki_heroes = {}
 $hero_counts = Hash.new {|h, k| h[k] = 0 }
 $new_hero_count = 0
+# these are from db/data/heroes/*.json
+# - $json_heroes is indexed by "stars-name"
+$json_heroes = {}
 $highest_hero_id = 0
+# sources
 $sources = {}
 
 def titleize_hero(name)
@@ -262,13 +271,23 @@ def flatten_heroes
     hero_h['stars'].collect do |star|
       flat_attr = hero_h.clone.tap {|a| a.delete('stars') }.merge(star)
       $hero_counts[flat_attr['stars']] += 1
+      $wiki_heroes["#{flat_attr['stars']}-#{flat_attr['name']}"] = flat_attr
       $stderr.puts "flatten_hero #{flat_attr.to_json}" if $options[:verbose]
       flat_attr
     end
   end.flatten.sort_by {|f| [FACTIONS.index(f['faction']), f['name'], f['stars']] }
 end
 
-def load_heroes
+def add_natural_flag
+  $flat_heroes.each do |hero_h|
+    next if (hero_h['stars'] < 5) || (hero_h['stars'] > 9)
+    if !$wiki_heroes["4-#{hero_h['name']}"]
+      hero_h['natural'] = true
+    end
+  end
+end
+
+def load_json_heroes
   path = File.join('db', 'data', 'heroes')
   Dir.entries(path).each do |filename|
     if m = filename.match(/^(\d+)\.json$/)
@@ -277,14 +296,14 @@ def load_heroes
       j_path = File.join('db', 'data', 'heroes', filename)
       json = File.read(j_path)
       hero_h = JSON.parse(json)
-      $have_heroes["#{hero_h['stars']}-#{hero_h['name']}"] = hero_h
+      $json_heroes["#{hero_h['stars']}-#{hero_h['name']}"] = hero_h
     end
   end
 end
 
 def emit_heroes
   $flat_heroes.each do |hero_h|
-    if hh = $have_heroes["#{hero_h['stars']}-#{hero_h['name']}"]
+    if hh = $json_heroes["#{hero_h['stars']}-#{hero_h['name']}"]
       hero_id = hh['id']
     else
       $highest_hero_id += 1
@@ -336,6 +355,9 @@ end
 $options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: parse_wiki [$options]"
+  opts.on("-d", "--debug", "Debug mode") do |d|
+    $options[:debug] = d
+  end
   opts.on("-h", "--heroes", "Create heroes JSON") do |h|
     $options[:heroes] = h
   end
@@ -360,11 +382,12 @@ unless $options[:wiki_path]
   abort('-w/--wiki is required')
 end
 
+load_json_heroes
 path = File.join($options[:wiki_path], 'wiki')
 $stderr.puts "path=#{path}" if $options[:verbose]
 Dir.entries(path).each do |filename|
   next if filename =~ /^\.+$/
-  #next unless filename =~ /^[AB]/  # for short debug runs
+  next if $options[:debug] && (filename !~ /^[AB]/)
   $stderr.puts "file=#{filename}" if $options[:verbose]
   begin
     # catch Errno::ENOENT from this function:
@@ -374,7 +397,7 @@ Dir.entries(path).each do |filename|
   end
 end
 flatten_heroes
-load_heroes
+add_natural_flag
 emit_heroes if $options[:heroes]
 emit_images if $options[:images]
 emit_sources if $options[:sources]

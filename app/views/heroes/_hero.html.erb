@@ -1,5 +1,5 @@
 <span>
-  <%= link_to (defined?(show_stars) ? "#{hero.stars}★ #{hero.name}" : hero.name), hero %>
+  <%= link_to (defined?(show_stars) ? "#{hero.stars}★ #{fmt_name(hero)}" : fmt_name(hero)), hero %>
   <% if defined?(show_role) %>
     <span>(<%= hero.role %>)</span>
   <% end %>
