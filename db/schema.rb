@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831222522) do
+ActiveRecord::Schema.define(version: 20170902130329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170831222522) do
     t.integer "attack"
     t.integer "armor"
     t.integer "speed"
+    t.string "wiki_url"
     t.index ["id"], name: "index_heroes_on_id", unique: true
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
   end

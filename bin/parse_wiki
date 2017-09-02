@@ -202,6 +202,8 @@ def parse_an_article(art, page_tag)
       end
     end
   end
+  # Hero wiki URL
+  attr['wiki_url'] = "http://idleheroes.wikia.com/wiki/#{page_tag}"
   # Hero star levels
   stars_attr = art.css('section.pi-item.pi-group').collect do |section|
     parse_a_section(section, attr['name'])
@@ -302,7 +304,7 @@ def parse_a_page(path, page_tag)
   page = Nokogiri::HTML(open(File.join(path, page_tag)))
   if art = page.css('.WikiaArticle')[0]
     attr = parse_an_article(art, page_tag)
-    if attr.count > 1
+    if attr.count > 2
       cache_a_hero(attr)
     end
   else

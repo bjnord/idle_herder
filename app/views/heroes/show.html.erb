@@ -4,6 +4,7 @@
 <h1><%= @hero.name %></h2>
 <h2><%= "#{@hero.stars}★ #{@hero.faction} #{@hero.role}" %></h2>
 <ul>
+  <li><%= link_to 'Wiki', @hero.wiki_url %></li>
   <li>Power: <%= @hero.power %></li>
   <li>Health: <%= @hero.health %></li>
   <li>Attack: <%= @hero.attack %></li>
