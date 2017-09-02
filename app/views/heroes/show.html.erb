@@ -5,9 +5,9 @@
 <h2><%= "#{@hero.stars}★ #{@hero.faction} #{@hero.role}" %></h2>
 <ul>
   <li><%= link_to 'Wiki', @hero.wiki_url %></li>
-  <li>Power: <%= @hero.power %></li>
-  <li>Health: <%= @hero.health %></li>
-  <li>Attack: <%= @hero.attack %></li>
-  <li>Armor: <%= @hero.armor %></li>
-  <li>Speed: <%= @hero.speed %></li>
+  <% [:power, :health, :attack, :armor, :speed].each do |stat| %>
+    <% if v = @hero.send(stat) %>
+      <li><%= "#{stat.to_s.capitalize}: #{v}" %></li>
+    <% end %>
+  <% end %>
 </ul>
