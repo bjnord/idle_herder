@@ -1,0 +1,9 @@
+<span>
+  <%= link_to (defined?(show_stars) ? "#{hero.stars}★ #{hero.name}" : hero.name), hero %>
+  <% if defined?(show_role) %>
+    <span>(<%= hero.role %>)</span>
+  <% end %>
+  <% if hero.power %>
+    &nbsp;&nbsp;<span>Power: <%= number_with_delimiter(hero.power) %></span>
+  <% end %>
+</span>

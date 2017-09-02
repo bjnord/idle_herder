@@ -1,0 +1,12 @@
+<% if material.material_hero %>
+  <li>
+    <%= material.count %> ×
+    <%= link_to "#{material.material_hero.stars}★ #{material.material_hero.name}", material.material_hero %>
+  </li>
+<% else %>
+  <li>
+    <%= material.count %> ×
+    <%= material.stars.blank? ? '' : "#{material.stars}★" %>
+    <%= material.faction %>
+  </li>
+<% end %>
