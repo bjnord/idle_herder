@@ -282,7 +282,7 @@ def load_heroes
   end
 end
 
-def save_heroes
+def emit_heroes
   $flat_heroes.each do |hero_h|
     if hh = $have_heroes["#{hero_h['stars']}-#{hero_h['name']}"]
       hero_id = hh['id']
@@ -290,7 +290,7 @@ def save_heroes
       $highest_hero_id += 1
       hero_id = $highest_hero_id
       $new_hero_count += 1
-      $stderr.puts "save_hero NEW id=#{hero_id} #{hero_h.to_json}" if $options[:verbose]
+      $stderr.puts "emit_hero NEW id=#{hero_id} #{hero_h.to_json}" if $options[:verbose]
     end
     path = File.join('db', 'data', 'heroes', "#{hero_id}.json")
     File.open(path, 'w') do |f|
@@ -330,28 +330,28 @@ def emit_stats
   end.join(' ')
   $hero_count = $hero_counts.sum {|k, v| v }
   $stderr.puts "#{$hero_count} heroes: #{$box_score}"
-  $stderr.puts "#{$new_hero_count} new heroes added"
+  $stderr.puts "#{$new_hero_count} new heroes added" if $options[:heroes]
 end
 
 $options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: parse_wiki [$options]"
+  opts.on("-h", "--heroes", "Create heroes JSON") do |h|
+    $options[:heroes] = h
+  end
   opts.on("-i", "--images", "Dump image URLs") do |i|
     $options[:images] = i
   end
-  opts.on("-n", "--[no-]dry-run", "Dry run (don't update DB)") do |d|
-    $options[:dryrun] = d
-  end
-  opts.on("-s", "--sources", "Dump list of sources") do |s|
+  opts.on("-s", "--sources", "Create sources JSON") do |s|
     $options[:sources] = s
   end
-  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+  opts.on("-v", "--verbose", "Run verbosely") do |v|
     $options[:verbose] = v
   end
   opts.on("-w", "--wiki PATH", "Path to Wikia mirror") do |w|
     $options[:wiki_path] = w
   end
-  opts.on_tail("-h", "--help", "Display command-line options") do
+  opts.on_tail("-?", "--help", "Display command-line options") do
     puts opts
     exit
   end
@@ -375,7 +375,7 @@ Dir.entries(path).each do |filename|
 end
 flatten_heroes
 load_heroes
-save_heroes unless $options[:dryrun]
+emit_heroes if $options[:heroes]
 emit_images if $options[:images]
 emit_sources if $options[:sources]
 emit_stats
