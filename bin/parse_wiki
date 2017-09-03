@@ -244,7 +244,7 @@ def hero_star(stars, attr, star_attr)
       {'count' => 2, 'stars' => 5, 'faction' => attr['faction']}
     ]
   end
-  star_h['sources'] = ['Awakening']
+  star_h['sources'] = ['Awaken']
   star_h
 end
 
