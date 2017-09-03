@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IdleHerder</title>
+    <title>Idle Herder</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <%= javascript_pack_tag    'application' %>
+    <%= stylesheet_pack_tag    'application' %>
   </head>
 
-  <body>
-    <header>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-    </header>
+  <body class="container">
+    <%= render 'shared/header' %>
+    <%= render 'shared/flash' %>
     <%= yield %>
-    <footer>
-      Idle Herder app &copy; 2017 IdleHerder.com &bullet; <%= link_to 'not affiliated with Idle Heroes', about_path(anchor: 'disclaimer') %>
-    </footer>
+    <%= render "shared/footer" %>
   </body>
 </html>

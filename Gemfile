@@ -14,6 +14,9 @@ gem 'rails', '~> 5.1.1'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+# jQuery is needed for Bootstrap 3 (e.g. navbar collapse menu button)
+# (keeping it out of yarn/node_modules, in the hope of removing it someday)
+gem 'jquery-rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
