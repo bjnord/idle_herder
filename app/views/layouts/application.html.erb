@@ -9,8 +9,13 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    </header>
     <%= yield %>
+    <footer>
+      Idle Herder app &copy; 2017 IdleHerder.com &bullet; <%= link_to 'not affiliated with Idle Heroes', about_path(anchor: 'disclaimer') %>
+    </footer>
   </body>
 </html>
