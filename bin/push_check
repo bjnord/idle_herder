@@ -1,0 +1,19 @@
+#!/bin/bash
+AHEAD="`git status | grep 'Your branch is ahead'`"
+if [ -n "$AHEAD" ]; then
+	echo "*** $AHEAD" >&2
+	/bin/echo -n "Are you sure you want to deploy? " >&2
+	read sure
+	if [ -z "`echo $sure | grep '[Yy]'`" ]; then
+		if [ -z "$PPID" ]; then
+			PPID=`ps -p $$ -o ppid= 2>/dev/null`
+		fi
+		if [ -n "$PPID" ]; then
+			kill $PPID
+		else
+			echo 'Then abort now! Deploying in 5 seconds...' >&2
+			sleep 5
+		fi
+	fi
+fi
+exit 0
