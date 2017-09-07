@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907123747) do
+ActiveRecord::Schema.define(version: 20170907133019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170907123747) do
     t.integer "faction", null: false
     t.index ["id"], name: "index_heroes_on_id", unique: true
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
+    t.index ["stars", "faction", "name"], name: "index_heroes_on_stars_and_faction_and_name"
   end
 
   create_table "materials", force: :cascade do |t|
