@@ -4,8 +4,15 @@ class Material < ApplicationRecord
   validates :count, presence: true
   validates :count, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|m| m.count.blank? }
   validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10 }, unless: Proc.new {|m| m.stars.blank? }
-  validates :faction, inclusion: {in: Hero::FACTIONS, message: 'is not valid'}, unless: Proc.new {|m| m.faction.blank? }
+  validates :faction, inclusion: {in: (0..Hero::FACTIONS.count-1), message: 'is not valid'}, unless: Proc.new {|m| m.faction.blank? }
   validate :target_present
+
+  def faction=(faction)
+    super(faction.respond_to?(:to_str) ? Hero::FACTIONS.index(faction) : faction)
+  end
+  def faction_name
+    Hero::FACTIONS[self.faction]
+  end
 
   def self.attr_from_hash(material_h)
     return {} if material_h['count'].blank?

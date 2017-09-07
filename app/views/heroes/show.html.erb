@@ -2,7 +2,7 @@
   <%= image_tag "heroes/#{@hero.image_file}" %>
 <% end %>
 <h1><%= @hero.name %></h2>
-<h2><%= "#{@hero.natural && (@hero.stars == 5) ? 'Natural ' : ''}#{@hero.stars}★ #{@hero.faction} #{@hero.role}" %></h2>
+<h2><%= "#{@hero.natural && (@hero.stars == 5) ? 'Natural ' : ''}#{@hero.stars}★ #{@hero.faction_name} #{@hero.role}" %></h2>
 <ul>
   <li><%= link_to 'Wiki', @hero.wiki_url %></li>
   <% [:power, :health, :attack, :armor, :speed].each do |stat| %>

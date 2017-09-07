@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902185253) do
+ActiveRecord::Schema.define(version: 20170907123747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20170902185253) do
     t.bigint "id", null: false
     t.string "name", null: false
     t.integer "stars", null: false
-    t.string "faction", null: false
     t.string "role", null: false
     t.integer "power"
     t.string "image_file"
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170902185253) do
     t.integer "speed"
     t.string "wiki_url"
     t.boolean "natural", default: false, null: false
+    t.integer "faction", null: false
     t.index ["id"], name: "index_heroes_on_id", unique: true
     t.index ["name", "stars"], name: "index_heroes_on_name_and_stars", unique: true
   end
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170902185253) do
     t.integer "count", null: false
     t.bigint "material_hero_id"
     t.integer "stars"
-    t.string "faction"
+    t.integer "faction"
     t.index ["hero_id"], name: "index_materials_on_hero_id"
     t.index ["material_hero_id"], name: "index_materials_on_material_hero_id"
   end

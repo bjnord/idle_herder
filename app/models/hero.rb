@@ -14,9 +14,19 @@ class Hero < ApplicationRecord
   validates :stars, presence: true
   validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10 }, unless: Proc.new {|h| h.stars.blank? }
   validates :faction, presence: true
-  validates :faction, inclusion: {in: FACTIONS, message: 'is not valid'}, unless: Proc.new {|h| h.faction.blank? }
+  validates :faction, inclusion: {in: (0..FACTIONS.count-1), message: 'is not valid'}, unless: Proc.new {|h| h.faction.blank? }
   validates :role, presence: true
   validates :role, inclusion: {in: ROLES, message: 'is not valid'}, unless: Proc.new {|h| h.role.blank? }
+
+  def faction=(faction)
+    super(faction.respond_to?(:to_str) ? FACTIONS.index(faction) : faction)
+  end
+  def faction_name
+    FACTIONS[self.faction]
+  end
+  def self.faction_name_of(faction)
+    FACTIONS[faction]
+  end
 
   def self.build_from_json(id)
     json = File.read(self.json_path(id))
