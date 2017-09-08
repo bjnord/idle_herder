@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907133019) do
+ActiveRecord::Schema.define(version: 20170908111102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "player_name", null: false
+    t.string "server"
+    t.string "guild_name"
+    t.integer "level"
+    t.text "description"
+    t.integer "icon_hero_id"
+    t.string "player_id"
+    t.string "vip_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "player_name"], name: "index_accounts_on_user_id_and_player_name"
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
 
   create_table "heroes", id: false, force: :cascade do |t|
     t.bigint "id", null: false
