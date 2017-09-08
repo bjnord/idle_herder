@@ -6,12 +6,25 @@ class User < ApplicationRecord
          :lockable
 
   has_many :accounts, inverse_of: :user, dependent: :destroy
+  validates :accounts, length: { minimum: 1 }
   ROLES = %w[admin user]
   validates :role, presence: true, inclusion: { in: ROLES, allow_blank: true }
   validate :validate_invite, on: :create
 
+  before_validation :ensure_user_has_an_account
+
+  attr_accessor :player_name
   attr_accessor :invitation_code
   def admin? ; self.role == 'admin' ; end
+   
+private
+
+  def ensure_user_has_an_account
+    if self.accounts.length < 1
+      self.player_name ||= 'Unregistered #1'
+      self.accounts << Account.new(player_name: self.player_name)
+    end
+  end
 
   def validate_invite
     return unless Rails.env.production?
