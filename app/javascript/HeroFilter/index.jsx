@@ -24,12 +24,24 @@ function matchesToggles(index, toggles)
 function staticHeroList()
 {
   return [
+    {id: 13, name: "Blood Blade", faction: 0, stars: 5},
+    {id: 14, name: "Blood Blade", faction: 0, stars: 6},
+    {id: 15, name: "Blood Blade", faction: 0, stars: 7},
+    {id: 16, name: "Blood Blade", faction: 0, stars: 8},
+    {id: 17, name: "Blood Blade", faction: 0, stars: 9},
+    {id: 18, name: "Blood Blade", faction: 0, stars: 10},
     {id: 23, name: 'Bonecarver', faction: 0, stars: 4},
     {id: 24, name: 'Bonecarver', faction: 0, stars: 5},
     {id: 25, name: 'Bonecarver', faction: 0, stars: 6},
     {id: 32, name: 'Dark Priest', faction: 0, stars: 3},
     {id: 82, name: 'Shirley', faction: 0, stars: 3},
     {id: 103, name: 'Fire Fist', faction: 1, stars: 3},
+    {id: 117, name: "Iceblink", faction: 1, stars: 5},
+    {id: 118, name: "Iceblink", faction: 1, stars: 6},
+    {id: 119, name: "Iceblink", faction: 1, stars: 7},
+    {id: 120, name: "Iceblink", faction: 1, stars: 8},
+    {id: 121, name: "Iceblink", faction: 1, stars: 9},
+    {id: 122, name: "Iceblink", faction: 1, stars: 10},
     {id: 161, name: 'Reggie', faction: 1, stars: 3},
     {id: 180, name: 'Storm Hudde', faction: 1, stars: 4},
     {id: 181, name: 'Storm Hudde', faction: 1, stars: 5},
@@ -39,6 +51,12 @@ function staticHeroList()
     {id: 218, name: 'Fat Mu', faction: 2, stars: 6},
     {id: 225, name: 'Gusta', faction: 2, stars: 5},
     {id: 226, name: 'Gusta', faction: 2, stars: 6},
+    {id: 288, name: "Demon Hunter", faction: 3, stars: 5},
+    {id: 289, name: "Demon Hunter", faction: 3, stars: 6},
+    {id: 290, name: "Demon Hunter", faction: 3, stars: 7},
+    {id: 291, name: "Demon Hunter", faction: 3, stars: 8},
+    {id: 292, name: "Demon Hunter", faction: 3, stars: 9},
+    {id: 293, name: "Demon Hunter", faction: 3, stars: 10},
     {id: 343, name: 'Starlight', faction: 3, stars: 5},
     {id: 344, name: 'Starlight', faction: 3, stars: 6},
     {id: 349, name: 'Sybil', faction: 3, stars: 3},
@@ -62,7 +80,7 @@ export default class HeroFilter extends React.Component
     this.state = {
       // FIXME when we switch to fetch, this should be []
       heroes: staticHeroList(),
-      smartBarFilters: {text: '', namePatterns: [], factionToggles: {}},
+      smartBarFilters: {text: '', namePatterns: [], factionToggles: {}, starToggles: {}},
     };
     this.handleFilterChange = this.handleFilterChange.bind(this);
   }
@@ -76,7 +94,9 @@ export default class HeroFilter extends React.Component
       if (!matchesToggles(hero.faction, this.state.smartBarFilters.factionToggles)) {
         return false;
       }
-      // TODO filter stars
+      if (!matchesToggles(hero.stars, this.state.smartBarFilters.starToggles)) {
+        return false;
+      }
       return true;
     });
   }
@@ -120,5 +140,6 @@ export default class HeroFilter extends React.Component
     //let patterns = filters.namePatterns.map((regexp) => regexp.toString());
     //console.debug('namePatterns=[' + patterns.join(' | ') + ']');
     //console.debug('factionToggles=[' + Object.keys(filters.factionToggles).join(',') + ']');
+    //console.debug('starToggles=[' + Object.keys(filters.starToggles).join(',') + ']');
   }
 }
