@@ -4,7 +4,7 @@ class Hero < ApplicationRecord
   has_many :materials, inverse_of: :hero, dependent: :destroy
   accepts_nested_attributes_for :materials
 
-  STARS = [1, 2, 3, 4, 5, 6, 10]
+  MAX_STARS = 10
   FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
@@ -12,7 +12,7 @@ class Hero < ApplicationRecord
   validates :id, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|h| h.id.blank? }
   validates :name, presence: true
   validates :stars, presence: true
-  validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10 }, unless: Proc.new {|h| h.stars.blank? }
+  validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: MAX_STARS }, unless: Proc.new {|h| h.stars.blank? }
   validates :faction, presence: true
   validates :faction, inclusion: {in: (0..FACTIONS.count-1), message: 'is not valid'}, unless: Proc.new {|h| h.faction.blank? }
   validates :role, presence: true
