@@ -1,3 +1,6 @@
+<div id="react-hsb"></div>
+<%= javascript_pack_tag('hero_smart_bar') %>
+
 <% @hero_tree.keys.sort.each do |stars| %>
   <h1><%= stars %>★ Heroes</h1>
   <% @hero_tree[stars].keys.sort.each do |faction| %>
