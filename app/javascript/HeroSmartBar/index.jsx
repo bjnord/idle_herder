@@ -1,11 +1,12 @@
 import React from 'react';
+import SmartTextParser from './SmartTextParser';
 
 export default function HeroSmartBar({ text, onFilterChange })
 {
   function handleChange(event)
   {
-    let filters = {text: event.target.value};
-    onFilterChange(filters);
+    let parser = new SmartTextParser(event.target.value);
+    onFilterChange(parser.filters);
   }
 
   return (
