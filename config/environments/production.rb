@@ -64,16 +64,20 @@ Rails.application.configure do
   # ActionMailer settings
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'idleherder.com' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'smtp.postmarkapp.com',
-    port: 587,
-    user_name: ENV['POSTMARK_USER_PASS'],
-    password: ENV['POSTMARK_USER_PASS'],
-    authentication: :cram_md5,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.default_url_options = { host: ENV.fetch('PROD_SERVER_NAME') { 'idleherder.com' } }
+  if ENV['POSTMARK_USER_PASS']
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: 'smtp.postmarkapp.com',
+      port: 587,
+      user_name: ENV['POSTMARK_USER_PASS'],
+      password: ENV['POSTMARK_USER_PASS'],
+      authentication: :cram_md5,
+      enable_starttls_auto: true
+    }
+  else
+    config.action_mailer.delivery_method = :sendmail
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
