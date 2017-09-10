@@ -31,6 +31,11 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Digested image pathnames aren't available in React JS without a bunch
+# of work; for now, make non-digested paths available alongside the
+# digested ones:
+gem 'non-stupid-digest-assets'
+
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano-rails'
