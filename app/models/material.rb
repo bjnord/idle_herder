@@ -11,7 +11,7 @@ class Material < ApplicationRecord
     super(faction.respond_to?(:to_str) ? Hero::FACTIONS.index(faction) : faction)
   end
   def faction_name
-    Hero::FACTIONS[self.faction]
+    self.faction.nil? ? nil : Hero::FACTIONS[self.faction]
   end
 
   def self.attr_from_hash(material_h)

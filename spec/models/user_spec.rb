@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     expect(subject).to be_valid
   end
 
-  describe "admin?" do
+  describe "#admin?" do
     it "should be false" do
       expect(subject.admin?).not_to be_truthy
     end
@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
   context "with the admin role" do
     let(:user) { build(:admin_user) }
 
-    describe "admin?" do
+    describe "#admin?" do
       it "should be true" do
         expect(user.admin?).to be_truthy
       end

@@ -22,10 +22,10 @@ class Hero < ApplicationRecord
     super(faction.respond_to?(:to_str) ? FACTIONS.index(faction) : faction)
   end
   def faction_name
-    FACTIONS[self.faction]
+    self.faction.nil? ? nil : FACTIONS[self.faction]
   end
   def self.faction_name_of(faction)
-    FACTIONS[faction]
+    faction.nil? ? nil : FACTIONS[faction]
   end
 
   def self.build_from_json(id)
