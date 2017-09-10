@@ -45,7 +45,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = ENV['NO_FORCE_SSL'] ? false : true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -64,7 +64,10 @@ Rails.application.configure do
   # ActionMailer settings
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: ENV.fetch('PROD_SERVER_NAME') { 'idleherder.com' } }
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('PROD_SERVER_NAME') { 'idleherder.com' }
+    protocol: ENV['NO_FORCE_SSL'] ? 'http' : 'https'
+  }
   if ENV['POSTMARK_USER_PASS']
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
