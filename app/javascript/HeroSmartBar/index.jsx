@@ -1,17 +1,31 @@
 import React from 'react';
 import SmartTextParser from './SmartTextParser';
 
-export default function HeroSmartBar({ text, onFilterChange })
+export default class HeroSmartBar extends React.Component
 {
-  function handleChange(event)
+  constructor(props)
   {
-    let parser = new SmartTextParser(event.target.value);
-    onFilterChange(parser.filters);
+    super(props);
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  return (
-    <div className="hsb-component form-group">
-      <input id="hero-smart-bar" className="form-control" placeholder="Search for heroes" aria-label="Search for heroes" value={text} onChange={handleChange} />
-    </div>
-  );
+  handleFocus(event)
+  {
+    event.target.select();
+  }
+
+  handleChange(event)
+  {
+    let parser = new SmartTextParser(event.target.value);
+    this.props.onFilterChange(parser.filters);
+  }
+
+  render()
+  {
+    return (
+      <div className="hsb-component form-group">
+        <input id="hero-smart-bar" className="form-control" placeholder="Search for heroes" aria-label="Search for heroes" value={this.props.text} autoFocus onFocus={this.handleFocus} onChange={this.handleChange} />
+      </div>
+    );
+  }
 }
