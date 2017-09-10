@@ -78,8 +78,7 @@ export default class HeroFilter extends React.Component
   {
     super(props);
     this.state = {
-      // FIXME when we switch to fetch, this should be []
-      heroes: staticHeroList(),
+      heroes: [],
       smartBarFilters: {text: '', namePatterns: [], factionToggles: {}, starToggles: {}},
     };
     this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -87,6 +86,9 @@ export default class HeroFilter extends React.Component
 
   filteredHeroes()
   {
+    if (this.areFiltersEmpty()) {
+      return [];
+    }
     return this.state.heroes.filter((hero) => {
       if (!matchesAnyPattern(hero.name, this.state.smartBarFilters.namePatterns)) {
         return false;
@@ -101,35 +103,44 @@ export default class HeroFilter extends React.Component
     });
   }
 
+  areFiltersEmpty()
+  {
+    if (this.state.smartBarFilters.namePatterns.length > 0) {
+      return false;
+    } else if (Object.keys(this.state.smartBarFilters.factionToggles).length > 0) {
+      return false;
+    } else if (Object.keys(this.state.smartBarFilters.starToggles).length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   handleFilterChange(newFilters)
   {
     //this.debugFilters(newFilters);
     this.setState(() => ({smartBarFilters: newFilters}));
   }
 
-  /***
   componentDidMount()
   {
-    // TODO "fetchJSON()" wrapper method that adds headers: credentials:
-    var heroesPath = this.props.path + '/heroes.json';
+    var heroesPath = this.props.topURI + '/heroes.json';
     fetch(heroesPath, {headers: {Accept: 'application/json'}, credentials: 'same-origin'})
       .then((res) => res.json())
       .then((json) => {
-        //console.debug('parsed json', json);
-        this.setState({heroes: json});
+        this.setState(() => ({heroes: json}));
       })
       .catch((ex) => {
         console.error('JSON parsing failed: ', ex);
-      })
+      });
   }
-  ***/
 
   render()
   {
     return (
       <div>
         <HeroSmartBar text={this.state.smartBarFilters.text} onFilterChange={this.handleFilterChange} />
-        <HeroListBox heroes={this.filteredHeroes()} />
+        <HeroListBox heroes={this.filteredHeroes()} topURI={this.props.topURI} />
       </div>
     );
   }

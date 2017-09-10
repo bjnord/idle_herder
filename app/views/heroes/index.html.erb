@@ -1,16 +1,2 @@
 <div id="react-hsb"></div>
 <%= javascript_pack_tag('hero_smart_bar') %>
-
-<% @hero_tree.keys.sort.each do |stars| %>
-  <h1><%= stars %>★ Heroes</h1>
-  <% @hero_tree[stars].keys.sort.each do |faction| %>
-    <h2><%= Hero.faction_name_of(faction) %></h2>
-    <ul>
-      <% @hero_tree[stars][faction].sort_by {|h| h.name }.each do |hero| %>
-        <li>
-          <%= render partial: 'hero', object: hero, locals: {show_role: true} %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-<% end %>

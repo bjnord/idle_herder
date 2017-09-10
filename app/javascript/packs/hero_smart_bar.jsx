@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import HeroFilter from 'HeroFilter';
 
 document.addEventListener('DOMContentLoaded', () => {
+  let topURI = document.getElementById("top-uri").innerHTML;
   ReactDOM.render(
-    <HeroFilter />,
+    <HeroFilter topURI={topURI} />,
     document.getElementById('react-hsb')
   );
 });

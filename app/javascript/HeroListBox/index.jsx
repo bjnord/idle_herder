@@ -1,11 +1,11 @@
 import React from 'react';
 import HeroListItem from 'HeroListItem';
 
-export default function HeroListBox({ heroes })
+export default function HeroListBox({ heroes, topURI })
 {
-  return (<ul>
+  return (<ul className="hero-box">
     {heroes.map((hero) => {
-      return <HeroListItem key={hero.id} hero={hero} />;
+      return <HeroListItem key={hero.id} hero={hero} topURI={topURI} />;
     })}
   </ul>);
 }

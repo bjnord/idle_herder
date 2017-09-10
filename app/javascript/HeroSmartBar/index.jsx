@@ -10,8 +10,8 @@ export default function HeroSmartBar({ text, onFilterChange })
   }
 
   return (
-    <div className="hsb-component">
-      <input id="hero-smart-bar" placeholder="Search for heroes" aria-label="Search for heroes" value={text} onChange={handleChange} />
+    <div className="hsb-component form-group">
+      <input id="hero-smart-bar" className="form-control" placeholder="Search for heroes" aria-label="Search for heroes" value={text} onChange={handleChange} />
     </div>
   );
 }
