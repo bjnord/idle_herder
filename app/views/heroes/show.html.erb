@@ -4,34 +4,10 @@
 <% meta_tag :faction, @hero.faction_name %>
 <% meta_tag :role, @hero.role %>
 
-<% if @hero.image_file %>
-  <%= image_tag "heroes/#{@hero.image_file}" %>
-<% end %>
+<%= render 'image' %>
 <h1><%= @hero.name %></h2>
-<h2><%= "#{@hero.natural && (@hero.stars == 5) ? 'Natural ' : ''}#{@hero.stars}★ #{@hero.faction_name} #{@hero.role}" %></h2>
-<ul>
-  <li><%= link_to 'Wiki', @hero.wiki_url %></li>
-  <% [:power, :health, :attack, :armor, :speed].each do |stat| %>
-    <% if v = @hero.send(stat) %>
-      <li><%= "#{stat.to_s.capitalize}: #{number_with_delimiter(v)}" %></li>
-    <% end %>
-  <% end %>
-</ul>
-<% unless @hero.materials.empty? %>
-  <h3>Fused from</h3>
-  <ul>
-    <%= render partial: 'material', collection: @hero.materials %>
-  </ul>
-<% end %>
-<% unless @hero.material_of.empty? %>
-  <h3>Fuses into</h3>
-  <ul>
-    <%= render partial: 'to_hero', collection: @hero.material_of %>
-  </ul>
-<% end %>
-<% unless @hero.other_stars.empty? %>
-  <h3>Other forms</h3>
-  <ul>
-    <%= render partial: 'alt_hero', collection: @hero.other_stars %>
-  </ul>
-<% end %>
+<h2><%= fmt_subtitle(@hero) %></h2>
+<%= render 'details' %>
+<%= render 'fused_from' %>
+<%= render 'fuses_into' %>
+<%= render 'other_forms' %>

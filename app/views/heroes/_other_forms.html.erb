@@ -1,0 +1,6 @@
+<% unless @hero.other_stars.empty? %>
+  <h3>Other forms</h3>
+  <ul>
+    <%= render partial: 'alt_hero', collection: @hero.other_stars %>
+  </ul>
+<% end %>

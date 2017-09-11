@@ -1,0 +1,6 @@
+<% unless @hero.material_of.empty? %>
+  <h3>Fuses into</h3>
+  <ul>
+    <%= render partial: 'to_hero', collection: @hero.material_of %>
+  </ul>
+<% end %>
