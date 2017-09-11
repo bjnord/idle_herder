@@ -2,8 +2,8 @@
 SitemapGenerator::Sitemap.default_host = 'https://idleherder.com'
 
 SitemapGenerator::Sitemap.create do
-  add '/about', priority: 1.2
-  add '/about/contact', priority: 1.0
+  add '/about', priority: 1.0
+  add '/about/contact', priority: 0.8
   Hero.find_each do |hero|
     add hero_path(hero)
   end
