@@ -1,0 +1,5 @@
+<% [:description, :heroname, :stars, :faction, :role].each do |tag| %>
+  <% if content_for?(:"meta_#{tag}") %>
+    <meta name="<%= tag %>" content="<%= content_for(:"meta_#{tag}") %>" />
+  <% end %>
+<% end %>

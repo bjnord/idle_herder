@@ -1,3 +1,9 @@
+<% title "#{@hero.stars}★ #{@hero.name}" %>
+<% meta_tag :heroname, @hero.name %>
+<% meta_tag :stars, @hero.stars.to_s %>
+<% meta_tag :faction, @hero.faction_name %>
+<% meta_tag :role, @hero.role %>
+
 <% if @hero.image_file %>
   <%= image_tag "heroes/#{@hero.image_file}" %>
 <% end %>
