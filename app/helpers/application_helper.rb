@@ -3,6 +3,8 @@ module ApplicationHelper
     case page
     when 'heroes'
       controller_name == 'heroes' ? 'active' : ''
+    when 'accounts'
+      controller_name == 'accounts' ? 'active' : ''
     when 'about'
       (controller_name == 'about' && action_name == 'index') ? 'active' : ''
     when 'contact'
