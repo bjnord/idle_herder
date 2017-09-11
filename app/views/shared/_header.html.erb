@@ -15,6 +15,11 @@
           <li class="<%= active_class('heroes') %>">
             <%= link_to 'Heroes', heroes_path %>
           </li>
+          <% if user_signed_in? %>
+            <li class="<%= active_class('accounts') %>">
+              <%= link_to 'My Heroes', accounts_path %>
+            </li>
+          <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if !user_signed_in? && (controller_path !~ %r{^devise/}) %>
