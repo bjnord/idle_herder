@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'https://idleheroes.com'
+SitemapGenerator::Sitemap.default_host = 'https://idleherder.com'
 
 SitemapGenerator::Sitemap.create do
   add '/about', priority: 1.2
