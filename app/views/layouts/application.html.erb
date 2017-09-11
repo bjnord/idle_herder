@@ -4,14 +4,19 @@
     <title>Idle Herder</title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% if request.host == 'idleherder.com' %>
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-106201915-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <% end %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= javascript_pack_tag    'application' %>
     <%= stylesheet_pack_tag    'application' %>
-    <% if request.host == 'idleherder.com' %>
-      <%= javascript_include_tag '/analytics' %>
-    <% end %>
   </head>
 
   <body class="container">
