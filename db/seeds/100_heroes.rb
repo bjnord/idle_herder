@@ -15,3 +15,5 @@ $stderr.puts "pass 1: Material.count=#{Material.count}"
   h.update_materials!(hj.materials)
 end
 $stderr.puts "pass 2: Material.count=#{Material.count}"
+$stderr.puts ""
+$stderr.puts "don't forget to update the sitemap if new heroes were added!"

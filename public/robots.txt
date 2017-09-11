@@ -1,1 +1,4 @@
-# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+Sitemap: https://idleheroes.com/sitemap.xml.gz
+User-agent: *
+Disallow: /users/
+Disallow: /accounts/

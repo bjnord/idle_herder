@@ -237,6 +237,8 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sitemap_generator (5.3.1)
+      builder (~> 3.0)
     slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -307,6 +309,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   shoulda-matchers
+  sitemap_generator
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
