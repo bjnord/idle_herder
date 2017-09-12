@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.json { render json: {status: 'error', error: 'Access denied'}, status: :unauthorized }
-      format.html { redirect_to root_url, alert: exception.message }
+      format.html { render '/errors/401', status: :unauthorized }
     end
   end
 
