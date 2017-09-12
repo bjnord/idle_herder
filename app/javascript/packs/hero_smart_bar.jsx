@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HeroFilter from 'HeroFilter.jsx';
+import HeroFilterBox from 'HeroFilterBox.jsx';
 
 document.addEventListener('DOMContentLoaded', () => {
   let topURI = document.getElementById("top-uri").innerHTML;
   ReactDOM.render(
-    <HeroFilter topURI={topURI} />,
+    <HeroFilterBox topURI={topURI} />,
     document.getElementById('react-hsb')
   );
 });

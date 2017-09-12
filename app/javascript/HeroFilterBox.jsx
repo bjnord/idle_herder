@@ -4,7 +4,7 @@ import React from 'react';
 import HeroBox from 'HeroBox.jsx';
 import HeroSmartBar from 'HeroSmartBar.jsx';
 
-export default class HeroFilter extends React.Component
+export default class HeroFilterBox extends React.Component
 {
   constructor(props)
   {
