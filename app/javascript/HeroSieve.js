@@ -1,6 +1,6 @@
 export default class HeroSieve
 {
-  constructor(filters)
+  constructor(filters, passAllIfEmpty = false)
   {
     if (filters) {
       this.filters = filters;
@@ -8,6 +8,7 @@ export default class HeroSieve
     } else {
       this.filters = {name: [], faction: {}, stars: {}};
     }
+    this.passAllIfEmpty = passAllIfEmpty;
   }
 
   static matchesAnyPattern(str, patterns)
@@ -47,7 +48,7 @@ export default class HeroSieve
 
   filter(heroes)
   {
-    if (this.areFiltersEmpty()) {
+    if (!this.passAllIfEmpty && this.areFiltersEmpty()) {
       return [];
     }
     return heroes.filter((hero) => {
