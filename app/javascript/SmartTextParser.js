@@ -2,8 +2,8 @@ export default class SmartTextParser
 {
   constructor(text)
   {
-    this.filters = {text: text, namePatterns: [], factionToggles: {}, starToggles: {}};
-    this.parse();
+    this.filters = {namePatterns: [], factionToggles: {}, starToggles: {}};
+    this.parse(text);
   }
 
   wordToRegExp(word)
@@ -48,9 +48,9 @@ export default class SmartTextParser
     });
   }
 
-  parse()
+  parse(text)
   {
-    let text = this.filters.text.trim();
+    text = text.trim();
     if (text) {
       let tokens = text.split(/\s+/);
       // TODO extract "quoted names" to filters.namePatterns

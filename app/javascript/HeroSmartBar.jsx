@@ -17,7 +17,7 @@ export default class HeroSmartBar extends React.Component
   handleChange(event)
   {
     let parser = new SmartTextParser(event.target.value);
-    this.props.onFilterChange(parser.filters);
+    this.props.onTextChange(event.target.value, parser.filters);
   }
 
   render()

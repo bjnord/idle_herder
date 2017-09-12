@@ -2,58 +2,17 @@ export default class HeroList
 {
   constructor(heroes)
   {
-    this.heroes = heroes;
-  }
-
-  static matchesAnyPattern(str, patterns)
-  {
-    if (patterns.length < 1) {
-      return true;
-    }
-    return patterns.some((regexp) => str.match(regexp));
-  }
-
-  static matchesToggles(index, toggles)
-  {
-    if (Object.keys(toggles).length < 1) {
-      return true;
-    }
-    if (index in toggles) {
-      return toggles[index];
-    }
-    return false;
-  }
-
-  static areFiltersEmpty(filters)
-  {
-    if (filters.namePatterns.length > 0) {
-      return false;
-    } else if (Object.keys(filters.factionToggles).length > 0) {
-      return false;
-    } else if (Object.keys(filters.starToggles).length > 0) {
-      return false;
+    if (heroes) {
+      this.heroes = heroes;
     } else {
-      return true;
+      this.heroes = [];
     }
   }
 
-  filteredHeroes(filters)
+  filteredHeroes(sieve)
   {
-    if (HeroList.areFiltersEmpty(filters)) {
-      return [];
-    }
-    return this.heroes.filter((hero) => {
-      if (!HeroList.matchesAnyPattern(hero.name, filters.namePatterns)) {
-        return false;
-      }
-      if (!HeroList.matchesToggles(hero.faction, filters.factionToggles)) {
-        return false;
-      }
-      if (!HeroList.matchesToggles(hero.stars, filters.starToggles)) {
-        return false;
-      }
-      return true;
-    });
+    // TODO sorting of this.heroes will go here
+    return sieve.filter(this.heroes);
   }
 
   static testHeroList()
