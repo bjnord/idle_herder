@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HeroFilter from 'HeroFilter';
+import HeroFilter from 'HeroFilter.jsx';
 
 document.addEventListener('DOMContentLoaded', () => {
   let topURI = document.getElementById("top-uri").innerHTML;

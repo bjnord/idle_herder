@@ -1,6 +1,6 @@
 import React from 'react';
-import HeroSmartBar from 'HeroSmartBar';
-import HeroListBox from 'HeroListBox';
+import HeroSmartBar from 'HeroSmartBar.jsx';
+import HeroBox from 'HeroBox.jsx';
 
 function matchesAnyPattern(str, patterns)
 {
@@ -140,7 +140,7 @@ export default class HeroFilter extends React.Component
     return (
       <div>
         <HeroSmartBar text={this.state.smartBarFilters.text} onFilterChange={this.handleFilterChange} />
-        <HeroListBox heroes={this.filteredHeroes()} topURI={this.props.topURI} />
+        <HeroBox heroes={this.filteredHeroes()} topURI={this.props.topURI} />
       </div>
     );
   }

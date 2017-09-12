@@ -1,5 +1,5 @@
 import React from 'react';
-import SmartTextParser from './SmartTextParser';
+import SmartTextParser from 'SmartTextParser.js';
 
 export default class HeroSmartBar extends React.Component
 {

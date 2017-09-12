@@ -1,5 +1,5 @@
 import React from 'react';
-import HeroListItem from 'HeroListItem';
+import HeroListItem from 'HeroListItem.jsx';
 
 export default function HeroListBox({ heroes, topURI })
 {
