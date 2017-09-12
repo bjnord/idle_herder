@@ -8,6 +8,24 @@ RSpec.describe AccountHero, type: :model do
       expect(subject).to be_valid
     end
 
+    context "with nil level" do
+      let(:account_hero) { build(:account_hero, level: nil) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:level, :blank)).to be_truthy
+      end
+    end
+
+    context "with nil shards" do
+      let(:account_hero) { build(:account_hero, shards: nil) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:shards, :blank)).to be_truthy
+      end
+    end
+
     context "without level but with shards" do
       let(:account_hero) { build(:sharded_account_hero) }
 
