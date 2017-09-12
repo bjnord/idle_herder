@@ -6,7 +6,7 @@ function heroPath(uri, hero)
   return uri + '/heroes/' + hero.id;
 }
 
-export default function HeroListItem({ hero, topURI })
+export default function HeroTile({ hero, topURI })
 {
   return (<li className="hero-item">
     <a className="hero-link" href={heroPath(topURI, hero)}>
