@@ -6,7 +6,7 @@ export default class HeroSieve
       this.filters = filters;
       //this.debug();
     } else {
-      this.filters = {namePatterns: [], factionToggles: {}, starToggles: {}};
+      this.filters = {name: [], faction: {}, stars: {}};
     }
   }
 
@@ -31,15 +31,18 @@ export default class HeroSieve
 
   areFiltersEmpty()
   {
-    if (this.filters.namePatterns.length > 0) {
-      return false;
-    } else if (Object.keys(this.filters.factionToggles).length > 0) {
-      return false;
-    } else if (Object.keys(this.filters.starToggles).length > 0) {
-      return false;
-    } else {
-      return true;
+    for (let key in this.filters) {
+      if (Array.isArray(this.filters[key])) {
+        if (this.filters[key].length > 0) {
+          return false;
+        }
+      } else {
+        if (Object.keys(this.filters[key]).length > 0) {
+          return false;
+        }
+      }
     }
+    return true;
   }
 
   filter(heroes)
@@ -48,14 +51,16 @@ export default class HeroSieve
       return [];
     }
     return heroes.filter((hero) => {
-      if (!HeroSieve.matchesAnyPattern(hero.name, this.filters.namePatterns)) {
-        return false;
-      }
-      if (!HeroSieve.matchesToggles(hero.faction, this.filters.factionToggles)) {
-        return false;
-      }
-      if (!HeroSieve.matchesToggles(hero.stars, this.filters.starToggles)) {
-        return false;
+      for (let key in this.filters) {
+        if (Array.isArray(this.filters[key])) {
+          if (!HeroSieve.matchesAnyPattern(hero[key], this.filters[key])) {
+            return false;
+          }
+        } else {
+          if (!HeroSieve.matchesToggles(hero[key], this.filters[key])) {
+            return false;
+          }
+        }
       }
       return true;
     });
@@ -63,9 +68,13 @@ export default class HeroSieve
 
   debug()
   {
-    let patterns = this.filters.namePatterns.map((regexp) => regexp.toString());
-    console.debug('namePatterns=[' + patterns.join(' | ') + ']');
-    console.debug('factionToggles=[' + Object.keys(this.filters.factionToggles).join(',') + ']');
-    console.debug('starToggles=[' + Object.keys(this.filters.starToggles).join(',') + ']');
+    for (let key in this.filters) {
+      if (Array.isArray(this.filters[key])) {
+        let patterns = this.filters[key].map((regexp) => regexp.toString());
+        console.debug(key + '=[' + patterns.join(' | ') + ']');
+      } else {
+        console.debug(key + '=[' + Object.keys(this.filters[key]).join(',') + ']');
+      }
+    }
   }
 }
