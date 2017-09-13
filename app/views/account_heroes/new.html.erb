@@ -1,23 +1,2 @@
 <% title "Add My Hero" %>
-
-<%= form_for(@account_hero, remote: request.xhr?, html: { data: { modal: true } }) do |f| %>
-  <div class="modal-body">
-  <div class="form-group">
-    <%= f.label :hero_id %><br />
-    <%= f.text_field :hero_id, autofocus: true, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :level %><br />
-    <%= f.text_field :level, autofocus: true, class: 'form-control' %>
-  </div>
-
-  <%= f.hidden_field :shards, value: 0 %>
-  </div>
-
-  <div class="modal-footer">
-  <div class="actions">
-    <%= f.submit 'Add', class: 'btn btn-primary btn-lg' %>
-  </div>
-  </div>
-<% end %>
+<%= render "form" %>
