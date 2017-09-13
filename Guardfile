@@ -112,6 +112,8 @@ guard 'livereload' do
   #
   watch(%r{(app|vendor)(/assets/stylesheets/(.+)\.(css|scss))}) {|m| "/assets/#{m[3]}.self.css" }
   watch(%r{(app|vendor)(/assets/javascripts/(.+)\.(js))}) {|m| "/assets/#{m[3]}.self.js" }
+  # Also watch front-end JS/JSX
+  watch(%r{app/javascripts/.+\.(js|jsx)})
 
   # file needing a full reload of the page anyway
   watch(%r{app/views/.+\.(#{rails_view_exts * '|'})$})
