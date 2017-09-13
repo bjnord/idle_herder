@@ -1,7 +1,7 @@
 import React from 'react';
 import HeroTile from 'HeroTile.jsx';
 
-export default function HeroListBox({ heroes, topURI })
+export default function HeroBox({ heroes, topURI })
 {
   return (<ul className="hero-box">
     {heroes.map((hero) => {
