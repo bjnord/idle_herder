@@ -11,12 +11,11 @@
     display: inline-block;
     height: 80px;
     width: $hero-width;
-    margin: 0 0 4px 4px;
+    margin: 0 8px 4px 0;
 
-    .image {
+    .hero-image {
       float: left;
       margin: 10px;
-      height: 60px;
     }
     .details {
       float: left;
@@ -30,5 +29,17 @@
         font-size: 80%;
       }
     }
+  }
+  .hero-stamp {
+    display: inline-block;
+    height: 64px;
+    width: 68px;
+
+    .hero-image {
+    }
+  }
+  .hero-image {
+    height: 60px;
+    width: 60px;
   }
 }

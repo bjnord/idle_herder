@@ -7,7 +7,7 @@ function heroImagePath(uri, hero)
 
 export default function HeroIcon({ hero, topURI })
 {
-  return (<div className="image">
+  return (<div className="hero-image">
     <img src={heroImagePath(topURI, hero)} height="60" width="60" />
   </div>);
 }

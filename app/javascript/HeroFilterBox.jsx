@@ -41,7 +41,7 @@ export default class HeroFilterBox extends React.Component
     return (
       <div>
         <HeroSmartBar text={this.state.smartText} onTextChange={this.handleSmartTextChange} />
-        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} topURI={this.props.topURI} />
+        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} topURI={this.props.topURI} items="tiles" />
       </div>
     );
   }
