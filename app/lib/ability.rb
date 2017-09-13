@@ -8,6 +8,7 @@ class Ability
     else
       can :manage, user if user.confirmed?
       can :manage, Account, user_id: user.id
+      can :manage, AccountHero, account: { user_id: user.id }
       can :read, Hero
     end
   end

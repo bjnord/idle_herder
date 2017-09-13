@@ -1,2 +1,7 @@
-<h1>My Heroes</h1>
-<h1>Player: <%= @account.player_name %></h1>
+<div class="panel panel-default">
+  <div class="panel-heading">My Heroes</div>
+  <div class="panel-body">
+    <div id="react-mhb"></div>
+    <%= javascript_pack_tag('my_heroes_box') %>
+  </div>
+</div>
