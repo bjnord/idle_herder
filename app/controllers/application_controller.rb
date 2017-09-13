@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # https://jtway.co/5-steps-to-add-remote-modals-to-your-rails-app-8c21213b4d0c
+  def respond_modal_with(*args, &blk)
+    options = args.extract_options!
+    options[:responder] = ModalResponder
+    respond_with *args, options, &blk
+  end
+
 protected
 
   def configure_permitted_parameters

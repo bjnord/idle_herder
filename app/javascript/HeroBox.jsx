@@ -6,10 +6,11 @@ export default function HeroBox({ heroes, topURI, items })
 {
   return (<ul className="hero-box">
     {heroes.map((hero) => {
+      let key = hero.account_hero_id ? hero.account_hero_id : hero.id
       if (items && (items == 'stamps')) {
-        return <HeroStamp key={hero.id} hero={hero} topURI={topURI} />;
+        return <HeroStamp key={key} hero={hero} topURI={topURI} />;
       } else {
-        return <HeroTile key={hero.id} hero={hero} topURI={topURI} />;
+        return <HeroTile key={key} hero={hero} topURI={topURI} />;
       }
     })}
   </ul>);

@@ -1,4 +1,6 @@
 class AccountHeroesController < ApplicationController
+  respond_to :html, :json
+
   before_action :authenticate_user!
   before_action :set_account
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
@@ -13,18 +15,16 @@ class AccountHeroesController < ApplicationController
     authorize! :read, @account_hero
   end
 
+  def new
+    authorize! :create, @account
+    @account_hero = @account.account_heroes.build
+    respond_modal_with @account_hero
+  end
+
   def create
     authorize! :create, @account
-    @account_hero = @account.account_heroes.build(secure_params)
-    respond_to do |format|
-      if @account_hero.save
-        format.html { redirect_to @account_hero, notice: 'AccountHero was successfully created.' }
-        format.json { render :show, status: :created, location: @account_hero }
-      else
-        format.html { render :new }
-        format.json { render json: @account_hero.errors, status: :unprocessable_entity }
-      end
-    end
+    @account_hero = @account.account_heroes.create(secure_params)
+    respond_modal_with @account_hero, location: accounts_path
   end
 
 private
