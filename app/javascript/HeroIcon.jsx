@@ -1,13 +1,21 @@
 import React from 'react';
 
-function heroImagePath(uri, hero)
+export default class HeroIcon extends React.Component
 {
-  return uri + '/assets/heroes/' + hero.image_file;
-}
+  constructor(props)
+  {
+    super(props);
+  }
 
-export default function HeroIcon({ hero, topURI })
-{
-  return (<div className="hero-image">
-    <img src={heroImagePath(topURI, hero)} height="60" width="60" />
-  </div>);
+  heroImagePath()
+  {
+    return this.props.topURI + '/assets/heroes/' + this.props.hero.image_file;
+  }
+
+  render()
+  {
+    return (<div className="hero-image">
+      <img src={this.heroImagePath()} height="60" width="60" />
+    </div>);
+  }
 }

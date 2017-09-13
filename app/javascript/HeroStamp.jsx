@@ -1,16 +1,24 @@
 import React from 'react';
 import HeroIcon from 'HeroIcon.jsx';
 
-function heroPath(uri, hero)
+export default class HeroStamp extends React.Component
 {
-  return uri + '/heroes/' + hero.id;
-}
+  constructor(props)
+  {
+    super(props);
+  }
 
-export default function HeroStamp({ hero, topURI })
-{
-  return (<li className="hero-stamp">
-    <a className="hero-link" href={heroPath(topURI, hero)}>
-      <HeroIcon hero={hero} topURI={topURI} />
-    </a>
-  </li>);
+  heroPath()
+  {
+    return this.props.topURI + '/heroes/' + this.props.hero.id;
+  }
+
+  render()
+  {
+    return (<li className="hero-stamp">
+      <a className="hero-link" href={this.heroPath()}>
+        <HeroIcon hero={this.props.hero} topURI={this.props.topURI} />
+      </a>
+    </li>);
+  }
 }
