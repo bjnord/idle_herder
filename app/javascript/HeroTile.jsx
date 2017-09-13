@@ -8,7 +8,7 @@ function heroPath(uri, hero)
 
 export default function HeroTile({ hero, topURI })
 {
-  return (<li className="hero-item">
+  return (<li className="hero-tile">
     <a className="hero-link" href={heroPath(topURI, hero)}>
       <HeroIcon hero={hero} topURI={topURI} />
       <div className="details">
