@@ -1,5 +1,5 @@
 <%# FIXME don't borrow from devise-form class %>
-<%= form_for(@account_hero, html: { class: 'devise-form' }) do |f| %>
+<%= form_for(@account_hero, html: { class: 'devise-form', autocomplete: 'off' }) do |f| %>
   <div class="fields">
     <div id="react-hss"></div>
     <%= javascript_pack_tag('hero_smart_selector') %>
