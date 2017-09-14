@@ -18,13 +18,13 @@ class AccountHeroesController < ApplicationController
   def new
     authorize! :create, @account
     @account_hero = @account.account_heroes.build
-    respond_modal_with @account_hero
+    respond_with @account_hero
   end
 
   def create
     authorize! :create, @account
     @account_hero = @account.account_heroes.create(secure_params)
-    respond_modal_with @account_hero, location: accounts_path
+    respond_with @account_hero, location: account_path(@account)
   end
 
 private

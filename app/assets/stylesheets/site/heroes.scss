@@ -32,14 +32,29 @@
   }
   .hero-stamp {
     display: inline-block;
-    height: 64px;
-    width: 68px;
+    height: 62px;
+    width: 62px;
+    margin: 2px 3px;
+    padding: 1px;
 
-    .hero-image {
+    &.selected {
+      outline-style: dashed;
+      outline-style: blue;
     }
   }
   .hero-image {
     height: 60px;
     width: 60px;
+  }
+}
+
+.add-my-hero-panel {
+  .panel-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  form {
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 }

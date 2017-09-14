@@ -1,19 +1,31 @@
-<%= form_for(@account_hero, remote: request.xhr?, html: { data: { modal: request.xhr? }, class: request.xhr? ? '' : 'devise-form' }) do |f| %>
-  <div class="fields <%= request.xhr? ? 'modal-body' : '' %>">
-    <div class="form-group">
-      <%= f.label :hero_id %><br />
-      <%= f.text_field :hero_id, autofocus: true, class: 'form-control' %>
-    </div>
+<%# FIXME don't borrow from devise-form class %>
+<%= form_for(@account_hero, html: { class: 'devise-form' }) do |f| %>
+  <div class="fields">
+    <div id="react-hss"></div>
+    <%= javascript_pack_tag('hero_smart_selector') %>
+    <%= f.hidden_field :hero_id %>
 
     <div class="form-group">
       <%= f.label :level %><br />
-      <%= f.text_field :level, autofocus: true, class: 'form-control' %>
+      <%= f.text_field :level, class: 'form-control' %>
     </div>
 
     <%= f.hidden_field :shards, value: 0 %>
   </div>
 
-  <div class="actions <%= request.xhr? ? 'modal-footer' : '' %>">
-    <%= f.submit 'Add', class: 'btn btn-primary btn-lg' %>
+  <div class="actions">
+    <%= f.submit 'Add', class: 'btn btn-success' %>
   </div>
 <% end %>
+
+<script>
+  function setSelectedHeroId(heroId)
+  {
+    let inputTag = document.getElementById("account_hero_hero_id");
+    if (inputTag) {
+      inputTag.value = heroId;
+    } else {
+      console.error('setSelectedHeroId(' + heroId + "): can't find input tag for update");
+    }
+  }
+</script>

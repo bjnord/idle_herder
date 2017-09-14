@@ -1,4 +1,9 @@
-<%= link_to 'Add', new_account_hero_path, data: { modal: true } %>
+<div class="panel panel-default add-my-hero-panel">
+  <div class="panel-heading">Add Hero</div>
+  <div class="panel-body">
+    <%= render "account_heroes/form" %>
+  </div>
+</div>
 
 <div class="panel panel-default">
   <div class="panel-heading">My Heroes</div>
