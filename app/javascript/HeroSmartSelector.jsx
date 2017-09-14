@@ -32,7 +32,7 @@ export default class HeroSmartSelector extends React.Component
 
   componentDidMount()
   {
-    var heroesPath = this.props.topURI + '/heroes.json';
+    var heroesPath = topURI + '/heroes.json';
     fetch(heroesPath, {headers: {Accept: 'application/json'}, credentials: 'same-origin'})
       .then((res) => res.json())
       .then((json) => {
@@ -53,7 +53,7 @@ export default class HeroSmartSelector extends React.Component
     return (
       <div>
         <HeroSmartBar text={this.state.smartText} onTextChange={this.handleSmartTextChange} />
-        <HeroBox heroes={heroes} selectedHeroId={selectedHeroId} topURI={this.props.topURI} items="selstamps" onHeroSelected={this.handleHeroSelected}  />
+        <HeroBox heroes={heroes} selectedHeroId={selectedHeroId} items="selstamps" onHeroSelected={this.handleHeroSelected}  />
       </div>
     );
   }

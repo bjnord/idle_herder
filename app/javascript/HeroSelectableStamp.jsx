@@ -11,7 +11,7 @@ export default class HeroSelectableStamp extends React.Component
 
   heroPath()
   {
-    return this.props.topURI + '/heroes/' + this.props.hero.id;
+    return topURI + '/heroes/' + this.props.hero.id;
   }
 
   handleClick(event)
@@ -23,7 +23,7 @@ export default class HeroSelectableStamp extends React.Component
   {
     let selected = this.props.selected ? ' selected' : '';
     return (<li className={'hero-stamp' + selected} onClick={this.handleClick}>
-      <HeroIcon hero={this.props.hero} topURI={this.props.topURI} />
+      <HeroIcon hero={this.props.hero} />
     </li>);
   }
 }

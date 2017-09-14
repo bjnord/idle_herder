@@ -25,7 +25,7 @@ export default class HeroFilterBox extends React.Component
 
   componentDidMount()
   {
-    var heroesPath = this.props.topURI + '/heroes.json';
+    var heroesPath = topURI + '/heroes.json';
     fetch(heroesPath, {headers: {Accept: 'application/json'}, credentials: 'same-origin'})
       .then((res) => res.json())
       .then((json) => {
@@ -41,7 +41,7 @@ export default class HeroFilterBox extends React.Component
     return (
       <div>
         <HeroSmartBar text={this.state.smartText} onTextChange={this.handleSmartTextChange} />
-        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} topURI={this.props.topURI} items="tiles" />
+        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} items="tiles" />
       </div>
     );
   }

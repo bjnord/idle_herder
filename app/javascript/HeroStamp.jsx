@@ -10,14 +10,14 @@ export default class HeroStamp extends React.Component
 
   heroPath()
   {
-    return this.props.topURI + '/heroes/' + this.props.hero.id;
+    return topURI + '/heroes/' + this.props.hero.id;
   }
 
   render()
   {
     return (<li className="hero-stamp">
       <a className="hero-link" href={this.heroPath()}>
-        <HeroIcon hero={this.props.hero} topURI={this.props.topURI} />
+        <HeroIcon hero={this.props.hero} />
       </a>
     </li>);
   }

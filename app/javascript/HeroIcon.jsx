@@ -9,7 +9,7 @@ export default class HeroIcon extends React.Component
 
   heroImagePath()
   {
-    return this.props.topURI + '/assets/heroes/' + this.props.hero.image_file;
+    return topURI + '/assets/heroes/' + this.props.hero.image_file;
   }
 
   render()
