@@ -5,12 +5,22 @@
     <%= javascript_pack_tag('hero_smart_selector') %>
     <%= f.hidden_field :hero_id %>
 
-    <div class="form-group">
-      <%= f.label :level %><br />
-      <%= f.text_field :level, class: 'form-control' %>
+    <div class="container-fluid">
+      <div class="row no-gutters">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :level %><br />
+            <%= f.text_field :level, class: 'form-control', style: 'width: 95%;' %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :shards %><br />
+            <%= f.text_field :shards, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <%= f.hidden_field :shards, value: 0 %>
   </div>
 
   <div class="actions">
@@ -28,4 +38,12 @@
       console.error('setSelectedHeroId(' + heroId + "): can't find input tag for update");
     }
   }
+  $(document).ready(function () {
+    $("#account_hero_level").on('input', function () {
+      $("#account_hero_shards").val(0);
+    });
+    $("#account_hero_shards").on('input', function () {
+      $("#account_hero_level").val(0);
+    });
+  });
 </script>

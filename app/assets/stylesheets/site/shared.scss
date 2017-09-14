@@ -18,3 +18,8 @@ footer {
 .page-header {
   margin: 20px 0 !important;
 }
+
+.no-gutters > [class*="col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
