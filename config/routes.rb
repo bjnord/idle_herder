@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'heroes#index'
-  devise_for :users, :controllers  => {sessions: 'sessions'}
+  devise_for :users, controllers: {sessions: 'sessions'}
   %w( 401 404 422 500 ).each do |code|
     get code, to: 'errors#show', code: code
   end
