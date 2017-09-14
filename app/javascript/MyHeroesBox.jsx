@@ -4,7 +4,7 @@ import HeroSieve from 'HeroSieve.js';
 import React from 'react';
 import HeroBox from 'HeroBox.jsx';
 
-export default class HeroFilterBox extends React.Component
+export default class MyHeroesBox extends React.Component
 {
   constructor(props)
   {
