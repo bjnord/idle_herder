@@ -24,6 +24,7 @@ class AccountHeroesController < ApplicationController
   def create
     authorize! :create, @account
     @account_hero = @account.account_heroes.create(secure_params)
+    session[:add_hero_panel_display] = 'block';
     respond_with @account_hero, location: account_path(@account)
   end
 
