@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   has_many :accounts, inverse_of: :user, dependent: :destroy
   validates :accounts, length: { minimum: 1 }
-  ROLES = %w[admin user]
-  validates :role, presence: true, inclusion: { in: ROLES, allow_blank: true }
+  ROLES = {'admin' => 'Admin', 'user' => 'User'}
+  validates :role, presence: true, inclusion: { in: ROLES.keys, allow_blank: true }
   validate :validate_invite, on: :create
 
   before_validation :ensure_user_has_an_account
@@ -16,7 +16,11 @@ class User < ApplicationRecord
   attr_accessor :player_name
   attr_accessor :invitation_code
   def admin? ; self.role == 'admin' ; end
-   
+
+  def self.role_select_options
+    ROLES.collect{|k,v| [v, k] }
+  end
+
 private
 
   def ensure_user_has_an_account
