@@ -1,14 +1,30 @@
-<div class="panel panel-default add-my-hero-panel">
-  <div class="panel-heading">Add Hero</div>
-  <div class="panel-body">
-    <%= render "account_heroes/form" %>
+<div class="panel-group">
+  <div id="add-my-hero-panel" class="panel panel-default" style="display: none;">
+    <div class="panel-heading">
+      <h4 class="panel-title">Add Hero</h4>
+    </div>
+    <div class="panel-body">
+      <%= render "account_heroes/form" %>
+    </div>
+  </div>
+  <div id="my-heroes-panel" class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">My Heroes</h4>
+      <%= button_to 'ADD', '#', class: 'btn btn-primary btn-sm', id: 'add-my-hero' %>
+    </div>
+    <div class="panel-body">
+      <div id="react-mhb"></div>
+      <%= javascript_pack_tag('my_heroes_box') %>
+    </div>
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">My Heroes</div>
-  <div class="panel-body">
-    <div id="react-mhb"></div>
-    <%= javascript_pack_tag('my_heroes_box') %>
-  </div>
-</div>
+<script>
+  $(document).ready(function () {
+    $("#add-my-hero").click(function (event) {
+      event.stopPropagation();
+      $("#add-my-hero-panel").toggle();
+      return false;
+    });
+  });
+</script>
