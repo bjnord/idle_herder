@@ -7,21 +7,34 @@ export default class HeroIcon extends React.Component
     super(props);
   }
 
-  heroImagePath()
+  imagePath(base)
   {
-    return topURI + '/assets/heroes/' + this.props.hero.image_file;
+    return topURI + '/assets/' + base;
   }
 
   render()
   {
-    let title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
-    let levelLabel;
-    if (this.props.hero.level) {
-      levelLabel = <div className="level">{this.props.hero.level}</div>;
+    let title, levelLabel, puzzlePiece;
+    // FIXME too complicated; break into methods or separate class
+    if ('box_type' in this.props.hero) {
+      if (this.props.hero.box_type == 'hero') {
+        title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
+        levelLabel = <div className="level">{this.props.hero.level}</div>;
+      } else if (this.props.hero.box_type == 'hero-shards') {
+        title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
+        puzzlePiece = <img className="puzzle-piece" src={this.imagePath('puzzle-piece-cover.png')} height="18" width="18" />;
+        // TODO under-label with # of shards
+      } else if (this.props.hero.box_type == 'generic-shards') {
+        title = this.props.hero.stars + '★ Generic'  // TODO faction name
+        // TODO under-label with # of shards
+      }
+    } else {
+      title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
     }
     return (<div className="hero-image">
-      <img src={this.heroImagePath()} height="60" width="60" data-toggle="tooltip" title={title} />
+      <img src={this.imagePath(this.props.hero.image_file)} height="60" width="60" data-toggle="tooltip" title={title} />
       {levelLabel}
+      {puzzlePiece}
     </div>);
   }
 }

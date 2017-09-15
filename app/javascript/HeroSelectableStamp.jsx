@@ -9,11 +9,6 @@ export default class HeroSelectableStamp extends React.Component
     this.handleClick = this.handleClick.bind(this);
   }
 
-  heroPath()
-  {
-    return topURI + '/heroes/' + this.props.hero.id;
-  }
-
   handleClick(event)
   {
     this.props.onHeroSelected(this.props.hero.id);
