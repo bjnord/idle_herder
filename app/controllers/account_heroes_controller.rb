@@ -17,7 +17,6 @@ class AccountHeroesController < ApplicationController
 
   def create
     authorize! :create, @account
-    session[:add_hero_panel_display] = 'block';
     @account_hero = @account.account_heroes.build(secure_params)
     respond_to do |format|
       if @account_hero.save

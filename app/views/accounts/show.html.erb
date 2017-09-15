@@ -1,7 +1,7 @@
 <% title 'My Heroes' %>
 
 <div class="panel-group">
-  <div id="add-hero-panel" class="panel panel-default" style="display: <%= @add_hero_panel_display %>;">
+  <div id="add-hero-panel" class="panel panel-default" style="display: none;">
     <div class="panel-heading">
       <h4 class="panel-title">Add Hero</h4>
     </div>
@@ -23,9 +23,14 @@
 
 <script>
   $(document).ready(function () {
-    $("#add-hero").click(function (event) {
+    var visible = localStorageGetItem('add_hero_panel');
+    if (visible == 1) {
+      $('#add-hero-panel').show();
+    }
+    $('#add-hero').click(function (event) {
       event.stopPropagation();
-      $("#add-hero-panel").toggle();
+      var nowVisible = $('#add-hero-panel').toggle().is(':visible') ? 1 : 0;
+      localStorageSetItem('add_hero_panel', nowVisible);
       return false;
     });
   });
