@@ -5,6 +5,7 @@ class Hero < ApplicationRecord
   accepts_nested_attributes_for :materials
 
   MAX_STARS = 10
+  MAX_LEVELS = {10 => 250, 9 => 200, 8 => 180, 7 => 160, 6 => 140, 5 => 100, 4 => 80, 3 => 60, 2 => 50, 1 => 40}
   FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
@@ -26,6 +27,10 @@ class Hero < ApplicationRecord
   end
   def self.faction_name_of(faction)
     faction.nil? ? nil : FACTIONS[faction]
+  end
+
+  def max_level
+    MAX_LEVELS[stars]
   end
 
   def self.build_from_json(id)
