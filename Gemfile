@@ -47,7 +47,7 @@ group :development do
 end
 
 gem 'foreman'
-gem 'webpacker', '~> 2.0'
+gem 'webpacker', '~> 3.0.1'
 gem 'devise'
 gem 'cancancan'
 

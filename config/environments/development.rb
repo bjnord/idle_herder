@@ -64,5 +64,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Use webpack-dev-server running from Procfile
-  config.x.webpacker[:dev_server_host] = "http://localhost:8088"
+  config.x.webpacker[:dev_server_host] = "http://localhost:3035"
 end

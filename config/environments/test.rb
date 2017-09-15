@@ -43,5 +43,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Use webpack-dev-server running from Procfile
-  config.x.webpacker[:dev_server_host] = "http://localhost:8088"
+  config.x.webpacker[:dev_server_host] = "http://localhost:3035"
 end
