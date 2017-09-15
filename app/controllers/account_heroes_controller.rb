@@ -17,9 +17,17 @@ class AccountHeroesController < ApplicationController
 
   def create
     authorize! :create, @account
-    @account_hero = @account.account_heroes.create(secure_params)
     session[:add_hero_panel_display] = 'block';
-    respond_with @account_hero, location: account_path(@account)
+    @account_hero = @account.account_heroes.build(secure_params)
+    respond_to do |format|
+      if @account_hero.save
+        format.html { redirect_to account_url(@account), notice: 'Hero added' }
+        format.json { render :json, @account_hero, status: :created }
+      else
+        format.html { redirect_to account_url(@account), alert: "Couldn't add hero: #{@account_hero.errors.full_messages.join(', ')}" }
+        format.json { render json: @account_hero.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 private
