@@ -80,3 +80,21 @@
     margin-bottom: 15px;
   }
 }
+
+.faction-selector {
+  position: absolute;
+  top: 5px;
+  left: 120px;
+
+  li.toggle {
+    display: inline-block;
+    height: 26px;
+    width: 25px;
+    margin-right: 5px;
+    border: 1px solid transparent;
+
+    &.toggle-on {
+      border: 1px dotted red;
+    }
+  }
+}

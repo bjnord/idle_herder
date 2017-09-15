@@ -2,6 +2,7 @@ import HeroList from 'HeroList.js';
 import HeroSieve from 'HeroSieve.js';
 
 import React from 'react';
+import FactionSelector from 'FactionSelector.jsx';
 import HeroBox from 'HeroBox.jsx';
 
 export default class MyHeroesBox extends React.Component
@@ -13,7 +14,14 @@ export default class MyHeroesBox extends React.Component
       heroList: new HeroList(),
       heroSieve: new HeroSieve(null, true),
       smartText: '',
+      factionToggles: {0: false, 1: false, 2: false, 3: false, 4: false, 5: false},
     };
+    this.handleFactionsSelected = this.handleFactionsSelected.bind(this);
+  }
+
+  handleFactionsSelected(newFactionToggles)
+  {
+    this.setState(() => ({heroSieve: new HeroSieve({faction: newFactionToggles}, true), factionToggles: newFactionToggles}));
   }
 
   componentDidMount()
@@ -34,6 +42,7 @@ export default class MyHeroesBox extends React.Component
     return (
       <div>
         <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} items="stamps" />
+        <FactionSelector toggles={this.state.factionToggles} onFactionsSelected={this.handleFactionsSelected} />
       </div>
     );
   }

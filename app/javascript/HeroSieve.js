@@ -9,6 +9,22 @@ export default class HeroSieve
       this.filters = {name: [], faction: {}, stars: {}};
     }
     this.passAllIfEmpty = passAllIfEmpty;
+    this.wildcards = {};
+    this.setWildcards('faction');
+  }
+
+  // TODO this should replace areFiltersEmpty()
+  setWildcards(key)
+  {
+    let anyAreTrue = false;
+    Object.keys(this.filters[key]).forEach((i) => {
+      if (this.filters[key][i]) {
+        anyAreTrue = true;
+      }
+    });
+    if (!anyAreTrue && this.passAllIfEmpty) {
+      this.wildcards[key] = true;
+    }
   }
 
   static matchesAnyPattern(str, patterns)
@@ -58,7 +74,9 @@ export default class HeroSieve
             return false;
           }
         } else {
-          if (!HeroSieve.matchesToggles(hero[key], this.filters[key])) {
+          if (key in this.wildcards) {
+            return true;
+          } else if (!HeroSieve.matchesToggles(hero[key], this.filters[key])) {
             return false;
           }
         }
