@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :heroes, only: [:index, :show]
   resources :accounts, only: [:index, :show]
-  resources :account_heroes, only: [:new, :create]
+  resources :account_heroes, only: [:create]
 
   # these routes are JSON-only:
   get 'account_heroes', to: 'account_heroes#index', constraints: lambda {|request| request.format.json? }

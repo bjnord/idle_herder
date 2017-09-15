@@ -15,12 +15,6 @@ class AccountHeroesController < ApplicationController
     authorize! :read, @account_hero
   end
 
-  def new
-    authorize! :create, @account
-    @account_hero = @account.account_heroes.build
-    respond_with @account_hero
-  end
-
   def create
     authorize! :create, @account
     @account_hero = @account.account_heroes.create(secure_params)
