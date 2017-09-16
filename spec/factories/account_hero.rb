@@ -23,6 +23,7 @@ FactoryGirl.define do
     # "wish list" is a specific hero (stars/name/faction) user doesn't have
     factory :wish_list_account_hero do
       level        nil
+      wish_list    true
     end
   end
 end

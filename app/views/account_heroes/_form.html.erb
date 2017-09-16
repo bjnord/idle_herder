@@ -54,9 +54,15 @@
   $(document).ready(function () {
     $("#account_hero_level").on('input', function () {
       $("#account_hero_shards").val('');
+      $("#account_hero_wish_list").prop('checked', false);
     });
     $("#account_hero_shards").on('input', function () {
       $("#account_hero_level").val('');
+      $("#account_hero_wish_list").prop('checked', false);
+    });
+    $("#account_hero_wish_list").on('input', function () {
+      $("#account_hero_level").val('');
+      $("#account_hero_shards").val('');
     });
   });
 </script>

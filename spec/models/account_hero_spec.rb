@@ -9,7 +9,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "with nil level" do
-      let(:account_hero) { build(:account_hero, level: nil) }
+      let(:account_hero) { build(:sharded_account_hero, level: nil) }
 
       it "should be valid" do
         expect(account_hero).to be_valid
@@ -23,6 +23,15 @@ RSpec.describe AccountHero, type: :model do
       it "should be valid, and have zero underneath" do
         expect(account_hero).to be_valid
         expect(account_hero[:shards]).to be == 0
+      end
+    end
+
+    context "without level or shards or wish_list" do
+      let(:account_hero) { build(:sharded_account_hero, level: nil, shards: nil, wish_list: false) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:base, 'Either level or shards is required')).to be_truthy
       end
     end
 
@@ -42,6 +51,8 @@ RSpec.describe AccountHero, type: :model do
         expect(account_hero.errors.added?(:base, 'Using both level and shards is invalid')).to be_truthy
       end
     end
+
+    pending "#wish_list?"
   end
 
   context "generic hero (stars/faction in shards)" do
@@ -76,6 +87,8 @@ RSpec.describe AccountHero, type: :model do
         expect(account_hero.errors.added?(:shards, :missing)).to be_truthy
       end
     end
+
+    pending "#wish_list?"
   end
 
   context "wish list hero (stars/name/faction)" do
@@ -83,5 +96,7 @@ RSpec.describe AccountHero, type: :model do
     it "should be valid" do
       expect(subject).to be_valid
     end
+
+    pending "#wish_list?"
   end
 end
