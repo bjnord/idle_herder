@@ -98,5 +98,6 @@ RSpec.describe AccountHero, type: :model do
     end
 
     pending "#wish_list?"
+    pending "wish list hero can't have is_fodder flag set"
   end
 end
