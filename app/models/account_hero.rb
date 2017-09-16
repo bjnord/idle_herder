@@ -3,6 +3,8 @@ class AccountHero < ApplicationRecord
   belongs_to :hero, optional: true
   belongs_to :shard_type, optional: true
 
+  attr_accessor :wish_list
+
   validates :level, presence: true
   validates :shards, presence: true
   validate :hero_or_shard_type_present

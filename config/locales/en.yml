@@ -30,4 +30,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      account_hero:
+        is_fodder:
+          one: Fodder?
+          name: Fodder?
+        wish_list:
+          one: "Wish list?"
+          name: "Wish list?"
+    errors:
+      models:
+        account_hero:
+          attributes:
+            role:
+              inclusion: "is invalid"
