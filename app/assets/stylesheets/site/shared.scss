@@ -27,3 +27,15 @@ footer {
 input[type=checkbox].form-control {
   margin-top: 0;
 }
+
+.popover {
+  i {
+    font-style: italic;
+  }
+  ul {
+    list-style: disc;
+    li {
+      margin-left: 6px;
+    }
+  }
+}

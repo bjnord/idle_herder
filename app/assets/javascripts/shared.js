@@ -2,8 +2,9 @@ var topURI = null;
 
 $(document).ready(function () {
   topURI = $('#top-uri').text();
-  $('[data-toggle="tooltip"]').tooltip();  // prerequisite for popovers too
-  $('[data-toggle="popover"]').popover();
+  // NB this won't activate tooltips for elements inside React components
+  //    that has to be done inside componentDidMount()
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 var localStoragePrefix = 'idle_herder_com_';

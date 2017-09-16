@@ -133,3 +133,19 @@
     width: 10%;
   }
 }
+
+.hsb-component {
+  height: 34px;
+  vertical-align: middle;
+
+  #hero-smart-bar {
+    display: inline-block;
+    width: 90%;
+  }
+  #smart-bar-help {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin: -4px 0 0 4px;
+  }
+}
