@@ -7,7 +7,7 @@ class AccountHeroesController < ApplicationController
 
   def index
     authorize! :read, @account
-    @account_heroes = @account.account_heroes
+    @account_heroes = @account.account_heroes.includes(:hero, :shard_type)
   end
 
   def show
