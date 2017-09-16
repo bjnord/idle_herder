@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914111549) do
+ActiveRecord::Schema.define(version: 20170916163023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170914111549) do
     t.integer "level", default: 1, null: false
     t.integer "shards", default: 0, null: false
     t.integer "priority", default: 1, null: false
-    t.boolean "is_fodder"
+    t.boolean "is_fodder", default: false, null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
