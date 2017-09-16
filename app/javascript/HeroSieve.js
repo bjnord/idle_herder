@@ -74,9 +74,7 @@ export default class HeroSieve
             return false;
           }
         } else {
-          if (key in this.wildcards) {
-            return true;
-          } else if (!HeroSieve.matchesToggles(hero[key], this.filters[key])) {
+          if (!(key in this.wildcards) && !HeroSieve.matchesToggles(hero[key], this.filters[key])) {
             return false;
           }
         }
