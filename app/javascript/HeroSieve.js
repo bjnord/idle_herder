@@ -6,7 +6,7 @@ export default class HeroSieve
       this.filters = filters;
       //this.debug();
     } else {
-      this.filters = {name: [], faction: {}, stars: {}};
+      this.filters = {name: [], faction: {}, stars: {}, box_type: []};
     }
     this.passAllIfEmpty = passAllIfEmpty;
     this.wildcards = {};

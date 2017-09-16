@@ -13,7 +13,8 @@ export default class MyHeroesBox extends React.Component
     this.setInitialFactionToggles();
     this.state = {
       heroList: new HeroList(),
-      heroSieve: new HeroSieve({faction: this.initialFactionToggles}, true),
+      heroBoxSieve: new HeroSieve({faction: this.initialFactionToggles, box_type: [/^hero$/]}, true),
+      heroShardSieve: new HeroSieve({faction: this.initialFactionToggles, box_type: [/-shards$/]}, true),
       smartText: '',
       factionToggles: this.initialFactionToggles,
     };
@@ -45,7 +46,9 @@ export default class MyHeroesBox extends React.Component
   handleFactionsSelected(newFactionToggles)
   {
     this.storeFactionToggles(newFactionToggles);
-    this.setState(() => ({heroSieve: new HeroSieve({faction: newFactionToggles}, true), factionToggles: newFactionToggles}));
+    let heroBoxSieve = new HeroSieve({faction: newFactionToggles, box_type: [/^hero$/]}, true);
+    let heroShardSieve = new HeroSieve({faction: newFactionToggles, box_type: [/-shards$/]}, true);
+    this.setState(() => ({heroBoxSieve: heroBoxSieve, heroShardSieve: heroShardSieve, factionToggles: newFactionToggles}));
   }
 
   componentDidMount()
@@ -65,8 +68,10 @@ export default class MyHeroesBox extends React.Component
   {
     return (
       <div>
-        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroSieve)} items="stamps" />
         <FactionSelector toggles={this.state.factionToggles} onFactionsSelected={this.handleFactionsSelected} />
+        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroBoxSieve)} items="stamps" />
+        <h4 className="my-heroes-shards-subhead">Hero Shards</h4>
+        <HeroBox heroes={this.state.heroList.filteredHeroes(this.state.heroShardSieve)} items="stamps" />
       </div>
     );
   }
