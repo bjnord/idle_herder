@@ -1,5 +1,5 @@
 if account_hero.hero
-  json.(account_hero.hero, :id, :name, :stars, :faction, :role, :natural)
+  json.(account_hero.hero, :id, :name, :stars, :faction, :role, :max_level, :max_shards, :natural)
   json.box_type (account_hero.shards > 0) ? 'hero-shards' : 'hero'
   json.image_file "heroes/#{account_hero.hero.image_file}"
 elsif account_hero.shard_type

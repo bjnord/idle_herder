@@ -6,6 +6,7 @@ class Hero < ApplicationRecord
 
   MAX_STARS = 10
   MAX_LEVELS = {10 => 250, 9 => 200, 8 => 180, 7 => 160, 6 => 140, 5 => 100, 4 => 80, 3 => 60, 2 => 50, 1 => 40}
+  MAX_SHARDS = {5 => 50, 4 => 30, 3 => 20}
   FACTIONS = ['Shadow', 'Fortress', 'Abyss', 'Forest', 'Dark', 'Light']
   ROLES = ['Warrior', 'Mage', 'Ranger', 'Assassin', 'Priest']
 
@@ -31,6 +32,9 @@ class Hero < ApplicationRecord
 
   def max_level
     MAX_LEVELS[stars]
+  end
+  def max_shards
+    MAX_SHARDS[stars]
   end
 
   def self.build_from_json(id)
