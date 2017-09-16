@@ -27,5 +27,8 @@ module IdleHerder
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # This has to go here (not config/initializers or config/environments):
+    config.annotations.register_extensions('jsx') {|annotation| %r{//\s*(#{annotation}):?\s*(.*)$} }
   end
 end
