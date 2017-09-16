@@ -11,18 +11,18 @@ RSpec.describe AccountHero, type: :model do
     context "with nil level" do
       let(:account_hero) { build(:account_hero, level: nil) }
 
-      it "should be invalid" do
-        expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:level, :blank)).to be_truthy
+      it "should be valid" do
+        expect(account_hero).to be_valid
+        expect(account_hero[:level]).to be == 0
       end
     end
 
     context "with nil shards" do
       let(:account_hero) { build(:account_hero, shards: nil) }
 
-      it "should be invalid" do
-        expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:shards, :blank)).to be_truthy
+      it "should be valid, and have zero underneath" do
+        expect(account_hero).to be_valid
+        expect(account_hero[:shards]).to be == 0
       end
     end
 

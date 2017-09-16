@@ -20,4 +20,11 @@ module ApplicationHelper
   def meta_tag(tag, text)
     content_for :"meta_#{tag}", text
   end
+
+  def empty_integer(value)
+    if value.blank? || (value == 0)
+      return nil
+    end
+    value
+  end
 end
