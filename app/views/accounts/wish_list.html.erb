@@ -1,0 +1,48 @@
+<% title 'My Wish List' %>
+
+<%# FIXME copy-pasted from accounts#show ... absract out common code and CSS
+    (e.g. split #add-hero-panel to #add-wish-panel + .add-hero-panel) %>
+
+<div class="panel-group">
+  <div id="add-hero-panel" class="panel panel-default" style="display: none;">
+    <div class="panel-heading">
+      <h4 class="panel-title">Add to Wish List</h4>
+    </div>
+    <div class="panel-body">
+      <%= render "account_heroes/wish_form" %>
+    </div>
+  </div>
+  <div id="my-heroes-panel" class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">My Wish List</h4>
+      <%= button_to 'ADD', '#', class: 'btn btn-primary btn-sm', id: 'add-hero' %>
+    </div>
+    <div class="panel-body">
+      <table class="table wish-list-table">
+        <tr>
+          <th class="hero">Hero</th>
+          <th>Materials Needed</th>
+        </tr>
+        <%= render partial: 'account_heroes/wish_list_hero', collection: @account.account_heroes.wish_list %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var visible = localStorageGetItem('add_wish_panel');
+    if (visible == 1) {
+      $('#add-hero-panel').show();
+    }
+    $('#add-hero').click(function (event) {
+      event.stopPropagation();
+      var nowVisible = $('#add-hero-panel').toggle().is(':visible') ? 1 : 0;
+      localStorageSetItem('add_wish_panel', nowVisible);
+      if (nowVisible) {
+        $('#hero-smart-bar').focus();
+      }
+      return false;
+    });
+  });
+</script>

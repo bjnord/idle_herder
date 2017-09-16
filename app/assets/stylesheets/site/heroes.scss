@@ -111,3 +111,12 @@
     }
   }
 }
+
+.wish-list-table {
+  width: 100%;
+  table-layout: fixed;
+
+  th.hero, td.hero {
+    width: 10%;
+  }
+}

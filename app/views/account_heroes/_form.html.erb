@@ -25,13 +25,7 @@
             <%= f.check_box :is_fodder, class: 'form-control' %>
           </div>
         </div>
-        <div class="col-sm-2">
-          <div class="form-group" style="text-align: center;">
-            <%= f.label :wish_list %><br />
-            <%= f.check_box :wish_list, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-sm-4">&nbsp;</div>
+        <div class="col-sm-6">&nbsp;</div>
       </div>
     </div>
   </div>
@@ -42,27 +36,12 @@
 <% end %>
 
 <script>
-  function setSelectedHeroId(heroId)
-  {
-    let inputTag = document.getElementById("account_hero_hero_id");
-    if (inputTag) {
-      inputTag.value = heroId;
-    } else {
-      console.error('setSelectedHeroId(' + heroId + "): can't find input tag for update");
-    }
-  }
   $(document).ready(function () {
     $("#account_hero_level").on('input', function () {
       $("#account_hero_shards").val('');
-      $("#account_hero_wish_list").prop('checked', false);
     });
     $("#account_hero_shards").on('input', function () {
       $("#account_hero_level").val('');
-      $("#account_hero_wish_list").prop('checked', false);
-    });
-    $("#account_hero_wish_list").on('input', function () {
-      $("#account_hero_level").val('');
-      $("#account_hero_shards").val('');
     });
   });
 </script>

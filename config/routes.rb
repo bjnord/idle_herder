@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   get 'about/contact'
 
   resources :heroes, only: [:index, :show]
-  resources :accounts, only: [:index, :show]
+  resources :accounts, only: [:index, :show] do
+    member do
+      get 'wish_list'
+    end
+  end
   resources :account_heroes, only: [:create]
 
   # these routes are JSON-only:

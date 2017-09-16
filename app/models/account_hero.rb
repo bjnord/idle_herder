@@ -14,6 +14,8 @@ class AccountHero < ApplicationRecord
   validate :level_and_shards_not_both_present
   validate :shard_type_has_shards_and_not_level
 
+  scope :wish_list, -> { where(level: 0, shards: 0) }
+
   # form submission via controller evades our custom setters, so:
   before_validation do
     self.level = self[:level]

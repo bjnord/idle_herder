@@ -19,6 +19,9 @@
             <li class="<%= active_class('accounts') %>">
               <%= link_to 'My Heroes', accounts_path %>
             </li>
+            <li class="<%= active_class('wish_list') %>">
+              <%= link_to 'My Wish List', '#' %>  <%# FIXME need current_account %>
+            </li>
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">

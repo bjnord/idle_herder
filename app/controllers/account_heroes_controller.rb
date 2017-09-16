@@ -20,7 +20,13 @@ class AccountHeroesController < ApplicationController
     @account_hero = @account.account_heroes.build(secure_params)
     respond_to do |format|
       if @account_hero.save
-        format.html { redirect_to account_url(@account), notice: 'Hero added' }
+        format.html {
+          if @account_hero.wish_list?
+            redirect_to wish_list_account_url(@account), notice: 'Hero added to wish list'
+          else
+            redirect_to account_url(@account), notice: 'Hero added'
+          end
+        }
         format.json { render :json, @account_hero, status: :created }
       else
         format.html { redirect_to account_url(@account), alert: "Couldn't add hero: #{@account_hero.errors.full_messages.join(', ')}" }

@@ -27,6 +27,8 @@ export default class HeroIcon extends React.Component
       } else if (this.props.hero.box_type == 'generic-shards') {
         title = this.props.hero.stars + '★ Generic'  // TODO faction name
         // TODO under-label with # of shards
+      } else if (this.props.hero.box_type == 'wish-list') {
+        title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
       }
     } else {
       title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';

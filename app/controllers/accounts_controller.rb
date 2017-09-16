@@ -12,4 +12,8 @@ class AccountsController < ApplicationController
   def show
     @account_hero = @account.account_heroes.build
   end
+
+  def wish_list
+    @account_hero = @account.account_heroes.build
+  end
 end
