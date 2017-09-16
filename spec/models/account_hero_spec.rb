@@ -52,6 +52,25 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
+    context "with max level" do
+      let(:hero) { build(:hero, stars: 5) }
+      let(:account_hero) { build(:account_hero, hero: hero, level: 100) }
+
+      it "should be valid" do
+        expect(account_hero).to be_valid
+      end
+    end
+
+    context "just over max level" do
+      let(:hero) { build(:hero, stars: 5) }
+      let(:account_hero) { build(:account_hero, hero: hero, level: 101) }
+
+      it "should not be valid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:level, 'is greater than maximum')).to be_truthy
+      end
+    end
+
     pending "#wish_list?"
   end
 
