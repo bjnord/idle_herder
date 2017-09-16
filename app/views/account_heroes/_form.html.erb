@@ -5,29 +5,7 @@
     <%= javascript_pack_tag('hero_smart_selector') %>
     <%= f.hidden_field :hero_id %>
 
-    <div class="container-fluid">
-      <div class="row no-gutters">
-        <div class="col-sm-2">
-          <div class="form-group">
-            <%= f.label :level %><br />
-            <%= f.text_field :level, value: empty_integer(@account_hero.level), class: 'form-control', style: 'width: 95%;' %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <%= f.label :shards %><br />
-            <%= f.text_field :shards, value: empty_integer(@account_hero.shards), class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group" style="text-align: center;">
-            <%= f.label :is_fodder %><br />
-            <%= f.check_box :is_fodder, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-sm-6">&nbsp;</div>
-      </div>
-    </div>
+    <%= render subform, f: f %>
   </div>
 
   <div class="actions">
