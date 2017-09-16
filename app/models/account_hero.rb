@@ -10,6 +10,7 @@ class AccountHero < ApplicationRecord
   validate :hero_or_shard_type_present
   validate :hero_and_shard_type_not_both_present
   validate :level_is_within_maximum
+  validate :shards_valid_for_this_hero
   validate :level_or_shards_present_unless_wish_list
   validate :level_and_shards_not_both_present
   validate :shard_type_has_shards_and_not_level
@@ -59,8 +60,13 @@ protected
   def level_is_within_maximum
     if hero && (level > hero.max_level)
       # FIXME use locale string
-      $stderr.puts "hero=#{hero.inspect} self=#{self.inspect}"
       errors.add(:level, 'is greater than maximum')
+    end
+  end
+
+  def shards_valid_for_this_hero
+    if hero && (shards > 0) && !hero.max_shards
+      errors.add(:shards, :invalid)
     end
   end
 

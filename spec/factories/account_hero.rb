@@ -8,8 +8,9 @@ FactoryGirl.define do
 
     # "sharded" is a specific hero (stars/name/faction) but in shards 1..n
     factory :sharded_account_hero do
-      level   nil
-      shards  { 1 + rand(20) }
+      association  :hero, factory: :shardable_hero
+      level        nil
+      shards       { 1 + rand(20) }
     end
 
     # "generic sharded" is just the shards 1..n (stars/faction)

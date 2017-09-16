@@ -71,6 +71,16 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
+    context "with shards for a non-shardable hero" do
+      let(:hero) { build(:hero, stars: 10) }
+      let(:account_hero) { build(:sharded_account_hero, hero: hero) }
+
+      it "should not be valid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:shards, :invalid)).to be_truthy
+      end
+    end
+
     pending "#wish_list?"
   end
 
