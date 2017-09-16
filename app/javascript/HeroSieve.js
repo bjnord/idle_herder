@@ -92,7 +92,7 @@ export default class HeroSieve
         let patterns = this.filters[key].map((regexp) => regexp.toString());
         console.debug(key + '=[' + patterns.join(' | ') + ']');
       } else {
-        console.debug(key + '=[' + Object.keys(this.filters[key]).join(',') + ']');
+        console.debug(key + '=[' + Object.keys(this.filters[key]).map((i) => { return i+':'+this.filters[key][i]; }).join(',') + ']');
       }
     }
   }
