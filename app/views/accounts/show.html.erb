@@ -31,6 +31,9 @@
       event.stopPropagation();
       var nowVisible = $('#add-hero-panel').toggle().is(':visible') ? 1 : 0;
       localStorageSetItem('add_hero_panel', nowVisible);
+      if (nowVisible) {
+        $('#hero-smart-bar').focus();
+      }
       return false;
     });
   });
