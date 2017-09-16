@@ -14,6 +14,10 @@ class ShardType < ApplicationRecord
     Hero::FACTIONS[self.faction]
   end
 
+  def max_shards
+    Hero::MAX_SHARDS[stars]
+  end
+
   def self.build_from_json(id)
     json = File.read(self.json_path(id))
     shard_type_h = JSON.parse(json)

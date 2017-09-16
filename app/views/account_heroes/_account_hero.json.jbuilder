@@ -3,7 +3,7 @@ if account_hero.hero
   json.box_type (account_hero.shards > 0) ? 'hero-shards' : ((account_hero.level > 0) ? 'hero' : 'wish-list')
   json.image_file "heroes/#{account_hero.hero.image_file}"
 elsif account_hero.shard_type
-  json.(account_hero.shard_type, :id, :stars, :faction)
+  json.(account_hero.shard_type, :id, :stars, :faction, :max_shards)
   json.box_type 'generic-shards'
   json.image_file "shards/#{account_hero.shard_type.image_file}"
 end

@@ -32,7 +32,6 @@
   }
   .hero-stamp {
     display: inline-block;
-    height: 62px;
     width: 62px;
     margin: 2px 3px;
     padding: 1px;
@@ -40,6 +39,20 @@
     &.selected {
       outline-style: dashed;
       outline-style: blue;
+    }
+    a {
+      text-decoration: none;
+    }
+    .shards-count {
+      background-color: #ddf1fd;
+      margin: 4px 0 2px;
+      height: 20px;
+      width: 62px;
+      text-align: center;
+
+      &.maxed {
+        background-color: #c1fcc1;
+      }
     }
   }
   .hero-image {
