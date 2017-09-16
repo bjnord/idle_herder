@@ -17,10 +17,10 @@
           </li>
           <% if user_signed_in? %>
             <li class="<%= active_class('accounts') %>">
-              <%= link_to 'My Heroes', accounts_path %>
+              <%= link_to 'My Heroes', account_path(current_account) %>
             </li>
             <li class="<%= active_class('wish_list') %>">
-              <%= link_to 'My Wish List', '#' %>  <%# FIXME need current_account %>
+              <%= link_to 'My Wish List', wish_list_account_path(current_account) %>
             </li>
           <% end %>
         </ul>
