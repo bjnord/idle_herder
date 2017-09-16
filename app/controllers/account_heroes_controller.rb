@@ -41,6 +41,6 @@ private
 
   def secure_params
     # NB take :account_id from @account to avoid shenanigans
-    params.require(:account_hero).permit(:hero_id, :shard_type_id, :level, :shards, :wish_list, :priority, :description)
+    params.require(:account_hero).permit(:hero_id, :shard_type_id, :level, :shards, :priority, :is_fodder, :description, :wish_list)
   end
 end
