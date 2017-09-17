@@ -45,3 +45,12 @@ en:
           attributes:
             role:
               inclusion: "is invalid"
+  flash:
+    actions:
+      create:
+        notice: "Added %{resource_name}"
+      update:
+        notice: "Updated %{resource_name}"
+      destroy:
+        notice: "Destroyed %{resource_name}"
+        alert: "Could not destroy %{resource_name}"

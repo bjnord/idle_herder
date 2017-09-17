@@ -8,9 +8,9 @@ export default class HeroStamp extends React.Component
     super(props);
   }
 
-  heroPath()
+  heroEditPath()
   {
-    return topURI + '/heroes/' + this.props.hero.id;
+    return topURI + '/account_heroes/' + this.props.hero.account_hero_id + '/edit';
   }
 
   render()
@@ -24,7 +24,7 @@ export default class HeroStamp extends React.Component
       shardCount = <div className={cls}>{this.props.hero.shards} / {this.props.hero.max_shards}</div>;
     }
     return (<li className="hero-stamp">
-      <a className="hero-link" href={this.heroPath()}>
+      <a className="hero-link" data-modal="true" href={this.heroEditPath()}>
         <HeroIcon hero={this.props.hero} />
         {shardCount}
       </a>

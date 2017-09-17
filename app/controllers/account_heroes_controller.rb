@@ -15,6 +15,11 @@ class AccountHeroesController < ApplicationController
     authorize! :read, @account_hero
   end
 
+  def edit
+    @account_hero = AccountHero.find(params[:id])
+    respond_modal_with @account_hero
+  end
+
   def create
     authorize! :create, @account
     @account_hero = @account.account_heroes.build(secure_params)
@@ -33,6 +38,15 @@ class AccountHeroesController < ApplicationController
         format.json { render json: @account_hero.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def update
+    authorize! :create, @account
+    @account_hero = AccountHero.find(params[:id])
+    @account_hero.update(secure_params)
+    # FIXME flash success/failure not appearing
+    # FIXME can't switch level to shards or vice-versa (silent error)
+    respond_modal_with @account_hero, location: account_url(@account)
   end
 
 private

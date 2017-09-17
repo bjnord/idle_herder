@@ -14,9 +14,9 @@ Rails.application.routes.draw do
       get 'wish_list'
     end
   end
-  resources :account_heroes, only: [:create]
+  resources :account_heroes, only: [:edit, :create, :update]
 
   # these routes are JSON-only:
   get 'account_heroes', to: 'account_heroes#index', constraints: lambda {|request| request.format.json? }
-  get 'account_heroes/:id', to: 'account_heroes#show', as: 'account_hero', constraints: lambda {|request| request.format.json? }
+  get 'account_heroes/:id', to: 'account_heroes#show', constraints: lambda {|request| request.format.json? }
 end
