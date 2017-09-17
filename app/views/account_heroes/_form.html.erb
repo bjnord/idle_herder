@@ -12,14 +12,3 @@
     <%= f.submit 'Add', class: 'btn btn-success' %>
   </div>
 <% end %>
-
-<script>
-  $(document).ready(function () {
-    $("#account_hero_level").on('input', function () {
-      $("#account_hero_shards").val('');
-    });
-    $("#account_hero_shards").on('input', function () {
-      $("#account_hero_level").val('');
-    });
-  });
-</script>

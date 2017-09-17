@@ -26,3 +26,14 @@
     <div class="col-sm-10">&nbsp;</div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $("#account_hero_level").on('input', function () {
+      $("#account_hero_shards").val('');
+    });
+    $("#account_hero_shards").on('input', function () {
+      $("#account_hero_level").val('');
+    });
+  });
+</script>
