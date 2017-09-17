@@ -1,11 +1,13 @@
 class AccountsController < ApplicationController
+  respond_to :html, :json
+
   before_action :authenticate_user!
+  before_action :build_account_hero, only: [:show, :wish_list]
   load_and_authorize_resource
 
   def index
-    @account = current_user.accounts.first
     respond_to do |format|
-      format.html { redirect_to @account }
+      format.html { redirect_to current_account }
     end
   end
 
@@ -14,6 +16,11 @@ class AccountsController < ApplicationController
   end
 
   def wish_list
-    @account_hero = @account.account_heroes.build
+  end
+
+protected
+
+  def build_account_hero
+    @account_hero = current_account.account_heroes.build
   end
 end

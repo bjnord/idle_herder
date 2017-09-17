@@ -56,7 +56,7 @@ private
   #      and we should take the :account_id from the path:
   #        @account = Account.find(params[:account_id])
   def set_account
-    @account = current_user.accounts.first
+    @account = current_account
   end
 
   def secure_params
