@@ -1,7 +1,7 @@
 <% if material.material_hero %>
   <li>
     <%= material.count %> x
-    <%= link_to "#{material.material_hero.stars}★ #{material.material_hero.name}", material.material_hero %>
+    <%= link_to "#{material.material_hero.stars}★ #{fmt_name(material.material_hero)}", material.material_hero %>
   </li>
 <% else %>
   <li>
