@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Three-Star Fusion</h4>
+  </div>
+  <div class="panel-body">
+    <h4>Wish List</h4>
+    <ul class="hero-box">
+      <% @account.account_heroes.wish_list.each do |account_hero| %>
+        <%= link_to account_hero.hero, class: 'hero-link' do %>
+          <li class="hero-stamp">
+            <%= image_tag "heroes/#{account_hero.hero.image_file}", height: 60, width: 60, title: fmt_title(account_hero.hero) %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <h4>3★ Needed</h4>
+    <%# here, show count of what we already have, incl. shards %>
+    <h4>3★ Not Needed</h4>
+    <%# here, also include those we already have enough of %>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Fodder</h4>
+  </div>
+  <div class="panel-body">
+    <ul class="hero-box">
+      <% @account.account_heroes.fodder.each do |account_hero| %>
+        <%= link_to account_hero.hero, class: 'hero-link' do %>
+          <li class="hero-stamp">
+            <%= image_tag "heroes/#{account_hero.hero.image_file}", height: 60, width: 60, title: fmt_title(account_hero.hero) %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
