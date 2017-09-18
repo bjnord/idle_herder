@@ -4,7 +4,7 @@ class ShardType < ApplicationRecord
   validates :id, presence: true
   validates :id, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|st| st.id.blank? }
   validates :stars, presence: true
-  validates :stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: Hero::MAX_STARS }, unless: Proc.new {|st| st.stars.blank? }
+  validates :stars, numericality: { only_integer: true, greater_than_or_equal_to: 3, less_than_or_equal_to: 5 }, unless: Proc.new {|st| st.stars.blank? }
   validates :faction, inclusion: {in: (0..Hero::FACTIONS.count-1), message: 'is not valid'}, unless: Proc.new {|st| st.faction.blank? }
 
   def faction=(faction)
