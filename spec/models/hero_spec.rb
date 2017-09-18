@@ -6,6 +6,15 @@ RSpec.describe Hero, type: :model do
     expect(subject).to be_valid
   end
 
+  context "with stars too high" do
+    let(:hero) { build(:hero, stars: 13) }
+
+    it "should not be valid" do
+      expect(hero).not_to be_valid
+      expect(hero.errors.added?(:stars, :less_than_or_equal_to, count: Hero::MAX_STARS)).to be_truthy
+    end
+  end
+
   describe "#faction_name" do
     context "with Abyss value" do
       let(:hero) { build(:hero, faction: 2) }
