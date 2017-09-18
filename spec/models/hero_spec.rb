@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Hero, type: :model do
   subject { build(:hero) }
   it "should be valid" do
     expect(subject).to be_valid
