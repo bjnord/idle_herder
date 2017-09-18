@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+patterns = []
+Hero.all.each do |h|
+  forms = Hero.where(name: h.name).order(:stars)
+  # verify stars are always consecutive:
+  expect = forms[0].stars
+  forms.each do |f|
+    abort "non-consecutive #{forms.inspect}" if f.stars != expect
+    expect += 1
+  end
+  # show forms for uniq'ing
+  patterns.push("#{h.stars}#{h.natural ? 'n' : ''} has #{forms.collect{|f| f.stars}.join(',')}")
+  # verify max_stars is set correctly
+  if h.max_stars != forms[-1].stars
+    abort "h.stars=#{h.stars}: h.max_stars=#{h.max_stars} != forms[-1].stars=#{forms[-1].stars}"
+  end
+end
+$stderr.puts patterns.uniq.join("\n")
