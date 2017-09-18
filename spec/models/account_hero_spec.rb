@@ -81,6 +81,15 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
+    context "with target_stars too high" do
+      let(:account_hero) { build(:account_hero, target_stars: 11) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:target_stars, :less_than_or_equal_to, count: Hero::MAX_STARS)).to be_truthy
+      end
+    end
+
     pending "#wish_list?"
   end
 

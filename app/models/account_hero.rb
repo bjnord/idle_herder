@@ -7,6 +7,9 @@ class AccountHero < ApplicationRecord
 
   validates :level, presence: true
   validates :shards, presence: true
+  validates :target_stars, presence: true
+  # FIXME needs to validate based on *this* hero's higher-star forms
+  validates :target_stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: Hero::MAX_STARS }, unless: Proc.new {|ah| ah.target_stars.blank? }
   validate :hero_or_shard_type_present
   validate :hero_and_shard_type_not_both_present
   validate :level_is_within_maximum
@@ -18,10 +21,13 @@ class AccountHero < ApplicationRecord
   scope :fodder, -> { where(is_fodder: true) }
   scope :wish_list, -> { where(level: 0, shards: 0).includes(:hero).order('heroes.faction, heroes.stars desc') }
 
-  # form submission via controller evades our custom setters, so:
   before_validation do
+    # form submission via controller evades our custom setters, so:
     self.level = self[:level]
     self.shards = self[:shards]
+    # FIXME this is temporary, until target_stars selector added to all forms
+    # set target_stars if caller didn't provide one:
+    self.target_stars ||= self.hero ? self.hero.stars : self.shard_type.stars
   end
 
   def level=(value)
