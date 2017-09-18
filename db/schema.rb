@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170916163023) do
+ActiveRecord::Schema.define(version: 20170918011940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,12 +50,7 @@ ActiveRecord::Schema.define(version: 20170916163023) do
     t.string "name", null: false
     t.integer "stars", null: false
     t.string "role", null: false
-    t.integer "power"
     t.string "image_file"
-    t.integer "health"
-    t.integer "attack"
-    t.integer "armor"
-    t.integer "speed"
     t.string "wiki_url"
     t.boolean "natural", default: false, null: false
     t.integer "faction", null: false

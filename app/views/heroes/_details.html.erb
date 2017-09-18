@@ -1,8 +1,3 @@
 <ul>
   <li><%= link_to 'Wiki', @hero.wiki_url %></li>
-  <% [:power, :health, :attack, :armor, :speed].each do |stat| %>
-    <% if v = @hero.send(stat) %>
-      <li><%= "#{stat.to_s.capitalize}: #{number_with_delimiter(v)}" %></li>
-    <% end %>
-  <% end %>
 </ul>

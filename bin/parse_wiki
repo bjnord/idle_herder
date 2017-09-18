@@ -162,14 +162,17 @@ def parse_a_section(section, hero_name)
           sect_attr['sources'] = acq_thru unless acq_thru.empty?
         end
       elsif ['power', 'health', 'attack', 'armor', 'speed'].include?(label_type)
-        div.css('div.pi-data-value').each do |value_div|
-          value = value_div.content.strip.to_i
-          if value <= 0
-            $stderr.puts "WARN: hero #{attr['name']}: invalid #{label_type}"
-          elsif
-            sect_attr[label_type] = value.to_i
-          end
-        end
+        # no longer store hero stats: the wiki stays more complete and is
+        # more useful, whereas idle_herder doesn't use the stats for anything
+        #
+        #div.css('div.pi-data-value').each do |value_div|
+        #  value = value_div.content.strip.to_i
+        #  if value <= 0
+        #    $stderr.puts "WARN: hero #{attr['name']}: invalid #{label_type}"
+        #  elsif
+        #    sect_attr[label_type] = value.to_i
+        #  end
+        #end
       else
         $stderr.puts "WARN: unknown label_type=[#{label_type}]"
       end
