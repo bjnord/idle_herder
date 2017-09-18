@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   resources :heroes, only: [:index, :show]
   resources :accounts, only: [:index, :show] do
     member do
+      get 'goals'
       get 'materials'
-      get 'wish_list'
     end
   end
   resources :account_heroes, only: [:edit, :create, :update]

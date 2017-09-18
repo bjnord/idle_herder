@@ -27,7 +27,7 @@ class AccountHeroesController < ApplicationController
       if @account_hero.save
         format.html {
           if @account_hero.wish_list?
-            redirect_to wish_list_account_url(@account), notice: 'Hero added to wish list'
+            redirect_to goals_account_url(@account), notice: 'Hero added to wish list'
           else
             redirect_to account_url(@account), notice: 'Hero added'
           end

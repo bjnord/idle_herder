@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   respond_to :html, :json
 
   before_action :authenticate_user!
-  before_action :build_account_hero, only: [:show, :wish_list]
+  before_action :build_account_hero, only: [:show, :goals]
   load_and_authorize_resource
 
   def index
@@ -14,10 +14,10 @@ class AccountsController < ApplicationController
   def show
   end
 
-  def materials
+  def goals
   end
 
-  def wish_list
+  def materials
   end
 
 protected
