@@ -8,8 +8,7 @@ class AccountHero < ApplicationRecord
   validates :level, presence: true
   validates :shards, presence: true
   validates :target_stars, presence: true
-  # FIXME needs to validate based on *this* hero's higher-star forms
-  validates :target_stars, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: Hero::MAX_STARS }, unless: Proc.new {|ah| ah.target_stars.blank? }
+  validates :target_stars, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|ah| ah.target_stars.blank? }
   validate :hero_or_shard_type_present
   validate :hero_and_shard_type_not_both_present
   validate :level_is_within_maximum
@@ -17,6 +16,7 @@ class AccountHero < ApplicationRecord
   validate :level_or_shards_present_unless_wish_list
   validate :level_and_shards_not_both_present
   validate :shard_type_has_shards_and_not_level
+  validate :target_stars_is_within_maximum
 
   scope :fodder, -> { where(is_fodder: true) }
   scope :wish_list, -> { where(level: 0, shards: 0).includes(:hero).order('heroes.faction, heroes.stars desc') }
@@ -101,6 +101,16 @@ protected
       if level > 0
         errors.add(:level, :invalid)
       end
+    end
+  end
+
+  def target_stars_is_within_maximum
+    if hero && (target_stars > hero.max_stars)
+      # FIXME use locale string
+      errors.add(:target_stars, 'is greater than maximum')
+    elsif shard_type && (target_stars != shard_type.stars)
+      # FIXME use locale string
+      errors.add(:target_stars, 'must be equal to stars for shardable')
     end
   end
 end

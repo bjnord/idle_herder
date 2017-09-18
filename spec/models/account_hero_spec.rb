@@ -53,7 +53,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "with max level" do
-      let(:hero) { build(:hero, stars: 5) }
+      let(:hero) { build(:five_star_hero) }
       let(:account_hero) { build(:account_hero, hero: hero, level: 100) }
 
       it "should be valid" do
@@ -62,7 +62,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "just over max level" do
-      let(:hero) { build(:hero, stars: 5) }
+      let(:hero) { build(:five_star_hero) }
       let(:account_hero) { build(:account_hero, hero: hero, level: 101) }
 
       it "should not be valid" do
@@ -72,7 +72,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "with shards for a non-shardable hero" do
-      let(:hero) { build(:hero, stars: 10) }
+      let(:hero) { build(:ten_star_hero) }
       let(:account_hero) { build(:sharded_account_hero, hero: hero) }
 
       it "should not be valid" do
@@ -81,12 +81,41 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
-    context "with target_stars too high" do
-      let(:account_hero) { build(:account_hero, target_stars: 11) }
+    context "with target_stars below 1" do
+      let(:account_hero) { build(:account_hero, target_stars: 0) }
 
       it "should be invalid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:target_stars, :less_than_or_equal_to, count: Hero::MAX_STARS)).to be_truthy
+        expect(account_hero.errors.added?(:target_stars, :greater_than, count: 0)).to be_truthy
+      end
+    end
+
+    context "with target_stars allowable for hero" do
+      let(:hero) { build(:hero, stars: 4, natural: false, max_stars: 5) }
+      let(:account_hero) { build(:account_hero, hero: hero, target_stars: 5) }
+
+      it "should be valid" do
+        expect(account_hero).to be_valid
+      end
+    end
+
+    context "with target_stars too high for hero" do
+      let(:hero) { build(:hero, stars: 5, natural: false, max_stars: 5) }
+      let(:account_hero) { build(:account_hero, hero: hero, target_stars: 6) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:target_stars, 'is greater than maximum')).to be_truthy
+      end
+    end
+
+    context "with target_stars incorrect for shard_type" do
+      let(:shard_type) { build(:shard_type, stars: 3) }
+      let(:account_hero) { build(:generic_sharded_account_hero, shard_type: shard_type, target_stars: 4) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:target_stars, 'must be equal to stars for shardable')).to be_truthy
       end
     end
 

@@ -14,6 +14,18 @@ FactoryGirl.define do
     natural    { h_natural }
     max_stars  { h_max_stars }
 
+    factory :five_star_hero do
+      stars      5
+      natural    false
+      max_stars  5
+    end
+
+    factory :ten_star_hero do
+      stars      10
+      natural    false
+      max_stars  10
+    end
+
     factory :shardable_hero do
       stars      { 3 + rand(3) }
       natural    false
