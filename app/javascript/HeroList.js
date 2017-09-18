@@ -15,6 +15,11 @@ export default class HeroList
     return sieve.filter(this.heroes);
   }
 
+  findById(id)
+  {
+    return this.heroes.find((hero) => (hero.id == id));
+  }
+
   static testHeroList()
   {
     return [

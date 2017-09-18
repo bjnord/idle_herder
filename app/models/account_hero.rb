@@ -25,9 +25,6 @@ class AccountHero < ApplicationRecord
     # form submission via controller evades our custom setters, so:
     self.level = self[:level]
     self.shards = self[:shards]
-    # FIXME this is temporary, until target_stars selector added to all forms
-    # set target_stars if caller didn't provide one:
-    self.target_stars ||= self.hero ? self.hero.stars : (self.shard_type ? self.shard_type.stars : nil)
   end
 
   def level=(value)

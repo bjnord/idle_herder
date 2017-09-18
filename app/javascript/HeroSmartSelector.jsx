@@ -14,7 +14,7 @@ export default class HeroSmartSelector extends React.Component
       heroList: new HeroList(),
       heroSieve: new HeroSieve(),
       smartText: '',
-      selectedHeroId: null,
+      selectedHero: null,
     };
     this.handleSmartTextChange = this.handleSmartTextChange.bind(this);
     this.handleHeroSelected = this.handleHeroSelected.bind(this);
@@ -27,7 +27,7 @@ export default class HeroSmartSelector extends React.Component
 
   handleHeroSelected(heroId)
   {
-    this.setState(() => ({selectedHeroId: heroId}));
+    this.setState(() => ({selectedHero: this.state.heroList.findById(heroId)}));
   }
 
   componentDidMount()
@@ -46,14 +46,16 @@ export default class HeroSmartSelector extends React.Component
   render()
   {
     let heroes = this.state.heroList.filteredHeroes(this.state.heroSieve);
-    let selectedHeroId = (heroes.length == 0) ? null : ((heroes.length == 1) ? heroes[0].id : this.state.selectedHeroId);
-    if (selectedHeroId && (typeof setSelectedHeroId !== 'undefined')) {
-      setSelectedHeroId(selectedHeroId);
+    let selectedHero = (heroes.length == 0) ? null : ((heroes.length == 1) ? heroes[0] : this.state.selectedHero);
+    if (selectedHero && (typeof setSelectedHero !== 'undefined')) {
+      setSelectedHero(selectedHero);
+    } else if (!selectedHero && (typeof unsetSelectedHero !== 'undefined')) {
+      unsetSelectedHero();
     }
     return (
       <div>
         <HeroSmartBar text={this.state.smartText} onTextChange={this.handleSmartTextChange} />
-        <HeroBox heroes={heroes} selectedHeroId={selectedHeroId} items="selstamps" onHeroSelected={this.handleHeroSelected}  />
+        <HeroBox heroes={heroes} selectedHeroId={selectedHero ? selectedHero.id : null} items="selstamps" onHeroSelected={this.handleHeroSelected}  />
       </div>
     );
   }
