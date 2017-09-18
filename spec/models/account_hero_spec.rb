@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe AccountHero, type: :model do
+  context "without hero or shard_type" do
+    let(:account_hero) { build(:account_hero, hero: nil) }
+
+    it "should be invalid" do
+      expect(account_hero).not_to be_valid
+      expect(account_hero.errors.added?(:base, :hero_or_shard_type_required)).to be_truthy
+    end
+  end
+
+  context "with both hero and shard_type" do
+    let(:hero) { build(:hero) }
+    let(:account_hero) { build(:generic_sharded_account_hero, hero: hero) }
+
+    it "should be invalid" do
+      expect(account_hero).not_to be_valid
+      expect(account_hero.errors.added?(:base, :hero_and_shard_type_together_invalid)).to be_truthy
+    end
+  end
+
   context "specific hero (stars/name/faction)" do
     # with level, without shards = default
     subject { build(:account_hero) }
@@ -31,7 +50,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should be invalid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:base, 'Either level or shards is required')).to be_truthy
+        expect(account_hero.errors.added?(:base, :level_or_shards_required)).to be_truthy
       end
     end
 
@@ -48,7 +67,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should not be valid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:base, 'Using both level and shards is invalid')).to be_truthy
+        expect(account_hero.errors.added?(:base, :level_and_shards_together_invalid)).to be_truthy
       end
     end
 
@@ -67,7 +86,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should not be valid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:level, 'is greater than maximum')).to be_truthy
+        expect(account_hero.errors.added?(:level, :cannot_exceed_for_this_hero, maximum: 100)).to be_truthy
       end
     end
 
@@ -77,7 +96,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should not be valid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:shards, :invalid)).to be_truthy
+        expect(account_hero.errors.added?(:shards, :invalid_for_this_hero)).to be_truthy
       end
     end
 
@@ -105,7 +124,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should be invalid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:target_stars, 'is greater than maximum')).to be_truthy
+        expect(account_hero.errors.added?(:target_stars, :cannot_exceed_for_this_hero, maximum: 5)).to be_truthy
       end
     end
 
@@ -115,7 +134,7 @@ RSpec.describe AccountHero, type: :model do
 
       it "should be invalid" do
         expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:target_stars, 'must be equal to stars for shardable')).to be_truthy
+        expect(account_hero.errors.added?(:target_stars, :must_equal_for_shard_type, eq_value: 3)).to be_truthy
       end
     end
 
@@ -126,15 +145,6 @@ RSpec.describe AccountHero, type: :model do
     subject { build(:generic_sharded_account_hero) }
     it "should be valid" do
       expect(subject).to be_valid
-    end
-
-    context "with hero" do
-      let(:account_hero) { build(:generic_sharded_account_hero, hero: FactoryGirl.build(:hero)) }
-
-      it "should not be valid" do
-        expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:base, 'Using both hero and shard_type is invalid')).to be_truthy
-      end
     end
 
     context "with level" do

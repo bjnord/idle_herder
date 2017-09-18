@@ -33,7 +33,7 @@ protected
 
   def target_present
     if self.material_hero_id.blank? && self.stars.blank? && self.faction.blank?
-      errors.add(:base, 'Material target cannot be blank')
+      errors.add(:base, :material_target_blank)
     end
   end
 end

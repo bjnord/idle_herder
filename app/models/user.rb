@@ -33,7 +33,7 @@ private
   def validate_invite
     return unless Rails.env.production?
     if self.invitation_code != "C#{rand(999999999).to_s.rjust(9, '0')}"
-      errors.add(:invitation_code, 'is invalid')
+      errors.add(:invitation_code, :invalid)
     end
   end
 end

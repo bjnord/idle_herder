@@ -27,7 +27,7 @@ class AccountHero < ApplicationRecord
     self.shards = self[:shards]
     # FIXME this is temporary, until target_stars selector added to all forms
     # set target_stars if caller didn't provide one:
-    self.target_stars ||= self.hero ? self.hero.stars : self.shard_type.stars
+    self.target_stars ||= self.hero ? self.hero.stars : (self.shard_type ? self.shard_type.stars : nil)
   end
 
   def level=(value)
@@ -52,44 +52,39 @@ protected
 
   def hero_or_shard_type_present
     unless hero || shard_type
-      # FIXME use locale string
-      errors.add(:base, 'Either hero or shard_type is required')
+      errors.add(:base, :hero_or_shard_type_required)
     end
   end
 
   def hero_and_shard_type_not_both_present
     if hero && shard_type
-      # FIXME use locale string
-      errors.add(:base, 'Using both hero and shard_type is invalid')
+      errors.add(:base, :hero_and_shard_type_together_invalid)
     end
   end
 
   def level_is_within_maximum
     if hero && (level > hero.max_level)
-      # FIXME use locale string
-      errors.add(:level, 'is greater than maximum')
+      errors.add(:level, :cannot_exceed_for_this_hero, maximum: hero.max_level)
     end
   end
 
   def shards_valid_for_this_hero
     if hero && (shards > 0) && !hero.max_shards
-      errors.add(:shards, :invalid)
+      errors.add(:shards, :invalid_for_this_hero)
     end
   end
 
   def level_or_shards_present_unless_wish_list
     unless wish_list
       if (level < 1) && (shards < 1)
-        # FIXME use locale string
-        errors.add(:base, 'Either level or shards is required')
+        errors.add(:base, :level_or_shards_required)
       end
     end
   end
 
   def level_and_shards_not_both_present
     if (level > 0) && (shards > 0)
-      # FIXME use locale string
-      errors.add(:base, 'Using both level and shards is invalid')
+      errors.add(:base, :level_and_shards_together_invalid)
     end
   end
 
@@ -106,11 +101,9 @@ protected
 
   def target_stars_is_within_maximum
     if hero && (target_stars > hero.max_stars)
-      # FIXME use locale string
-      errors.add(:target_stars, 'is greater than maximum')
+      errors.add(:target_stars, :cannot_exceed_for_this_hero, maximum: hero.max_stars)
     elsif shard_type && (target_stars != shard_type.stars)
-      # FIXME use locale string
-      errors.add(:target_stars, 'must be equal to stars for shardable')
+      errors.add(:target_stars, :must_equal_for_shard_type, eq_value: shard_type.stars)
     end
   end
 end

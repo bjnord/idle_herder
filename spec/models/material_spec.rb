@@ -6,6 +6,15 @@ RSpec.describe Material, type: :model do
     expect(subject).to be_valid
   end
 
+  context "with no material_hero, stars, or faction" do
+    let(:material) { build(:material, material_hero: nil, stars: nil, faction: nil) }
+
+    it "should be invalid" do
+      expect(material).not_to be_valid
+      expect(material.errors.added?(:base, :material_target_blank)).to be_truthy
+    end
+  end
+
   describe "#faction_name" do
     context "with Fortress value" do
       let(:material) { build(:material, faction: 1) }
