@@ -17,6 +17,9 @@ class ShardType < ApplicationRecord
   def max_shards
     Hero::MAX_SHARDS[stars]
   end
+  def max_stars
+    stars
+  end
 
   def self.build_from_json(id)
     json = File.read(self.json_path(id))
@@ -24,6 +27,10 @@ class ShardType < ApplicationRecord
     shard_type_h['image_file'] = shard_type_h.delete('img')
     shard_type = ShardType.new(shard_type_h)
     shard_type
+  end
+
+  def asset_path
+    "shards/#{image_file}"
   end
 
 protected

@@ -5,6 +5,7 @@ FactoryGirl.define do
     association   :hero
     level         { 1 + rand(40) }
     shards        nil
+    target_stars  { hero ? hero.stars : nil }
 
     # "sharded" is a specific hero (stars/name/faction) but in shards 1..n
     factory :sharded_account_hero do
@@ -19,6 +20,7 @@ FactoryGirl.define do
       association   :shard_type
       level         nil
       shards        { 1 + rand(20) }
+      target_stars  { shard_type ? shard_type.stars : nil }
     end
 
     # "wish list" is a specific hero (stars/name/faction) user doesn't have

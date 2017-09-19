@@ -18,9 +18,9 @@ en:
           hero_and_shard_type_together_invalid: 'Using both hero and shard type is invalid'
           level_or_shards_required: 'Either level or shards is required'
           level_and_shards_together_invalid: 'Using both level and shards is invalid'
+          must_be_at_least_for_this_hero: "must be at least %{minimum} for this hero"
           cannot_exceed_for_this_hero: "can't exceed %{maximum} for this hero"
           invalid_for_this_hero: 'invalid for this hero'
-          must_equal_for_shard_type: 'must equal %{eq_value} for shard type'
         material:
           material_target_blank: "Material target can't be blank"
       messages:

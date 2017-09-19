@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe AccountHero, type: :model do
   context "without hero or shard_type" do
-    let(:account_hero) { build(:account_hero, hero: nil) }
+    let(:account_hero) { build(:account_hero, hero: nil, shard_type: nil) }
 
     it "should be invalid" do
       expect(account_hero).not_to be_valid
       expect(account_hero.errors.added?(:base, :hero_or_shard_type_required)).to be_truthy
+    end
+
+    it "should have an empty target" do
+      expect(account_hero.target).to be_nil
     end
   end
 
@@ -25,6 +29,9 @@ RSpec.describe AccountHero, type: :model do
     subject { build(:account_hero) }
     it "should be valid" do
       expect(subject).to be_valid
+    end
+    it "should have a Hero target" do
+      expect(subject.target).to be_a_kind_of(Hero)
     end
 
     context "with nil level" do
@@ -109,6 +116,16 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
+    context "with target_stars too low for hero" do
+      let(:hero) { build(:hero, stars: 3, is_natural: false, max_stars: 3) }
+      let(:account_hero) { build(:account_hero, hero: hero, target_stars: 2) }
+
+      it "should be invalid" do
+        expect(account_hero).not_to be_valid
+        expect(account_hero.errors.added?(:target_stars, :must_be_at_least_for_this_hero, minimum: 3)).to be_truthy
+      end
+    end
+
     context "with target_stars allowable for hero" do
       let(:hero) { build(:hero, stars: 4, is_natural: false, max_stars: 5) }
       let(:account_hero) { build(:account_hero, hero: hero, target_stars: 5) }
@@ -128,13 +145,22 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
-    context "with target_stars incorrect for shard_type" do
-      let(:shard_type) { build(:shard_type, stars: 3) }
-      let(:account_hero) { build(:generic_sharded_account_hero, shard_type: shard_type, target_stars: 4) }
+    context "without target_stars for sharded_account_hero" do
+      let(:account_hero) { create(:sharded_account_hero, target_stars: nil) }
 
-      it "should be invalid" do
-        expect(account_hero).not_to be_valid
-        expect(account_hero.errors.added?(:target_stars, :must_equal_for_shard_type, eq_value: 3)).to be_truthy
+      it "should be valid, and fill in target_stars" do
+        expect(account_hero).to be_valid
+        expect(account_hero.target_stars).to be == account_hero.target_stars
+      end
+    end
+
+    context "with target_stars too high for sharded_account_hero" do
+      let(:hero) { build(:shardable_hero, stars: 4) }
+      let(:account_hero) { build(:sharded_account_hero, hero: hero, target_stars: 6) }
+
+      it "should be valid, and override target_stars" do
+        expect(account_hero).to be_valid
+        expect(account_hero.target_stars).to be == account_hero.target_stars
       end
     end
 
@@ -145,6 +171,9 @@ RSpec.describe AccountHero, type: :model do
     subject { build(:generic_sharded_account_hero) }
     it "should be valid" do
       expect(subject).to be_valid
+    end
+    it "should have a ShardType target" do
+      expect(subject.target).to be_a_kind_of(ShardType)
     end
 
     context "with level" do

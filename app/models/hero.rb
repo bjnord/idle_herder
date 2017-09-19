@@ -80,6 +80,10 @@ class Hero < ApplicationRecord
     @other_stars ||= Hero.where(name: self.name).where.not(stars: self.stars).order('stars desc')
   end
 
+  def asset_path
+    "heroes/#{image_file}"
+  end
+
 protected
 
   def self.json_path(id)

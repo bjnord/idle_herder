@@ -1,8 +1,4 @@
-<% if @account_hero.hero %>
-  <%= image_tag "heroes/#{@account_hero.hero.image_file}", height: 40, width: 40, class: 'edit-hero-image' %>
-<% elsif @account_hero.shard_type %>
-  <%= image_tag "shards/#{@account_hero.shard_type.image_file}", height: 40, width: 40, class: 'edit-hero-image' %>
-<% end %>
+<%= image_tag @account_hero.target.asset_path, height: 40, width: 40, class: 'edit-hero-image' %>
 
 <%= form_for(@account_hero, remote: request.xhr?, html: { data: { modal: true }, autocomplete: 'off' }) do |f| %>
   <div class="modal-body">

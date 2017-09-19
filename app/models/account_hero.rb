@@ -16,7 +16,7 @@ class AccountHero < ApplicationRecord
   validate :level_or_shards_present_unless_wish_list
   validate :level_and_shards_not_both_present
   validate :shard_type_has_shards_and_not_level
-  validate :target_stars_is_within_maximum
+  validate :target_stars_is_within_limits
 
   scope :fodder, -> { where(is_fodder: true) }
   scope :wish_list, -> { where(level: 0, shards: 0).includes(:hero).order('heroes.faction, heroes.stars desc') }
@@ -25,6 +25,10 @@ class AccountHero < ApplicationRecord
     # form submission via controller evades our custom setters, so:
     self.level = self[:level]
     self.shards = self[:shards]
+    # force target_stars value for shards/shard_type heroes:
+    if target && (shard_type || (shards > 0))
+      self.target_stars = target.stars
+    end
   end
 
   def level=(value)
@@ -47,6 +51,10 @@ class AccountHero < ApplicationRecord
   end
   def wish_list
     (@wish_list.blank? || (@wish_list == 0)) ? nil : '1'
+  end
+
+  def target
+    hero || shard_type
   end
 
 protected
@@ -100,11 +108,12 @@ protected
     end
   end
 
-  def target_stars_is_within_maximum
-    if hero && (target_stars > hero.max_stars)
-      errors.add(:target_stars, :cannot_exceed_for_this_hero, maximum: hero.max_stars)
-    elsif shard_type && (target_stars != shard_type.stars)
-      errors.add(:target_stars, :must_equal_for_shard_type, eq_value: shard_type.stars)
+  def target_stars_is_within_limits
+    return if !target
+    if target_stars < target.stars
+      errors.add(:target_stars, :must_be_at_least_for_this_hero, minimum: target.stars)
+    elsif target_stars > target.max_stars
+      errors.add(:target_stars, :cannot_exceed_for_this_hero, maximum: target.max_stars)
     end
   end
 end
