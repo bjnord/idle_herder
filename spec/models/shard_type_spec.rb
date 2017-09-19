@@ -15,12 +15,29 @@ RSpec.describe ShardType, type: :model do
     end
   end
 
-  context "with stars too high" do
+  context "with stars in 6..8" do
     let(:shard_type) { build(:shard_type, stars: 6) }
 
     it "should not be valid" do
       expect(shard_type).not_to be_valid
       expect(shard_type.errors.added?(:stars, :less_than_or_equal_to, count: 5)).to be_truthy
+    end
+  end
+
+  context "with stars=9" do
+    let(:shard_type) { build(:shard_type, stars: 9) }
+
+    it "should be valid" do
+      expect(shard_type).to be_valid
+    end
+  end
+
+  context "with stars too high" do
+    let(:shard_type) { build(:shard_type, stars: 10) }
+
+    it "should not be valid" do
+      expect(shard_type).not_to be_valid
+      expect(shard_type.errors.added?(:stars, :less_than_or_equal_to, count: 9)).to be_truthy
     end
   end
 end

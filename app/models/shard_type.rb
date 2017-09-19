@@ -4,8 +4,9 @@ class ShardType < ApplicationRecord
   validates :id, presence: true
   validates :id, numericality: { only_integer: true, greater_than: 0 }, unless: Proc.new {|st| st.id.blank? }
   validates :stars, presence: true
-  validates :stars, numericality: { only_integer: true, greater_than_or_equal_to: 3, less_than_or_equal_to: 5 }, unless: Proc.new {|st| st.stars.blank? }
+  validates :stars, numericality: { only_integer: true, greater_than_or_equal_to: 3, less_than_or_equal_to: 9 }, unless: Proc.new {|st| st.stars.blank? }
   validates :faction, inclusion: {in: (0..Hero::FACTIONS.count-1), message: 'is not valid'}, unless: Proc.new {|st| st.faction.blank? }
+  validate :stars_not_678
 
   def faction=(faction)
     super(faction.respond_to?(:to_str) ? Hero::FACTIONS.index(faction) : faction)
@@ -34,6 +35,12 @@ class ShardType < ApplicationRecord
   end
 
 protected
+
+  def stars_not_678
+    if stars.between?(6, 8)
+      errors.add(:stars, :less_than_or_equal_to, count: 5)
+    end
+  end
 
   def self.json_path(id)
     Rails.root.join('db', 'data', 'shard_types', "#{id}.json")

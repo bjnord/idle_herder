@@ -366,6 +366,17 @@ def emit_shard_types
       f.puts shard_type_h.to_json
     end
   end
+  # also need this generic one for 10* awakening
+  $highest_shard_type_id += 1
+  shard_type_h = {
+    id: $highest_shard_type_id,
+    stars: 9,
+    img: '5-Any-shard-icon.png',
+  }
+  path = File.join('db', 'data', 'shard_types', "#{$highest_shard_type_id}.json")
+  File.open(path, 'w') do |f|
+    f.puts shard_type_h.to_json
+  end
 end
 
 def emit_sources
