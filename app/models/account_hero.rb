@@ -19,7 +19,8 @@ class AccountHero < ApplicationRecord
   validate :target_stars_is_within_limits
 
   scope :fodder, -> { where(is_fodder: true) }
-  scope :wish_list, -> { where(level: 0, shards: 0).includes(:hero).order('heroes.faction, heroes.stars desc') }
+  scope :wish_list, -> { where(level: 0, shards: 0).includes(:hero).order('heroes.stars desc, heroes.faction') }
+  scope :stars_under_target, -> { where('level > 0 and heroes.stars < target_stars').joins(:hero).order('target_stars desc, heroes.faction') }
 
   before_validation do
     # form submission via controller evades our custom setters, so:

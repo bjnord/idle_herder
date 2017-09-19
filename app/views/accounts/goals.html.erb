@@ -3,12 +3,34 @@
 <%# FIXME copy-pasted from accounts#show ... absract out common code and CSS
     (e.g. split #add-hero-panel to #add-wish-panel + .add-hero-panel) %>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">My Hero Fusions</h4>
+  </div>
+  <div class="panel-body">
+    <table class="table wish-list-table">
+      <tr>
+        <th class="hero">My Hero</th>
+        <th class="hero">Target Hero</th>
+        <th>Materials Needed</th>
+      </tr>
+      <%= render partial: 'account_heroes/fusion_hero', collection: @account.account_heroes.stars_under_target %>
+    </table>
+  </div>
+</div>
+
 <div class="panel-group">
   <div id="add-hero-panel" class="panel panel-default" style="display: none;">
     <div class="panel-heading">
       <h4 class="panel-title">Add to Wish List</h4>
     </div>
     <div class="panel-body">
+      <div>
+        <p class="form-instructions">
+          Add a hero that you <b>do not yet have in any form</b>.
+          <%= link_to image_tag('help-icon.png', size: '16x16'), '#', { 'class' => 'tooltip-qm', 'data-toggle' => 'tooltip', 'title' => 'For heroes you already have, but want at a higher star level, set their "Target stars" to the star level you want.' }  %>
+        </p>
+      </div>
       <%= render 'account_heroes/form', subform: 'account_heroes/form_wish_fields' %>
     </div>
   </div>
