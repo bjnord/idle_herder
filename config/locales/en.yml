@@ -5,6 +5,9 @@ en:
         is_fodder:
           one: Fodder?
           name: Fodder?
+        is_natural:
+          one: Natural?
+          name: Natural?
         wish_list:
           one: 'Wish list?'
           name: 'Wish list?'

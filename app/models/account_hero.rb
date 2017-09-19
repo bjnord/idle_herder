@@ -35,6 +35,10 @@ class AccountHero < ApplicationRecord
     super(value || 0)
   end
 
+  def fodder?
+    is_fodder
+  end
+
   # NB don't mix these two! <https://goo.gl/pNYdjZ>
   #    the method is for Rails code (derived value)
   #    the accessor is for the form checkbox (independent value, normalized)
