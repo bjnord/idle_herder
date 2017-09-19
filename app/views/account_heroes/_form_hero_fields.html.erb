@@ -1,57 +1,18 @@
 <div id="account-hero-fields" class="container-fluid">
-  <div class="row no-gutters">
-    <div class="col-sm-2">
-      <div class="form-group">
-        <%= f.label :level %><br />
-        <%= f.text_field :level, value: empty_integer(@account_hero.level), class: 'form-control', style: 'width: 95%;' %>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group">
-        <%= f.label :shards %><br />
-        <%= f.text_field :shards, value: empty_integer(@account_hero.shards), class: 'form-control' %>
-      </div>
-    </div>
-    <div class="col-sm-6">&nbsp;</div>
-  </div>
-  <% if show_target_stars(@account_hero) %>
-    <div id="target-stars-row" class="row no-gutters" style="margin-bottom: 10px;">
-      <div class="col-sm-6">
-        <div class="form-check form-check-inline">
-          <%= f.label :target_stars, class: 'form-check-label' %><br />
-          <% (1..Hero::MAX_STARS).each do |stars| %>
-            <label id="target-stars-<%= stars %>" class="form-check-label" style="display: <%= show_target_stars_label(@account_hero, stars) ? 'inline-block' : 'none' %>;">
-              <%= f.label :target_stars, value: stars %>
-              <%= f.radio_button :target_stars, stars, class: 'form-check-input', style: 'margin-right: 12px;' %>
-            </label>
-          <% end %>
-        </div>
-      </div>
-      <div class="col-sm-6">&nbsp;</div>
-    </div>
-  <% end %>
-  <div class="row no-gutters" style="margin-bottom: 8px;">
-    <div class="col-sm-2">
-      <div class="form-check">
-        <label class="form-check-label">
-          <%= f.check_box :is_fodder, class: 'form-check-input' %>
-          <%= f.label :is_fodder %><br />
-        </label>
-      </div>
-    </div>
-    <div class="col-sm-10">&nbsp;</div>
-  </div>
+  <%= render 'account_heroes/form_level_shards_row', f: f %>
+  <%= render 'account_heroes/form_target_stars_row', f: f %>
+  <%= render 'account_heroes/form_fodder_row', f: f %>
 </div>
 
 <script>
   $(document).ready(function () {
-    $("#account_hero_level").on('input', function () {
-      $("#account_hero_shards").val('');
-      $("#target-stars-row").show();
+    $('#account_hero_level').on('input', function () {
+      $('#account_hero_shards').val('');
+      $('#target-stars-row').show();
     });
-    $("#account_hero_shards").on('input', function () {
-      $("#account_hero_level").val('');
-      $("#target-stars-row").hide();
+    $('#account_hero_shards').on('input', function () {
+      $('#account_hero_level').val('');
+      $('#target-stars-row').hide();
     });
   });
 </script>
