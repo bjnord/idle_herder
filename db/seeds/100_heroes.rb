@@ -22,9 +22,9 @@ $stderr.puts "pass 2 done: Material.count=#{Material.count}"
   when 1, 2, 3, 10
     h.max_stars = h.stars
   when 6, 7, 8, 9
-    h.max_stars = h.natural ? 10 : 9
+    h.max_stars = h.natural? ? 10 : 9
   when 4, 5
-    if h.natural
+    if h.natural?
       h.max_stars = 10
     elsif Hero.find_by(name: h.name, stars: 6)
       h.max_stars = 9

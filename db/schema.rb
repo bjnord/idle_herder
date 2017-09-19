@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918160712) do
+ActiveRecord::Schema.define(version: 20170918233241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170918160712) do
     t.string "role", null: false
     t.string "image_file"
     t.string "wiki_url"
-    t.boolean "natural", default: false, null: false
+    t.boolean "is_natural", default: false, null: false
     t.integer "faction", null: false
     t.integer "max_stars", default: 10, null: false
     t.index ["id"], name: "index_heroes_on_id", unique: true

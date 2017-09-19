@@ -10,7 +10,7 @@ Hero.all.each do |h|
     expect += 1
   end
   # show forms for uniq'ing
-  patterns.push("#{h.stars}#{h.natural ? 'n' : ''} has #{forms.collect{|f| f.stars}.join(',')}")
+  patterns.push("#{h.stars}#{h.natural? ? 'n' : ''} has #{forms.collect{|f| f.stars}.join(',')}")
   # verify max_stars is set correctly
   if h.max_stars != forms[-1].stars
     abort "h.stars=#{h.stars}: h.max_stars=#{h.max_stars} != forms[-1].stars=#{forms[-1].stars}"

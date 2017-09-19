@@ -30,6 +30,10 @@ class Hero < ApplicationRecord
     faction.nil? ? nil : FACTIONS[faction]
   end
 
+  def natural?
+    is_natural
+  end
+
   def max_level
     MAX_LEVELS[stars]
   end
@@ -41,6 +45,7 @@ class Hero < ApplicationRecord
     json = File.read(self.json_path(id))
     hero_h = JSON.parse(json)
     hero_h['image_file'] = hero_h.delete('img')
+    hero_h['is_natural'] = hero_h.delete('natural') ? true : false
     hero = Hero.new(hero_h.except('img_src', 'fuses_into', 'fused_from', 'sources'))
     if hero_h['fused_from']
       hero.materials_attributes = hero_h['fused_from'].collect do |ff|

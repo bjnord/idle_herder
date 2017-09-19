@@ -110,7 +110,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "with target_stars allowable for hero" do
-      let(:hero) { build(:hero, stars: 4, natural: false, max_stars: 5) }
+      let(:hero) { build(:hero, stars: 4, is_natural: false, max_stars: 5) }
       let(:account_hero) { build(:account_hero, hero: hero, target_stars: 5) }
 
       it "should be valid" do
@@ -119,7 +119,7 @@ RSpec.describe AccountHero, type: :model do
     end
 
     context "with target_stars too high for hero" do
-      let(:hero) { build(:hero, stars: 5, natural: false, max_stars: 5) }
+      let(:hero) { build(:hero, stars: 5, is_natural: false, max_stars: 5) }
       let(:account_hero) { build(:account_hero, hero: hero, target_stars: 6) }
 
       it "should be invalid" do
