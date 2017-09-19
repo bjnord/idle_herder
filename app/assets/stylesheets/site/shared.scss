@@ -43,3 +43,6 @@ input[type=checkbox].form-control {
 .form-instructions {
   margin: 12px 0 0;
 }
+form > .fields {  // don't apply this to modal-body > .fields
+  padding-bottom: 8px;
+}
