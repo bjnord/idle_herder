@@ -39,6 +39,9 @@ class AccountHero < ApplicationRecord
   def shards=(value)
     super(value || 0)
   end
+  def sharded?
+    shards > 0
+  end
 
   def fodder?
     is_fodder

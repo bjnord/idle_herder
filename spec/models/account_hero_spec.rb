@@ -33,6 +33,9 @@ RSpec.describe AccountHero, type: :model do
     it "should have a Hero target" do
       expect(subject.target).to be_a_kind_of(Hero)
     end
+    it "should not be sharded" do
+      expect(subject.sharded?).to be_falsey
+    end
 
     context "with nil level" do
       let(:account_hero) { build(:sharded_account_hero, level: nil) }
@@ -66,6 +69,9 @@ RSpec.describe AccountHero, type: :model do
 
       it "should be valid" do
         expect(account_hero).to be_valid
+      end
+      it "should be sharded" do
+        expect(account_hero.sharded?).to be_truthy
       end
     end
 
@@ -174,6 +180,9 @@ RSpec.describe AccountHero, type: :model do
     end
     it "should have a ShardType target" do
       expect(subject.target).to be_a_kind_of(ShardType)
+    end
+    it "should be sharded" do
+      expect(subject.sharded?).to be_truthy
     end
 
     context "with level" do
