@@ -7,11 +7,37 @@ export default class HeroList
     } else {
       this.heroes = [];
     }
+    this.sorted = false;
   }
 
   filteredHeroes(sieve)
   {
-    // TODO sorting of this.heroes will go here
+    if (!this.sorted) {
+      this.heroes = this.heroes.sort((a, b) => {
+        // highest stars first
+        if (a.stars < b.stars) {
+          return 1;
+        } else if (a.stars > b.stars) {
+          return -1;
+        }
+        if (('level' in a) && ('level' in b)) {
+          // highest level first
+          if (a.level < b.level) {
+            return 1;
+          } else if (a.level > b.level) {
+            return -1;
+          }
+        }
+        // hero name alphabetical
+        if (a.name < b.name) {
+          return -1;
+        } else if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+      this.sorted = true;
+    }
     return sieve.filter(this.heroes);
   }
 
