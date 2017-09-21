@@ -1,6 +1,6 @@
-<% unless @hero.materials.empty? %>
+<% unless @hero.sorted_materials.empty? %>
   <h3>Fused from</h3>
   <ul>
-    <%= render partial: 'material', collection: @hero.materials %>
+    <%= render partial: 'material', collection: @hero.sorted_materials %>
   </ul>
 <% end %>

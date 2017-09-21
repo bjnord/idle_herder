@@ -1,8 +1,11 @@
-<tr>
-  <td class="hero"><%= image_tag "heroes/#{fusion_hero.hero.image_file}", height: 60, width: 60, title: fmt_title(fusion_hero.hero) %></td>
-  <% target_hero = Hero.find_by(name: fusion_hero.hero.name, stars: fusion_hero.target_stars) %>
-  <td class="hero"><%= image_tag "heroes/#{target_hero.image_file}", height: 60, width: 60, title: fmt_title(target_hero) %></td>
-  <td>
-    <%= render 'account_heroes/fusion_materials' %>
-  </td>
-</tr>
+<li style="margin-left: 10px;">
+  <%# TODO render this as decorator image %>
+  <span><%= fusion_hero.decorator.to_s %></span>
+  <% if fusion_hero.level %>
+    <span><%= fmt_title(fusion_hero) %><%= " #{fusion_hero.fodder? ? 'F' : ''} L#{fusion_hero.level} S#{fusion_hero.shards}" %></span>
+  <% elsif fusion_hero.name %>
+    <span><%= fmt_title(fusion_hero) %></span>
+  <% else %>
+    <span><%= "#{fusion_hero.stars}★ #{Hero.faction_name_of(fusion_hero.faction)}" %></span>
+  <% end %>
+</li>

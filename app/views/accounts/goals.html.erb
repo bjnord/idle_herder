@@ -14,7 +14,7 @@
         <th class="hero">Target Hero</th>
         <th>Materials Needed</th>
       </tr>
-      <%= render partial: 'account_heroes/fusion_hero', collection: @account.account_heroes.stars_under_target %>
+      <%= render partial: 'account_heroes/goal', collection: @account.account_heroes.stars_under_target %>
     </table>
   </div>
 </div>
@@ -45,7 +45,7 @@
           <th class="hero">Hero</th>
           <th>Materials Needed</th>
         </tr>
-        <%= render partial: 'account_heroes/wish_list_hero', collection: @account.account_heroes.wish_list %>
+        <%= render partial: 'account_heroes/wish', collection: @account.account_heroes.wish_list %>
       </table>
     </div>
   </div>

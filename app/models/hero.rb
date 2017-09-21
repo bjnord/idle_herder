@@ -72,6 +72,26 @@ class Hero < ApplicationRecord
     true
   end
 
+  # 1. first: other forms of myself ("== name")
+  # 2. last: "generic" materials (!material_hero)
+  # 3. sort the rest by star level, highest first
+  def sorted_materials
+    @sorted_materials ||= materials.to_a.sort do |a, b|
+      case
+      when a.material_hero && (a.material_hero.name == name)
+        -1
+      when b.material_hero && (b.material_hero.name == name)
+        1
+      when a.material_hero && !b.material_hero
+        -1
+      when !a.material_hero && b.material_hero
+        1
+      else
+        b.stars <=> a.stars
+      end
+    end
+  end
+
   def material_of
     @material_of ||= Material.where(material_hero_id: self.id).includes(:hero).order('heroes.stars desc', 'heroes.name').collect {|m| m.hero }
   end

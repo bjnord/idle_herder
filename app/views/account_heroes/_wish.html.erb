@@ -1,0 +1,6 @@
+<tr>
+  <td class="hero"><%= image_tag "heroes/#{wish.hero.image_file}", height: 60, width: 60, title: fmt_title(wish.hero) %></td>
+  <td>
+    <%= render 'account_heroes/fusion_materials', target_hero: wish.hero %>
+  </td>
+</tr>

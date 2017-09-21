@@ -1,0 +1,9 @@
+<li style="border: 1px solid #ccc; display: inline-block; padding: 4px;">
+  <div>
+    <ol style="list-style-type: decimal;">
+      <% fusion_group.each do |fusion_hero| %>
+        <%= render partial: 'account_heroes/fusion_hero', object: fusion_hero %>
+      <% end %>
+    </ol>
+  </div>
+</li>
