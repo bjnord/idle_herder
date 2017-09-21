@@ -27,7 +27,7 @@ class AccountHero < ApplicationRecord
     self.level = self[:level]
     self.shards = self[:shards]
     # force target_stars value for shards/shard_type heroes:
-    if target && (shard_type || (shards > 0))
+    if target && (shard_type || sharded?)
       self.target_stars = target.stars
     end
   end
@@ -35,12 +35,15 @@ class AccountHero < ApplicationRecord
   def level=(value)
     super(value || 0)
   end
+  def leveled?
+    level && (level > 0)
+  end
 
   def shards=(value)
     super(value || 0)
   end
   def sharded?
-    shards > 0
+    shards && (shards > 0)
   end
 
   def fodder?
@@ -51,7 +54,7 @@ class AccountHero < ApplicationRecord
   #    the method is for Rails code (derived value)
   #    the accessor is for the form checkbox (independent value, normalized)
   def wish_list?
-    (!level || (level < 1)) && (!shards || (shards < 1))
+    !leveled? && !sharded?
   end
   def wish_list
     (@wish_list.blank? || (@wish_list == 0)) ? nil : '1'
@@ -82,31 +85,29 @@ protected
   end
 
   def shards_valid_for_this_hero
-    if hero && (shards > 0) && !hero.max_shards
+    if hero && sharded? && !hero.max_shards
       errors.add(:shards, :invalid_for_this_hero)
     end
   end
 
   def level_or_shards_present_unless_wish_list
-    unless wish_list
-      if (level < 1) && (shards < 1)
-        errors.add(:base, :level_or_shards_required)
-      end
+    if !leveled? && !sharded?
+      errors.add(:base, :level_or_shards_required) unless wish_list
     end
   end
 
   def level_and_shards_not_both_present
-    if (level > 0) && (shards > 0)
+    if leveled? && sharded?
       errors.add(:base, :level_and_shards_together_invalid)
     end
   end
 
   def shard_type_has_shards_and_not_level
     if shard_type
-      unless shards > 0
+      unless sharded?
         errors.add(:shards, :missing)
       end
-      if level > 0
+      if leveled?
         errors.add(:level, :invalid)
       end
     end
