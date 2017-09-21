@@ -4,81 +4,84 @@
   a.hero-link {
     color: inherit;
   }
+}
 
-  $hero-width: 200px;
-  .hero-tile {
-    background: #e0e0e0;
-    display: inline-block;
-    height: 80px;
-    width: $hero-width;
-    margin: 0 8px 4px 0;
+$hero-width: 200px;
+.hero-tile {
+  background: #e0e0e0;
+  display: inline-block;
+  height: 80px;
+  width: $hero-width;
+  margin: 0 8px 4px 0;
 
-    .hero-image {
-      float: left;
-      margin: 10px;
-    }
-    .details {
-      float: left;
-      padding: 20px 0;
-
-      .name, .role {
-        width: $hero-width - 80px;
-        overflow: hidden;
-      }
-      .role {
-        font-size: 80%;
-      }
-    }
-  }
-  .hero-stamp {
-    display: inline-block;
-    width: 62px;
-    margin: 2px 3px;
-    padding: 1px;
-
-    &.selected {
-      outline-style: dashed;
-      outline-style: blue;
-    }
-    a {
-      text-decoration: none;
-    }
-    .shards-count {
-      background-color: #ddf1fd;
-      margin: 4px 0 2px;
-      height: 20px;
-      width: 62px;
-      text-align: center;
-
-      &.maxed {
-        background-color: #c1fcc1;
-      }
-    }
-  }
   .hero-image {
-    position: relative;
-    height: 60px;
-    width: 60px;
+    float: left;
+    margin: 10px;
+  }
+  .details {
+    float: left;
+    padding: 20px 0;
 
-    .level {
-      position: absolute;
-      top: 3px;
-      right: 4px;
-      width: 20px;
-      border-radius: 5px;
-      background-color: black;
-      color: white;
-      font-size: 11px;
-      text-align: center;
+    .name, .role {
+      width: $hero-width - 80px;
+      overflow: hidden;
     }
+    .role {
+      font-size: 80%;
+    }
+  }
+}
+.hero-stamp {
+  display: inline-block;
+  width: 62px;
+  margin: 2px 3px;
+  padding: 1px;
 
-    .puzzle-piece {
-      position: absolute;
-      top: 1px;
-      right: 4px;
-      width: 18px;
-      height: 18px;
+  &.selected {
+    outline-style: dashed;
+    outline-style: blue;
+  }
+  a {
+    text-decoration: none;
+  }
+  .shards-count {
+    background-color: #ddf1fd;
+    margin: 4px 0 2px;
+    height: 20px;
+    width: 62px;
+    text-align: center;
+
+    &.maxed {
+      background-color: #c1fcc1;
     }
+    &.none {
+      background-color: inherit;
+    }
+  }
+}
+.hero-image {
+  position: relative;
+  height: 60px;
+  width: 60px;
+
+  .level {
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    width: 20px;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .puzzle-piece {
+    position: absolute;
+    top: 1px;
+    right: 4px;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -160,4 +163,39 @@
   left: 140px;
   height: 40px;
   width: 40px;
+}
+
+.fusion-materials {
+  margin: 0;
+
+  .hero-stamp {
+    margin: 2px 1px;
+  }
+}
+.fusion-group {
+  border: 1px solid black;
+  background-color: #e0e0e0;
+  display: inline-block;
+  margin: 0 4px 6px 0;
+  padding: 2px 2px 0 2px;
+}
+.hero-image {
+  .fusion-decorator {
+    position: absolute;
+    top: 52px;
+    left: 20px;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+
+    &.check {
+      color: #46a161;
+    }
+    &.qn {
+      color: #b1b200;
+    }
+    &.ex {
+      color: #cc0000;
+    }
+  }
 }

@@ -114,7 +114,10 @@ class FusionTree
     def faction ; target_attr(:faction) ; end
     def role ; target_attr(:role) ; end
     def image_file ; target_attr(:image_file) ; end
+    def asset_path ; target_attr(:asset_path) ; end
+    def target ; account_hero_attr(:target) ; end
     def level ; account_hero_attr(:level) ; end
+    def leveled? ; account_hero_attr(:leveled?) ; end
     def shards ; account_hero_attr(:shards) ; end
     def sharded? ; account_hero_attr(:sharded?) ; end
     def fodder? ; account_hero_attr(:fodder?) ; end

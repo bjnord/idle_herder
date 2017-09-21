@@ -1,5 +1,5 @@
 <%# TODO if target_hero.materials is empty, show sources here instead %>
-<ul>
+<ul class="fusion-materials">
   <% FusionTree.new(target_hero, current_account).each do |group| %>
     <%= render partial: 'account_heroes/fusion_group', object: group %>
   <% end %>
