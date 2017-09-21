@@ -14,5 +14,12 @@
       $('#account_hero_level').val('');
       $('#target-stars-row').hide();
     });
+    $('#account_hero_is_fodder').on('input', function () {
+      if ($(this).is(':checked')) {
+        // change "Target stars" selector to its lowest value
+        $('input[name=account_hero\\[target_stars\\]]').prop('checked', false);
+        $('label[id^=target-stars-]:visible').children('input[name=account_hero\\[target_stars\\]]').first().prop('checked', true);
+      }
+    });
   });
 </script>
