@@ -47,7 +47,7 @@ class AccountHero < ApplicationRecord
   end
 
   def fodder?
-    is_fodder
+    is_fodder || (target && (target.stars < 4))
   end
 
   # NB don't mix these two! <https://goo.gl/pNYdjZ>

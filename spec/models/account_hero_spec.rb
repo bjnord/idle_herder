@@ -170,6 +170,26 @@ RSpec.describe AccountHero, type: :model do
       end
     end
 
+    context "three-star hero without fodder flag set" do
+      let(:hero) { build(:hero, stars: 3, max_stars: 3) }
+      let(:account_hero) { build(:account_hero, hero: hero, is_fodder: false) }
+
+      it "should be considered fodder" do
+        expect(account_hero).to be_valid
+        expect(account_hero.fodder?).to be_truthy
+      end
+    end
+
+    context "three-star shard_type without fodder flag set" do
+      let(:hero) { build(:shardable_hero, stars: 3, max_stars: 3) }
+      let(:account_hero) { build(:sharded_account_hero, hero: hero, is_fodder: false) }
+
+      it "should be considered fodder" do
+        expect(account_hero).to be_valid
+        expect(account_hero.fodder?).to be_truthy
+      end
+    end
+
     pending "#wish_list?"
   end
 
