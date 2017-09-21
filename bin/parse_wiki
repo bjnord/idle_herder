@@ -21,8 +21,6 @@ $new_hero_count = 0
 # - $json_heroes is indexed by "stars-name"
 $json_heroes = {}
 $highest_hero_id = 0
-# shard_types
-$highest_shard_type_id = 0
 # sources
 $sources = {}
 
@@ -342,43 +340,6 @@ def emit_images
   end
 end
 
-def emit_shard_types
-  shard_types = $sources.keys.select {|s| s =~ /Shard$/i }.collect do |stype|
-    if m = stype.match(/^(\d+)\s+Star\s+(.*)Hero\s+Shard$/)
-      stars = m.captures[0].to_i
-      shard_type_h = {'id' => 0, 'stars' => stars}
-      faction = m.captures[1].strip
-      if faction.length > 0
-        shard_type_h['faction'] = faction
-      else
-        faction = 'Any'
-      end
-      shard_type_h['img'] = "#{stars}-#{faction}-shard-icon.png"
-      shard_type_h
-    end
-  end
-  shard_types.sort_by {|st| [st['stars'], FACTIONS.index(st['faction']) || -1] }.each do |shard_type_h|
-    $highest_shard_type_id += 1
-    shard_type_id = $highest_shard_type_id
-    path = File.join('db', 'data', 'shard_types', "#{shard_type_id}.json")
-    File.open(path, 'w') do |f|
-      shard_type_h['id'] = shard_type_id
-      f.puts shard_type_h.to_json
-    end
-  end
-  # also need this generic one for 10* awakening
-  $highest_shard_type_id += 1
-  shard_type_h = {
-    id: $highest_shard_type_id,
-    stars: 9,
-    img: '5-Any-shard-icon.png',
-  }
-  path = File.join('db', 'data', 'shard_types', "#{$highest_shard_type_id}.json")
-  File.open(path, 'w') do |f|
-    f.puts shard_type_h.to_json
-  end
-end
-
 def emit_sources
   $sources.keys.sort.each do |source|
     puts "source: #{source}"
@@ -408,9 +369,6 @@ OptionParser.new do |opts|
   end
   opts.on("-s", "--sources", "Create sources JSON") do |s|
     $options[:sources] = s
-  end
-  opts.on("-t", "--shard-types", "Create shard_types JSON") do |t|
-    $options[:shard_types] = t
   end
   opts.on("-v", "--verbose", "Run verbosely") do |v|
     $options[:verbose] = v
@@ -446,5 +404,4 @@ add_natural_flag
 emit_heroes if $options[:heroes]
 emit_images if $options[:images]
 emit_sources if $options[:sources]
-emit_shard_types if $options[:shard_types]
 emit_stats
