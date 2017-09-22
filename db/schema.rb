@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918233241) do
+ActiveRecord::Schema.define(version: 20170922112830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,7 @@ ActiveRecord::Schema.define(version: 20170918233241) do
   create_table "account_heroes", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "hero_id"
-    t.bigint "shard_type_id"
-    t.integer "level", default: 1, null: false
+    t.integer "level", default: 0, null: false
     t.integer "shards", default: 0, null: false
     t.integer "priority", default: 1, null: false
     t.boolean "is_fodder", default: false, null: false
@@ -27,6 +26,9 @@ ActiveRecord::Schema.define(version: 20170918233241) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "target_stars", null: false
+    t.string "type", null: false
+    t.integer "g_stars"
+    t.integer "g_faction"
     t.index ["account_id"], name: "index_account_heroes_on_account_id"
   end
 

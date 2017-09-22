@@ -49,6 +49,13 @@ guard :rspec, cmd: "bin/rspec", all_on_start: true do
   # Rails files
   rails = dsl.rails(view_extensions: %w(erb haml slim))
   dsl.watch_spec_files_for(rails.app_files)
+  watch('app/models/account_hero.rb') do |m|
+    [
+      'spec/models/account_hero_spec.rb',
+      'spec/models/specific_account_hero_spec.rb',
+      'spec/models/generic_account_hero_spec.rb'
+    ]
+  end
   dsl.watch_spec_files_for(rails.views)
   watch('app/lib/ability.rb') { 'spec/controllers' }
 

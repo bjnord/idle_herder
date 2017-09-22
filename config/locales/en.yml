@@ -14,8 +14,6 @@ en:
     errors:
       models:
         account_hero:
-          hero_or_shard_type_required: 'Either hero or shard type is required'
-          hero_and_shard_type_together_invalid: 'Using both hero and shard type is invalid'
           level_or_shards_required: 'Either level or shards is required'
           level_and_shards_together_invalid: 'Using both level and shards is invalid'
           must_be_at_least_for_this_hero: "must be at least %{minimum} for this hero"
