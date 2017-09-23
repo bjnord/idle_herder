@@ -1,4 +1,5 @@
 # <http://www.virtuouscode.com/2012/08/31/configuring-database_cleaner-with-rails-rspec-capybara-and-selenium/>
+# <https://www.devmynd.com/blog/setting-up-rspec-and-capybara-in-rails-5-for-testing/>
 #
 # in spec/rails_helper.rb
 # set config.use_transactional_fixtures = false
@@ -12,7 +13,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, :js => true) do
+  config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
   end
 

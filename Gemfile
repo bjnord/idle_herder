@@ -53,6 +53,7 @@ gem 'cancancan'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'database_cleaner'
   gem 'guard-rspec', require: false
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
@@ -72,7 +73,7 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
-  gem 'database_cleaner'
   gem 'faker'
 end

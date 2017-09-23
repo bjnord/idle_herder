@@ -1,12 +1,12 @@
 <% title 'My Materials' %>
 
-<div class="panel panel-default">
+<div id="three-star-fusion-panel" class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title">Three-Star Fusion</h4>
   </div>
   <div class="panel-body">
     <h4>Wish List</h4>
-    <ul class="hero-box">
+    <ul id="wish-list-hero-box" class="hero-box">
       <%= render partial: 'account_heroes/linked_stamped_hero', collection: @account.account_heroes.wish_list %>
     </ul>
     <h4>3★ Needed</h4>
@@ -21,7 +21,7 @@
     <h4 class="panel-title">Fodder</h4>
   </div>
   <div class="panel-body">
-    <ul class="hero-box">
+    <ul id="materials-hero-box" class="hero-box">
       <%= render partial: 'account_heroes/linked_stamped_hero', collection: @account.account_heroes.fodder %>
     </ul>
   </div>

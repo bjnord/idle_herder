@@ -17,7 +17,7 @@ RSpec.describe Material, type: :model do
 
   describe "#faction_name" do
     context "with Fortress value" do
-      let(:material) { build(:material, faction: 1) }
+      let(:material) { build(:generic_material, faction: 1) }
 
       it "should be 'Fortress'" do
         expect(material.faction_name).to be == 'Fortress'
@@ -25,7 +25,7 @@ RSpec.describe Material, type: :model do
     end
 
     context "with nil" do
-      let(:material) { build(:material, faction: nil) }
+      let(:material) { build(:generic_material, faction: nil) }
 
       it "should be nil" do
         expect(material.faction_name).to be_nil
