@@ -1,8 +1,0 @@
-<% if shard_fraction.respond_to?(:sharded?) && shard_fraction.sharded? %>
-  <% maxed = shard_fraction.max_sharded? ? ' maxed' : '' %>
-  <div class="shards-count<%= maxed %>">
-    <%= shard_fraction.shards %>&nbsp;/&nbsp;<%= shard_fraction.max_shards %>
-  </div>
-<% else %>
-  <div class="shards-count none">&nbsp;</div>
-<% end %>

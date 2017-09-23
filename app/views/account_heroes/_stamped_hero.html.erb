@@ -1,9 +1,9 @@
 <li class="hero-stamp">
   <div class="hero-image">
     <%= image_tag stamped_hero.asset_path, height: 60, width: 60, title: fmt_title(stamped_hero) %>
-    <%= render partial: 'account_heroes/hero_level', object: stamped_hero %>
-    <%= render partial: 'account_heroes/shard_decorator', object: stamped_hero %>
-    <%= render partial: 'account_heroes/fusion_decorator', object: stamped_hero %>
+    <%= render 'account_heroes/decorator/level', o: stamped_hero %>
+    <%= render 'account_heroes/decorator/sharded', o: stamped_hero %>
+    <%= render 'account_heroes/decorator/fusion', o: stamped_hero %>
   </div>
-  <%= render partial: 'account_heroes/shard_fraction', object: stamped_hero %>
+  <%= render 'account_heroes/decorator/shard_fraction', o: stamped_hero %>
 </li>

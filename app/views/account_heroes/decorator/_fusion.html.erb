@@ -1,5 +1,5 @@
-<% if fusion_decorator.is_a? FusionTree::Hero %>
-  <% case fusion_decorator.fusion_decorator %>
+<% if o.is_a? FusionTree::Hero %>
+  <% case o.fusion_decorator %>
   <% when :check_mark %>
     <div class="fusion-decorator check"><span class="glyphicon glyphicon-ok-sign"></span></div>
   <% when :question_mark %>
