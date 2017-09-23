@@ -28,7 +28,16 @@ guard :rspec, cmd: "bin/rspec", all_on_start: true do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
-  # Feel free to open issues for suggestions and improvements
+  # RSpec rule not firing?
+  # <https://github.com/guard/guard/wiki/Understanding-Guard>
+  # - start guard with debugging: "bin/guard -d"
+  # - tap into the non-firing rule as follows (NB ".tap" here):
+  #watch(%r{^app/models/(.+)\.rb$}) do |m|
+  #  "spec/models/#{m[1]}_spec.rb".tap do |result|
+  #    Guard::UI.info "Sending changes to: #{result.inspect}"
+  #    Guard::UI.info "The original match is: #{m.inspect}"
+  #  end
+  #end
 
   # RSpec files
   rspec = dsl.rspec
