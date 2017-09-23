@@ -32,7 +32,7 @@ class GenericAccountHero < AccountHero
   end
 
   def asset_path
-    "generics/#{stars}-#{faction_name}"
+    "generics/#{stars}-#{faction_name}.png"
   end
 
 protected

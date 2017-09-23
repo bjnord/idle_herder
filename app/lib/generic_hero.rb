@@ -28,11 +28,7 @@ class GenericHero
   end
 
   def asset_path
-    # FIXME create these missing icons
-    if stars == 6
-      return "generics/5-Any.png"
-    end
-    "generics/#{stars}-#{faction_name}"
+    "generics/#{stars}-#{faction_name}.png"
   end
 
   def valid?
