@@ -80,21 +80,8 @@ class FusionTree
       end
     end
 
-    # FIXME RF split into 2 methods, "create object" and "while...add_hero"
     def fill_with_ex_marks
-      if @material.material_hero
-        object = @material.material_hero
-      elsif shard_type = ShardType.find_by(stars: @material.stars, faction: @material.faction)
-        object = shard_type
-      elsif shard_type = ShardType.find_by(stars: @material.stars)
-        # TODO create all needed ShardType, so this case never happens
-        shard_type.faction = @material.faction
-        object = shard_type
-      else
-        # FIXME should raise exception?
-        Rails.logger.error("Material.generic_account_heroes got empty ShardType.find_by(stars=#{@material.stars}, faction=#{@material.faction})")
-        return
-      end
+      object = @material.material_hero || GenericHero.new(@material.stars, @material.faction)
       while @heroes.count < @material.count
         add_hero(:ex_mark, object)
       end
@@ -102,42 +89,28 @@ class FusionTree
   end
 
   class Hero
-    def initialize(decorator, object)
-      @fusion_decorator = decorator
-      @account_hero = object.is_a?(AccountHero) ? object : nil
-      @target = object.is_a?(Hero) ? object : nil
+    def initialize(fusion_decorator, object)
+      @fusion_decorator = fusion_decorator
+      @object = object
     end
 
     def fusion_decorator ; @fusion_decorator ; end
 
-    # TODO these should all come from AccountHero now
-    def name ; target_attr(:name) ; end
-    def stars ; target_attr(:stars) ; end
-    def faction ; target_attr(:faction) ; end
-    def role ; target_attr(:role) ; end
-    def image_file ; target_attr(:image_file) ; end
-    def asset_path ; target_attr(:asset_path) ; end
-    def max_shards ; target_attr(:max_shards) ; end
-    def generic? ; account_hero_attr(:generic?) ; end
-    def hero ; account_hero_attr(:hero) ; end
-    def target ; account_hero_attr(:target) ; end
-    def level ; account_hero_attr(:level) ; end
-    def leveled? ; account_hero_attr(:leveled?) ; end
-    def shards ; account_hero_attr(:shards) ; end
-    def sharded? ; account_hero_attr(:sharded?) ; end
-    def max_sharded? ; account_hero_attr(:max_sharded?) ; end
-    def fodder? ; account_hero_attr(:fodder?) ; end
-
-  protected
-
-    def account_hero_attr(key)
-      @account_hero ? @account_hero.send(key) : nil
+    # delegate attributes to our object (name, stars, faction, etc.)
+    # NOTE do NOT allow assignment, only read
+    def method_missing(symbol, *args, &block)
+      if @object && (symbol.to_s !~ /=/)
+        @object.send(symbol, *args, &block)
+      else
+        super(symbol, *args, &block)
+      end
     end
-
-    def target_attr(key)
-      return @account_hero.send(key) if @account_hero
-      return @target.send(key) if @target.respond_to?(key)
-      nil
+    def respond_to?(symbol, *args)
+      if @object && (symbol.to_s !~ /=/)
+         @object.respond_to?(symbol, *args)
+      else
+        super(symbol, *args)
+      end
     end
   end
 

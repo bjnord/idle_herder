@@ -1,7 +1,6 @@
 class GenericAccountHero < AccountHero
   validates :g_stars, presence: true
   validates :g_stars, numericality: { only_integer: true, greater_than_or_equal_to: 3, less_than_or_equal_to: 5 }, unless: Proc.new {|h| h.g_stars.blank? }
-  validates :g_faction, presence: true
   validates :g_faction, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: Hero::FACTIONS.count }, unless: Proc.new {|h| h.g_faction.blank? }
   validates :shards, numericality: { only_integer: true, greater_than: 0 }
 
@@ -27,7 +26,18 @@ class GenericAccountHero < AccountHero
   def target_stars ; g_stars ; end
   def faction ; g_faction ; end
   def max_shards ; Hero::MAX_SHARDS[g_stars] ; end
-  def asset_path ; 'generics/___.png' ; end  # FIXME
+
+  def faction_name
+    g_faction ? Hero::faction_name_of(g_faction) : 'Any'
+  end
+
+  def asset_path
+    # FIXME create these missing icons
+    if stars > 4
+      return "generics/5-Any.png"
+    end
+    "generics/#{stars}-#{faction_name}"
+  end
 
 protected
 

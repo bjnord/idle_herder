@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922112830) do
+ActiveRecord::Schema.define(version: 20170923150117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,14 +71,6 @@ ActiveRecord::Schema.define(version: 20170922112830) do
     t.integer "faction"
     t.index ["hero_id"], name: "index_materials_on_hero_id"
     t.index ["material_hero_id"], name: "index_materials_on_material_hero_id"
-  end
-
-  create_table "shard_types", id: false, force: :cascade do |t|
-    t.bigint "id", null: false
-    t.integer "stars", null: false
-    t.integer "faction"
-    t.string "image_file"
-    t.index ["id"], name: "index_shard_types_on_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

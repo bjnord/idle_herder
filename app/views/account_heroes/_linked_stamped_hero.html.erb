@@ -1,7 +1,11 @@
-<% if linked_stamped_hero.generic? %>
-  <%= render partial: 'account_heroes/stamped_hero', object: linked_stamped_hero %>
-<% else %>
-  <%= link_to linked_stamped_hero.hero, class: 'hero-link' do %>
+<% if linked_stamped_hero.is_a? AccountHero %>
+  <%= link_to account_hero_path(linked_stamped_hero), class: 'hero-link' do %>
     <%= render partial: 'account_heroes/stamped_hero', object: linked_stamped_hero %>
   <% end %>
+<% elsif linked_stamped_hero.is_a? Hero %>
+  <%= link_to hero_path(linked_stamped_hero), class: 'hero-link' do %>
+    <%= render partial: 'account_heroes/stamped_hero', object: linked_stamped_hero %>
+  <% end %>
+<% else %><%# GenericHero %>
+  <%= render partial: 'account_heroes/stamped_hero', object: linked_stamped_hero %>
 <% end %>

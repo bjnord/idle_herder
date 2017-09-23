@@ -20,6 +20,8 @@ class Hero < ApplicationRecord
   validates :role, presence: true
   validates :role, inclusion: {in: ROLES, message: 'is not valid'}, unless: Proc.new {|h| h.role.blank? }
 
+  def generic? ; false ; end
+
   def faction=(faction)
     super(faction.respond_to?(:to_str) ? FACTIONS.index(faction) : faction)
   end

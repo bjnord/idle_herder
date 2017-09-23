@@ -68,9 +68,8 @@ RSpec.describe GenericAccountHero, type: :model do
   context "without g_faction" do
     let(:account_hero) { build(:generic_account_hero, g_faction: nil) }
 
-    it "should not be valid" do
-      expect(account_hero).not_to be_valid
-      expect(account_hero.errors.added?(:g_faction, :blank)).to be_truthy
+    it "should be valid" do
+      expect(account_hero).to be_valid
     end
   end
 

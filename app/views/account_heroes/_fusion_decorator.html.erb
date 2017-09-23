@@ -1,8 +1,10 @@
-<% case fusion_decorator %>
-<% when :check_mark %>
-  <div class="fusion-decorator check"><span class="glyphicon glyphicon-ok-sign"></span></div>
-<% when :question_mark %>
-  <div class="fusion-decorator qn"><span class="glyphicon glyphicon-question-sign"></span></div>
-<% when :ex_mark %>
-  <div class="fusion-decorator ex"><span class="glyphicon glyphicon-remove-sign"></span></div>
+<% if fusion_decorator.is_a? FusionTree::Hero %>
+  <% case fusion_decorator.fusion_decorator %>
+  <% when :check_mark %>
+    <div class="fusion-decorator check"><span class="glyphicon glyphicon-ok-sign"></span></div>
+  <% when :question_mark %>
+    <div class="fusion-decorator qn"><span class="glyphicon glyphicon-question-sign"></span></div>
+  <% when :ex_mark %>
+    <div class="fusion-decorator ex"><span class="glyphicon glyphicon-remove-sign"></span></div>
+  <% end %>
 <% end %>

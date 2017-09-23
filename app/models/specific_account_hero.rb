@@ -53,6 +53,7 @@ class SpecificAccountHero < AccountHero
   delegate :max_stars, to: :hero
   delegate :max_level, to: :hero
   delegate :faction, to: :hero
+  delegate :faction_name, to: :hero
   delegate :role, to: :hero
   delegate :max_shards, to: :hero
   delegate :asset_path, to: :hero

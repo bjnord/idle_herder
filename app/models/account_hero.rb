@@ -42,9 +42,5 @@ class AccountHero < ApplicationRecord
 
   def fodder?
     is_fodder
-  end
-
-  def faction_name
-    Hero::faction_name_of(faction)
-  end
+  end 
 end

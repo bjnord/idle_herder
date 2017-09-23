@@ -1,17 +1,9 @@
 <li class="hero-stamp">
   <div class="hero-image">
-    <%# FIXME the 3-Any fallback won't be necessary after ShardType refactor %>
-    <%= image_tag stamped_hero.asset_path || 'shards/3-Any-shard-icon.png', height: 60, width: 60, title: fmt_title(stamped_hero) %>
-    <% if stamped_hero.leveled? %>
-      <div class="level"><%= stamped_hero.level %></div>
-    <% elsif stamped_hero.sharded? %>
-      <%= image_tag 'puzzle-piece-cover.png', height: 18, width: 18, class: 'puzzle-piece' %>
-    <% end %>
-    <% if stamped_hero.respond_to? :fusion_decorator %>
-      <%= render partial: 'account_heroes/fusion_decorator', object: stamped_hero.fusion_decorator %>
-    <% end %>
+    <%= image_tag stamped_hero.asset_path, height: 60, width: 60, title: fmt_title(stamped_hero) %>
+    <%= render partial: 'account_heroes/hero_level', object: stamped_hero %>
+    <%= render partial: 'account_heroes/shard_decorator', object: stamped_hero %>
+    <%= render partial: 'account_heroes/fusion_decorator', object: stamped_hero %>
   </div>
-  <div class="<%= shards_count_class(stamped_hero) %>">
-    <%= shard_fraction(stamped_hero) %>
-  </div>
+  <%= render partial: 'account_heroes/shard_fraction', object: stamped_hero %>
 </li>
