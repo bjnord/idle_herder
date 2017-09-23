@@ -29,7 +29,7 @@ class GenericHero
 
   def asset_path
     # FIXME create these missing icons
-    if stars > 4
+    if (stars > 4) && (stars < 9)
       return "generics/5-Any.png"
     end
     "generics/#{stars}-#{faction_name}"
