@@ -46,6 +46,7 @@ account.account_heroes.create!(type: 'SpecificAccountHero', hero_id: hero.id, le
 account.account_heroes.create!(type: 'GenericAccountHero', g_stars: 4, shards: 30)
 account.account_heroes.create!(type: 'GenericAccountHero', g_stars: 4, g_faction: 4, shards: 15)
 account.account_heroes.create!(type: 'GenericAccountHero', g_stars: 5, shards: 30)
+account.account_heroes.create!(type: 'GenericAccountHero', g_stars: 5, g_faction: 0, shards: 40)
 
 ## Wish List Heroes
 
