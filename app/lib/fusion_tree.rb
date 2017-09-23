@@ -6,7 +6,7 @@ class FusionTree
 
     def available?(account_hero)
       if account_hero.sharded?
-        (account_hero.shards - @used[account_hero.id]) >= account_hero.target.max_shards
+        (account_hero.shards - @used[account_hero.id]) >= account_hero.max_shards
       else
         @used[account_hero.id] < 1
       end
@@ -14,7 +14,7 @@ class FusionTree
 
     def pick_one(account_hero)
       if account_hero.sharded?
-        @used[account_hero.id] += account_hero.target.max_shards
+        @used[account_hero.id] += account_hero.max_shards
       else
         @used[account_hero.id] += 1
       end
@@ -105,7 +105,7 @@ class FusionTree
     def initialize(decorator, object)
       @decorator = decorator
       @account_hero = object.is_a?(AccountHero) ? object : nil
-      @target = (object.is_a?(Hero) || object.is_a?(ShardType)) ? object : nil
+      @target = object.is_a?(Hero) ? object : nil
     end
 
     def decorator ; @decorator ; end
@@ -115,11 +115,13 @@ class FusionTree
     def role ; target_attr(:role) ; end
     def image_file ; target_attr(:image_file) ; end
     def asset_path ; target_attr(:asset_path) ; end
+    def max_shards ; target_attr(:max_shards) ; end
     def target ; account_hero_attr(:target) ; end
     def level ; account_hero_attr(:level) ; end
     def leveled? ; account_hero_attr(:leveled?) ; end
     def shards ; account_hero_attr(:shards) ; end
     def sharded? ; account_hero_attr(:sharded?) ; end
+    def max_sharded? ; account_hero_attr(:max_sharded?) ; end
     def fodder? ; account_hero_attr(:fodder?) ; end
 
   protected
@@ -129,7 +131,7 @@ class FusionTree
     end
 
     def target_attr(key)
-      return @account_hero.target.send(key) if @account_hero
+      return @account_hero.send(key) if @account_hero
       return @target.send(key) if @target.respond_to?(key)
       nil
     end

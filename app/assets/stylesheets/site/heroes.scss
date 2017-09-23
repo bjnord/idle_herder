@@ -112,6 +112,11 @@ $hero-width: 200px;
 #form-fodder-row {
   margin-top: 4px;
 }
+#target-stars-row {
+  input[type=radio] {
+    margin-right: 12px;
+  }
+}
 
 .faction-selector {
   position: absolute;

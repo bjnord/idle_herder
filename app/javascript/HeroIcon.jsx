@@ -34,7 +34,7 @@ export default class HeroIcon extends React.Component
       title = this.props.hero.stars + '★ ' + this.props.hero.name + ' (' + this.props.hero.role + ')';
     }
     return (<div className="hero-image">
-      <img src={this.imagePath(this.props.hero.image_file)} height="60" width="60" data-toggle="tooltip" title={title} />
+      <img src={this.imagePath(this.props.hero.asset_path)} height="60" width="60" data-toggle="tooltip" title={title} />
       {levelLabel}
       {puzzlePiece}
     </div>);

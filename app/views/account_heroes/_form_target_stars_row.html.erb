@@ -1,12 +1,12 @@
-<% if show_target_stars(@account_hero) %>
+<% if show_target_stars(f.object) %>
   <div id="target-stars-row" class="row no-gutters">
     <div class="col-sm-6">
       <div class="form-check form-check-inline">
         <%= f.label :target_stars, class: 'form-check-label' %><br />
         <% (1..Hero::MAX_STARS).each do |stars| %>
-          <label id="target-stars-<%= stars %>" class="form-check-label" style="display: <%= show_target_stars_label(@account_hero, stars) ? 'inline-block' : 'none' %>;">
+          <label id="target-stars-<%= stars %>" class="form-check-label" style="display: <%= show_target_stars_label(f.object, stars) ? 'inline-block' : 'none' %>;">
             <%= f.label :target_stars, value: stars %>
-            <%= f.radio_button :target_stars, stars, class: 'form-check-input', style: 'margin-right: 12px;' %>
+            <%= f.radio_button :target_stars, stars, class: 'form-check-input' %>
           </label>
         <% end %>
       </div>

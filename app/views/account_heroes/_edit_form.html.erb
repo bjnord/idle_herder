@@ -1,6 +1,6 @@
-<%= image_tag @account_hero.target.asset_path, height: 40, width: 40, class: 'edit-hero-image' %>
+<%= image_tag @account_hero.asset_path, height: 40, width: 40, class: 'edit-hero-image' %>
 
-<%= form_for(@account_hero, remote: request.xhr?, html: { data: { modal: true }, autocomplete: 'off' }) do |f| %>
+<%= form_for @account_hero, url: account_hero_path(@account_hero), remote: request.xhr?, html: { data: { modal: true }, autocomplete: 'off' } do |f| %>
   <div class="modal-body">
     <div class="fields">
       <%= f.hidden_field :hero_id %>

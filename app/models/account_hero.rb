@@ -20,11 +20,24 @@ class AccountHero < ApplicationRecord
     self.shards = self[:shards]
   end
 
+  def generic? ; !specific? ; end
+
+  def box_type
+    return 'generic-shards' if generic?
+    return 'wish-list' if wish_list?
+    return 'hero-shards' if sharded?
+    return 'hero' if leveled?
+    nil
+  end
+
   def shards=(value)
     super(value || 0)
   end
   def sharded?
     shards && (shards > 0)
+  end
+  def max_sharded?
+    sharded? && (shards >= max_shards)
   end
 
   def fodder?

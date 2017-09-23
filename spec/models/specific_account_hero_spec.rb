@@ -6,15 +6,14 @@ RSpec.describe SpecificAccountHero, type: :model do
   it "should be valid" do
     expect(subject).to be_valid
   end
+  it "should have box_type=hero" do
+    expect(subject.box_type).to be == 'hero'
+  end
   it "should not be sharded" do
     expect(subject.sharded?).to be_falsey
   end
   it "should not be wish_list" do
     expect(subject.wish_list?).to be_falsey
-  end
-  it "should say it can provide Hero attributes directly" do
-    expect(subject.respond_to?(:name)).to be_truthy
-    expect(subject.respond_to?(:role)).to be_truthy
   end
   it "should provide Hero attributes directly" do
     expect(subject.name).to be == subject.hero.name
@@ -34,10 +33,6 @@ RSpec.describe SpecificAccountHero, type: :model do
     it "should be invalid" do
       expect(account_hero).not_to be_valid
       expect(account_hero.errors.added?(:hero, :blank)).to be_truthy
-    end
-    it "should not say it can provide Hero attributes directly" do
-      expect(account_hero.respond_to?(:name)).to be_falsey
-      expect(account_hero.respond_to?(:role)).to be_falsey
     end
     it "should not provide Hero attributes directly" do
       expect{account_hero.name}.to raise_error(NoMethodError)
@@ -77,6 +72,9 @@ RSpec.describe SpecificAccountHero, type: :model do
 
     it "should be valid" do
       expect(account_hero).to be_valid
+    end
+    it "should have box_type=hero-shards" do
+      expect(account_hero.box_type).to be == 'hero-shards'
     end
     it "should be sharded" do
       expect(account_hero.sharded?).to be_truthy
@@ -219,6 +217,9 @@ RSpec.describe SpecificAccountHero, type: :model do
     subject { build(:wish_list_account_hero) }
     it "should be valid" do
       expect(subject).to be_valid
+    end
+    it "should have box_type=wish-list" do
+      expect(subject.box_type).to be == 'wish-list'
     end
     it "should be wish_list" do
       expect(subject.wish_list).to be_truthy

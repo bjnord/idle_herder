@@ -26,12 +26,16 @@ class SpecificAccountHero < AccountHero
     end
   end
 
+  def specific? ; true ; end
+
   def level=(value)
     super(value || 0)
   end
   def leveled?
     level && (level > 0)
   end
+
+  def understarred? ; hero && (hero.stars < target_stars) ; end
 
   # NB don't mix these two! <https://goo.gl/pNYdjZ>
   #    the method is for Rails code (derived value)
@@ -43,29 +47,24 @@ class SpecificAccountHero < AccountHero
     (@wish_list.blank? || (@wish_list == 0)) ? nil : '1'
   end
 
-  def understarred? ; hero && (hero.stars < target_stars) ; end
+  delegate :natural?, to: :hero
+  delegate :name, to: :hero
+  delegate :stars, to: :hero
+  delegate :max_stars, to: :hero
+  delegate :max_level, to: :hero
+  delegate :faction, to: :hero
+  delegate :role, to: :hero
+  delegate :max_shards, to: :hero
+  delegate :asset_path, to: :hero
 
-  # this gives us Hero attributes directly (name, stars, faction, etc.)
-  # NOTE do NOT allow assignment, only read
-  def method_missing(symbol, *args, &block)
-    if hero && (symbol.to_s !~ /=/)
-      hero.send(symbol, *args, &block)
-    else
-      super(symbol, *args, &block)
-    end
-  end
-  def respond_to?(symbol, *args)
-    if hero && (symbol.to_s !~ /=/)
-      hero.respond_to?(symbol, *args)
-    else
-      super(symbol, *args)
-    end
+  def target_hero
+    @target_hero ||= Hero.find_by(name: name, stars: target_stars)
   end
 
 protected
 
   def level_is_within_maximum
-    if level > hero.max_level
+    if level > max_level
       errors.add(:level, :cannot_exceed_for_this_hero, maximum: hero.max_level)
     end
   end

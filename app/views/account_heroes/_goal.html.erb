@@ -1,9 +1,7 @@
 <tr>
-  <td class="hero"><%= image_tag "heroes/#{goal.hero.image_file}", height: 60, width: 60, title: fmt_title(goal.hero) %></td>
-  <%# FIXME move to AccountHero class: %>
-  <% target_hero = Hero.find_by(name: goal.hero.name, stars: goal.target_stars) %>
-  <td class="hero"><%= image_tag "heroes/#{target_hero.image_file}", height: 60, width: 60, title: fmt_title(target_hero) %></td>
+  <td class="hero"><%= image_tag goal.asset_path, height: 60, width: 60, title: fmt_title(goal) %></td>
+  <td class="hero"><%= image_tag goal.target_hero.asset_path, height: 60, width: 60, title: fmt_title(goal.target_hero) %></td>
   <td>
-    <%= render 'account_heroes/fusion_materials', target_hero: target_hero %>
+    <%= render 'account_heroes/fusion_materials', target_hero: goal.target_hero %>
   </td>
 </tr>

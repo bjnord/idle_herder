@@ -2,13 +2,13 @@
   <div class="col-sm-2">
     <div class="form-group">
       <%= f.label :level %><br />
-      <%= f.text_field :level, value: empty_integer(@account_hero.level), class: 'form-control', style: 'width: 95%;' %>
+      <%= f.text_field :level, value: empty_integer(f.object.level), class: 'form-control', style: 'width: 95%;' %>
     </div>
   </div>
   <div class="col-sm-2">
     <div class="form-group">
       <%= f.label :shards %><br />
-      <%= f.text_field :shards, value: empty_integer(@account_hero.shards), class: 'form-control' %>
+      <%= f.text_field :shards, value: empty_integer(f.object.shards), class: 'form-control' %>
     </div>
   </div>
   <div class="col-sm-6">&nbsp;</div>

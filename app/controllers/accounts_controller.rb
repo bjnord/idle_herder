@@ -23,6 +23,6 @@ class AccountsController < ApplicationController
 protected
 
   def build_account_hero
-    @account_hero = current_account.account_heroes.build
+    @account_hero = current_account.account_heroes.build(type: 'SpecificAccountHero')
   end
 end

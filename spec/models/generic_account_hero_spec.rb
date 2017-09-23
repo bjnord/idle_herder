@@ -5,6 +5,9 @@ RSpec.describe GenericAccountHero, type: :model do
   it "should be valid" do
     expect(subject).to be_valid
   end
+  it "should have box_type=generic-shards" do
+    expect(subject.box_type).to be == 'generic-shards'
+  end
   it "should be sharded" do
     expect(subject.sharded?).to be_truthy
   end

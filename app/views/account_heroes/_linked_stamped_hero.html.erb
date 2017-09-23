@@ -1,0 +1,12 @@
+<% if linked_stamped_hero.generic? %>
+  <li class="hero-stamp">
+    <%= image_tag linked_stamped_hero.asset_path, height: 60, width: 60, title: fmt_title(linked_stamped_hero) %>
+  </li>
+<% else %>
+  <%= link_to linked_stamped_hero.hero, class: 'hero-link' do %>
+    <li class="hero-stamp">
+      <%= image_tag linked_stamped_hero.asset_path, height: 60, width: 60, title: fmt_title(linked_stamped_hero) %>
+      <%# FIXME show level/shards/etc. %>
+    </li>
+  <% end %>
+<% end %>

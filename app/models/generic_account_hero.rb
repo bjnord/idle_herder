@@ -14,17 +14,20 @@ class GenericAccountHero < AccountHero
   end
 
   # overrides: always the case for generic heroes:
+  def specific? ; false ; end
   def understarred? ; false ; end
   def wish_list? ; false ; end
   def is_fodder ; true ; end
+  def natural? ; false ; end
 
-  # equivalents for SpecificAccountHero method_missing? direct access
+  # equivalents for SpecificAccountHero -> Hero delegation
   def name ; "#{faction_name} hero".strip ; end
   def stars ; g_stars ; end
   def max_stars ; g_stars ; end
   def target_stars ; g_stars ; end
   def faction ; g_faction ; end
   def max_shards ; Hero::MAX_SHARDS[g_stars] ; end
+  def asset_path ; 'generics/___.png' ; end  # FIXME
 
 protected
 

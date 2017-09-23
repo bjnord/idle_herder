@@ -1,12 +1,8 @@
-if account_hero.hero
-  json.(account_hero.hero, :id, :name, :stars, :faction, :role, :max_level, :max_shards, :is_natural, :max_stars)
-  # FIXME move this to AccountHero.box_type method
-  json.box_type account_hero.sharded? ? 'hero-shards' : (account_hero.leveled? ? 'hero' : 'wish-list')
-  json.image_file "heroes/#{account_hero.hero.image_file}"
-elsif account_hero.shard_type
-  json.(account_hero.shard_type, :id, :stars, :faction, :max_shards)
-  json.box_type 'generic-shards'
-  json.image_file "shards/#{account_hero.shard_type.image_file}"
-end
+json.(account_hero, :box_type, :name, :stars, :max_stars, :faction, :shards, :max_shards, :priority, :asset_path)
+json.is_natural account_hero.natural? ? true : false
+json.is_fodder account_hero.fodder? ? true : false
 json.account_hero_id account_hero.id
-json.(account_hero, :level, :shards, :priority, :is_fodder)
+if account_hero.specific?
+  json.(account_hero, :level, :max_level, :target_stars, :role)
+  json.id account_hero.hero.id
+end
