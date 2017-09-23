@@ -103,12 +103,14 @@ class FusionTree
 
   class Hero
     def initialize(decorator, object)
-      @decorator = decorator
+      @fusion_decorator = decorator
       @account_hero = object.is_a?(AccountHero) ? object : nil
       @target = object.is_a?(Hero) ? object : nil
     end
 
-    def decorator ; @decorator ; end
+    def fusion_decorator ; @fusion_decorator ; end
+
+    # TODO these should all come from AccountHero now
     def name ; target_attr(:name) ; end
     def stars ; target_attr(:stars) ; end
     def faction ; target_attr(:faction) ; end
@@ -116,6 +118,8 @@ class FusionTree
     def image_file ; target_attr(:image_file) ; end
     def asset_path ; target_attr(:asset_path) ; end
     def max_shards ; target_attr(:max_shards) ; end
+    def generic? ; account_hero_attr(:generic?) ; end
+    def hero ; account_hero_attr(:hero) ; end
     def target ; account_hero_attr(:target) ; end
     def level ; account_hero_attr(:level) ; end
     def leveled? ; account_hero_attr(:leveled?) ; end

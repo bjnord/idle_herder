@@ -46,8 +46,10 @@ $hero-width: 200px;
   }
   .shards-count {
     background-color: #ddf1fd;
-    margin: 4px 0 2px;
-    height: 20px;
+    font-size: 11px;
+    margin: 2px 0 2px;
+    line-height: 10px;
+    height: 11px;
     width: 62px;
     text-align: center;
 
@@ -183,12 +185,16 @@ $hero-width: 200px;
   display: inline-block;
   margin: 0 4px 6px 0;
   padding: 2px 2px 0 2px;
+
+  a.hero-link {
+    color: inherit;
+  }
 }
 .hero-image {
   .fusion-decorator {
     position: absolute;
-    top: 52px;
-    left: 20px;
+    top: 50px;
+    left: 47px;
     font-size: 20px;
     color: white;
     text-align: center;
