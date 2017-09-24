@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'errors', :type => :request do
+RSpec.describe 'errors', type: :request do
   it 'displays the 401 page' do
     get '/401'
     expect(response).to have_http_status(:unauthorized)

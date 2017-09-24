@@ -1,6 +1,6 @@
 class CreateHeroes < ActiveRecord::Migration[5.1]
   def change
-    create_table :heroes, :id => false do |t|
+    create_table :heroes, id: false do |t|
       t.bigint :id, null: false
       t.string :name, null: false
       t.integer :stars, null: false

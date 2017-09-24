@@ -16,22 +16,22 @@ SitemapGenerator::Sitemap.create do
   # Usage: add(path, options={})
   #        (default options are used if you don't specify)
   #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.now, :host => default_host
+  # Defaults: priority: 0.5, changefreq: 'weekly',
+  #           lastmod: Time.now, host: default_host
   #
   # Examples:
   #
   # Add '/articles'
   #
-  #   add articles_path, :priority => 0.7, :changefreq => 'daily'
+  #   add articles_path, priority: 0.7, changefreq: 'daily'
   #
   # Add all articles:
   #
   #   Article.find_each do |article|
-  #     add article_path(article), :lastmod => article.updated_at
+  #     add article_path(article), lastmod: article.updated_at
   #   end
   #
   # Mark a page as expired (ask search engines to remove it):
   #
-  #   add '/goodbye', :expires => Time.now + 2.weeks
+  #   add '/goodbye', expires: Time.now + 2.weeks
 end

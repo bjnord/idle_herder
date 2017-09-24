@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Accounts views', :type => :feature do
+RSpec.describe 'Accounts views', type: :feature do
   let(:user) { create(:user) }
   let(:current_account) { user.accounts.first }
   before do

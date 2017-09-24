@@ -54,7 +54,7 @@ RSpec.configure do |config|
   # You can disable this behaviour by removing the line below, and instead
   # explicitly tag your specs with their type, e.g.:
   #
-  #     RSpec.describe UsersController, :type => :controller do
+  #     RSpec.describe UsersController, type: :controller do
   #       # ...
   #     end
   #
@@ -72,8 +72,8 @@ RSpec.configure do |config|
   config.before(:all) do
     FactoryGirl.reload
   end
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
   config.include Requests::JsonHelpers, type: :request
 
   config.include Warden::Test::Helpers

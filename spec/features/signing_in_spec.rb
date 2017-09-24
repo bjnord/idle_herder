@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Signing in', :type => :feature do
+RSpec.describe 'Signing in', type: :feature do
   before do
     FactoryGirl.create(:user, email: 'user@example.net', password: 'sign_me_in')
   end

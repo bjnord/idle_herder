@@ -1,6 +1,6 @@
 class CreateShardTypes < ActiveRecord::Migration[5.1]
   def change
-    create_table :shard_types, :id => false do |t|
+    create_table :shard_types, id: false do |t|
       t.bigint :id, null: false
       t.integer :stars, null: false
       t.integer :faction

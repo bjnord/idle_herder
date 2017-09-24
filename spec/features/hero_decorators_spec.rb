@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Hero decorators', :type => :feature do
+RSpec.describe 'Hero decorators', type: :feature do
   let(:user) { create(:user) }
   let(:current_account) { user.accounts.first }
   before do
