@@ -49,6 +49,14 @@ class AccountHeroesController < ApplicationController
     respond_modal_with @account_hero, location: account_url(@account)
   end
 
+  def destroy
+    authorize! :create, @account
+    @account_hero = AccountHero.find(params[:id])
+    @account_hero.destroy
+    # FIXME flash success/failure not appearing
+    respond_modal_with @account_hero, location: account_url(@account)
+  end
+
 private
 
   # TODO the routes for this controller should be nested, as in:

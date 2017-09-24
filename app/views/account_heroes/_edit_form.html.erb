@@ -10,6 +10,7 @@
   <div class="modal-footer">
     <div class="actions">
       <%= f.submit 'Save', class: 'btn btn-success' %>
+      <%= link_to 'Delete', account_hero_path(@account_hero), method: :delete, class: 'btn btn-danger' %>
     </div>
   </div>
 <% end %>

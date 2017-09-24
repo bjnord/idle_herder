@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       get 'materials'
     end
   end
-  resources :account_heroes, only: [:edit, :create, :update]
+  resources :account_heroes, only: [:edit, :create, :update, :destroy]
 
   # these routes are JSON-only:
   get 'account_heroes', to: 'account_heroes#index', constraints: lambda {|request| request.format.json? }
