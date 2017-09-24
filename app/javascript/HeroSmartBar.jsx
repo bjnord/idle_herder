@@ -45,7 +45,8 @@ export default class HeroSmartBar extends React.Component
   {
     return (
       <div className="hsb-component form-group">
-        <input id="hero-smart-bar" className="form-control" placeholder="Search for heroes" aria-label="Search for heroes" value={this.props.text} autoFocus onFocus={this.handleFocus} onChange={this.handleChange} />
+        <label htmlFor="hero-smart-bar" className="hidden-label">Search for heroes</label>
+        <input id="hero-smart-bar" name="hero-smart-bar" className="form-control" placeholder="Search for heroes" value={this.props.text} autoFocus onFocus={this.handleFocus} onChange={this.handleChange} />
         <img id="smart-bar-help" src={this.helpImagePath()} width="24" height="24" />
       </div>
     );

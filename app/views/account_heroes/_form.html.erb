@@ -11,3 +11,39 @@
     <%= f.submit 'Add', class: 'btn btn-success' %>
   </div>
 <% end %>
+
+<script>
+  function setTargetStars(recheck) {
+    if ($('#specific_account_hero_shards').val()) {
+      $('#target-stars-row').hide();
+      return;
+    }
+    $('#target-stars-row').show();
+    if (recheck) {
+      $('input[name=specific_account_hero\\[target_stars\\]]').prop('checked', false);
+      if ($('#specific_account_hero_is_fodder').is(':checked')) {
+        // change "Target stars" selector to its lowest value
+        $('label[id^=target-stars-]:visible').children('input[name=specific_account_hero\\[target_stars\\]]').first().prop('checked', true);
+      } else {
+        // change "Target stars" selector to its highest value
+        $('label[id^=target-stars-]:visible').children('input[name=specific_account_hero\\[target_stars\\]]').last().prop('checked', true);
+      }
+    }
+  }
+  $(document).ready(function () {
+    setTargetStars(false);
+    $('#specific_account_hero_level').on('input', function () {
+      // recheck iff we're changing from sharded to leveled
+      var recheck = ($('#specific_account_hero_shards').val() != '');
+      $('#specific_account_hero_shards').val('');
+      setTargetStars(recheck);
+    });
+    $('#specific_account_hero_shards').on('input', function () {
+      $('#specific_account_hero_level').val('');
+      setTargetStars(false);
+    });
+    $('#specific_account_hero_is_fodder').on('change', function () {
+      setTargetStars(true);
+    });
+  });
+</script>

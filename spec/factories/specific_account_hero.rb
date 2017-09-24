@@ -6,6 +6,11 @@ FactoryGirl.define do
     shards        nil
     target_stars  { hero ? hero.stars : nil }
 
+    factory :fusable_specific_account_hero do
+      association   :hero, factory: :fusable_hero
+      target_stars  { hero.stars + 1 }
+    end
+
     factory :sharded_specific_account_hero do
       association  :hero, factory: :shardable_hero
       level        nil

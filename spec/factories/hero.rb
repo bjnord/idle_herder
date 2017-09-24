@@ -14,6 +14,12 @@ FactoryGirl.define do
     is_natural  { h_is_natural }
     max_stars   { h_max_stars }
 
+    factory :fusable_hero do
+      stars       4
+      is_natural  false
+      max_stars   6
+    end
+
     factory :five_star_hero do
       stars       5
       is_natural  false

@@ -14,3 +14,41 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  // FIXME remove .edit_specific_account_hero qualifier when all forms are modal
+  //       (passes feature without it, but doesn't work in #accounts context)
+  function setTargetStars(recheck) {
+    if ($('.edit_specific_account_hero #specific_account_hero_shards').val()) {
+      $('.edit_specific_account_hero #target-stars-row').hide();
+      return;
+    }
+    $('.edit_specific_account_hero #target-stars-row').show();
+    if (recheck) {
+      $('.edit_specific_account_hero input[name=specific_account_hero\\[target_stars\\]]').prop('checked', false);
+      if ($('.edit_specific_account_hero #specific_account_hero_is_fodder').is(':checked')) {
+        // change "Target stars" selector to its lowest value
+        $('.edit_specific_account_hero label[id^=target-stars-]:visible').children('input[name=specific_account_hero\\[target_stars\\]]').first().prop('checked', true);
+      } else {
+        // change "Target stars" selector to its highest value
+        $('.edit_specific_account_hero label[id^=target-stars-]:visible').children('input[name=specific_account_hero\\[target_stars\\]]').last().prop('checked', true);
+      }
+    }
+  }
+  $('.edit_specific_account_hero').ready(function () {
+    setTargetStars(false);
+    $('.edit_specific_account_hero #specific_account_hero_level').on('input', function () {
+      // recheck iff we're changing from sharded to leveled
+      var recheck = ($('.edit_specific_account_hero #specific_account_hero_shards').val() != '');
+      $('.edit_specific_account_hero #specific_account_hero_shards').val('');
+      setTargetStars(recheck);
+    });
+    $('.edit_specific_account_hero #specific_account_hero_shards').on('input', function () {
+      $('.edit_specific_account_hero #specific_account_hero_level').val('');
+      setTargetStars(false);
+    });
+    $('.edit_specific_account_hero #specific_account_hero_is_fodder').on('change', function () {
+      setTargetStars(true);
+    });
+  });
+</script>
