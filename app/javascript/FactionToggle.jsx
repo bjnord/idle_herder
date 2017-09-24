@@ -5,6 +5,7 @@ export default class FactionToggle extends React.Component
   constructor(props)
   {
     super(props);
+    // FIXME DRY get from Rails
     this.factionNames = {0: 'Shadow', 1: 'Fortress', 2: 'Abyss', 3: 'Forest', 4: 'Dark', 5: 'Light'};
     this.handleToggled = this.handleToggled.bind(this);
   }
