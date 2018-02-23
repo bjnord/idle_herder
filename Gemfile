@@ -44,6 +44,10 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano3-puma'
+  # these are needed by net-ssh to support ed25519 keys:
+  gem 'rbnacl', '~> 4.0.2'  # must be < 5.0
+  gem 'rbnacl-libsodium'
+  gem 'bcrypt_pbkdf'  # must be < 2.0
 end
 
 gem 'foreman'
