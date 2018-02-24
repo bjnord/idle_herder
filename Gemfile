@@ -8,6 +8,9 @@ end
 ruby '2.4.1'
 gem 'bundler', '1.15.4'
 
+# nokogiri < 1.8.1 (libxml2 < 2.9.5) has a serious security vuln.
+gem 'nokogiri', '~> 1.8.2', '>= 1.8.1'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
 # Use PostgreSQL as the database for Active Record
